@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
-import { RatesMap } from "./services/FetchRates";
-import { createCompositionRoot } from "./createCompositionRoot";
+import { RatesMap } from "../services/FetchRates";
+import { createCompositionRoot } from "../createCompositionRoot";
 
 const { fetchAverageRates } = createCompositionRoot();
 import {
@@ -14,11 +14,11 @@ import {
   isLongerThan1Hour,
   saveToLocalStorage,
   loadFromLocalStorage,
-} from "./utils/helpers";
-import Header from "./components/Header";
-import CurrencyInput from "./components/CurrencyInput";
-import CurrencyList from "./components/CurrencyList";
-import AddCurrencyModal from "./components/AddCurrencyModal";
+} from "../utils/helpers";
+import Header from "./Header";
+import CurrencyInput from "./CurrencyInput";
+import CurrencyList from "./CurrencyList";
+import AddCurrencyModal from "./AddCurrencyModal";
 import "./App.css";
 
 const STORAGE_KEYS = {
