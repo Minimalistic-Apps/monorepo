@@ -1,5 +1,10 @@
 import { Result, ok, err } from "@evolu/common";
-import { RatesMap, AllApisFailed, FetchRates, CurrencyRate } from "./types.js";
+import {
+  RatesMap,
+  AllApisFailed,
+  FetchRates,
+  CurrencyRate,
+} from "./FetchRates.js";
 
 export interface FetchAverageRatesDeps {
   readonly fetchCoingeckoRates: FetchRates;

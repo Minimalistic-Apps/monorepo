@@ -1,5 +1,16 @@
 import { tryAsync } from "@evolu/common";
-import { FetchRates, BlockchainInfoResponse, CurrencyRate } from "./types.js";
+import { FetchRates, CurrencyRate } from "./FetchRates.js";
+
+interface BlockchainInfoRateInfo {
+  readonly last: number;
+  readonly buy: number;
+  readonly sell: number;
+  readonly symbol: string;
+}
+
+interface BlockchainInfoResponse {
+  readonly [code: string]: BlockchainInfoRateInfo;
+}
 
 export interface FetchBlockchainInfoRatesDeps {
   readonly fetch: typeof globalThis.fetch;

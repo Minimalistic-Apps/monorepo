@@ -1,5 +1,18 @@
 import { tryAsync } from "@evolu/common";
-import { FetchRates, CoingeckoResponse, CurrencyRate } from "./types.js";
+import { FetchRates, CurrencyRate } from "./FetchRates.js";
+
+interface CoingeckoRateInfo {
+  readonly name: string;
+  readonly unit: string;
+  readonly value: number;
+  readonly type: string;
+}
+
+interface CoingeckoResponse {
+  readonly rates: {
+    readonly [code: string]: CoingeckoRateInfo;
+  };
+}
 
 export interface FetchCoingeckoRatesDeps {
   readonly fetch: typeof globalThis.fetch;

@@ -1,5 +1,15 @@
 import { tryAsync } from "@evolu/common";
-import { FetchRates, BitpayResponse, CurrencyRate } from "./types.js";
+import { FetchRates, CurrencyRate } from "./FetchRates.js";
+
+interface BitpayRateItem {
+  readonly code: string;
+  readonly name: string;
+  readonly rate: number;
+}
+
+interface BitpayResponse {
+  readonly data: readonly BitpayRateItem[];
+}
 
 export interface FetchBitpayRatesDeps {
   readonly fetch: typeof globalThis.fetch;

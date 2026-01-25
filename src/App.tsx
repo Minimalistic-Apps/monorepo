@@ -1,5 +1,8 @@
 import { useState, useEffect, useRef } from "react";
-import { fetchAverageRates, RatesMap } from "./services/index";
+import { RatesMap } from "./services/FetchRates";
+import { createCompositionRoot } from "./createCompositionRoot";
+
+const { fetchAverageRates } = createCompositionRoot();
 import {
   formatBtcWithCommas,
   formatFiatWithCommas,
