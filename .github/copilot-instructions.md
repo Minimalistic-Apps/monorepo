@@ -1,5 +1,5 @@
 ---
-applyTo: "**/*.{ts,tsx}"
+applyTo: '**/*.{ts,tsx}'
 ---
 
 # Project guidelines
@@ -20,19 +20,19 @@ Follow these specific conventions and patterns:
 
 ```ts
 // Good
-import { bar, baz } from "Foo.ts";
+import { bar, baz } from 'Foo.ts';
 export const ok = () => {};
 export const trySync = () => {};
 
 // Avoid
-import Foo from "Foo.ts";
+import Foo from 'Foo.ts';
 export const Utils = { ok, trySync };
 
 // Good - Avoid naming conflicts with globals
 const nativeSharedWorker = new globalThis.SharedWorker(url);
 
 // Avoid - Aliasing to work around global name clash
-import { SharedWorker as SharedWorkerType } from "./Worker.js";
+import { SharedWorker as SharedWorkerType } from './Worker.js';
 ```
 
 ## Functions
@@ -54,23 +54,17 @@ Use factory functions instead of classes for creating objects, typically named `
 ```ts
 // Good - Function overloads (requires function keyword)
 export function mapArray<T, U>(
-  array: NonEmptyReadonlyArray<T>,
-  mapper: (item: T) => U,
+    array: NonEmptyReadonlyArray<T>,
+    mapper: (item: T) => U,
 ): NonEmptyReadonlyArray<U>;
-export function mapArray<T, U>(
-  array: ReadonlyArray<T>,
-  mapper: (item: T) => U,
-): ReadonlyArray<U>;
-export function mapArray<T, U>(
-  array: ReadonlyArray<T>,
-  mapper: (item: T) => U,
-): ReadonlyArray<U> {
-  return array.map(mapper) as ReadonlyArray<U>;
+export function mapArray<T, U>(array: ReadonlyArray<T>, mapper: (item: T) => U): ReadonlyArray<U>;
+export function mapArray<T, U>(array: ReadonlyArray<T>, mapper: (item: T) => U): ReadonlyArray<U> {
+    return array.map(mapper) as ReadonlyArray<U>;
 }
 
 // Avoid - function keyword without overloads
 export function createUser(data: UserData): User {
-  // implementation
+    // implementation
 }
 ```
 
@@ -81,20 +75,20 @@ For functions with optional configuration, use inline types without `readonly` f
 ```ts
 // Good - inline type, single-use
 export const race = (
-  tasks: Tasks,
-  {
-    abortReason = raceLostError,
-  }: {
-    abortReason?: unknown;
-  } = {},
+    tasks: Tasks,
+    {
+        abortReason = raceLostError,
+    }: {
+        abortReason?: unknown;
+    } = {},
 ): Task<T, E> => {
-  // implementation
+    // implementation
 };
 
 // Good - named interface, reusable
 export interface RetryOptions {
-  readonly maxAttempts?: number;
-  readonly delay?: Duration;
+    readonly maxAttempts?: number;
+    readonly delay?: Duration;
 }
 ```
 
@@ -105,14 +99,14 @@ export interface RetryOptions {
 ```ts
 // Good - Shadow in nested scopes
 const value = getData();
-items.map((value) => process(value)); // shadowing is fine
+items.map(value => process(value)); // shadowing is fine
 
 const result = fetchUser();
 if (result.ok) {
-  const result = fetchProfile(result.value); // shadow in nested block
-  if (result.ok) {
-    // ...
-  }
+    const result = fetchProfile(result.value); // shadow in nested block
+    if (result.ok) {
+        // ...
+    }
 }
 ```
 
@@ -122,8 +116,8 @@ if (result.ok) {
 
 ```ts
 interface Example {
-  readonly id: number;
-  readonly items: ReadonlyArray<string>;
+    readonly id: number;
+    readonly items: ReadonlyArray<string>;
 }
 ```
 
@@ -147,8 +141,8 @@ export type User = typeof User.Type;
 - Useful for platform abstraction, handle types (timeout IDs, file handles), and type safety
 
 ```ts
-type TimeoutId = Brand<"TimeoutId">;
-type NativeMessagePort = Brand<"NativeMessagePort">;
+type TimeoutId = Brand<'TimeoutId'>;
+type NativeMessagePort = Brand<'NativeMessagePort'>;
 ```
 
 ## Documentation style
@@ -198,14 +192,11 @@ export interface Storage {
 
 ```ts
 // For lazy operations array
-const operations: Lazy<Result<void, MyError>>[] = [
-  () => doSomething(),
-  () => doSomethingElse(),
-];
+const operations: Lazy<Result<void, MyError>>[] = [() => doSomething(), () => doSomethingElse()];
 
 for (const op of operations) {
-  const result = op();
-  if (!result.ok) return result;
+    const result = op();
+    if (!result.ok) return result;
 }
 ```
 
@@ -216,19 +207,19 @@ Don't use `ok("done")` or `ok("success")` - the `ok()` itself already communicat
 ```ts
 // Good - ok() means success, no redundant string needed
 const save = (): Result<void, SaveError> => {
-  // ...
-  return ok();
+    // ...
+    return ok();
 };
 
 // Good - return a meaningful value
 const parse = (): Result<User, ParseError> => {
-  // ...
-  return ok(user);
+    // ...
+    return ok(user);
 };
 
 // Avoid - "done" and "success" add no information
-return ok("done");
-return ok("success");
+return ok('done');
+return ok('success');
 ```
 
 ## Evolu Type
@@ -240,27 +231,24 @@ return ok("success");
 
 ```ts
 // Good - Define typed error
-interface CurrencyCodeError extends TypeError<"CurrencyCode"> {}
+interface CurrencyCodeError extends TypeError<'CurrencyCode'> {}
 
 // Good - Brand for semantic meaning and validation
-const CurrencyCode = brand("CurrencyCode", String, (value) =>
-  /^[A-Z]{3}$/.test(value)
-    ? ok(value)
-    : err<CurrencyCodeError>({ type: "CurrencyCode", value }),
+const CurrencyCode = brand('CurrencyCode', String, value =>
+    /^[A-Z]{3}$/.test(value) ? ok(value) : err<CurrencyCodeError>({ type: 'CurrencyCode', value }),
 );
 
 // Good - Type factory pattern
 const minLength: <Min extends number>(
-  min: Min,
-) => BrandFactory<`MinLength${Min}`, { length: number }, MinLengthError<Min>> =
-  (min) => (parent) =>
-    brand(`MinLength${min}`, parent, (value) =>
-      value.length >= min ? ok(value) : err({ type: "MinLength", value, min }),
+    min: Min,
+) => BrandFactory<`MinLength${Min}`, { length: number }, MinLengthError<Min>> = min => parent =>
+    brand(`MinLength${min}`, parent, value =>
+        value.length >= min ? ok(value) : err({ type: 'MinLength', value, min }),
     );
 
 // Good - Error formatter
 const formatCurrencyCodeError = createTypeErrorFormatter<CurrencyCodeError>(
-  (error) => `Invalid currency code: ${error.value}`,
+    error => `Invalid currency code: ${error.value}`,
 );
 ```
 
@@ -271,12 +259,12 @@ const formatCurrencyCodeError = createTypeErrorFormatter<CurrencyCodeError>(
 - Use for catching developer mistakes eagerly (e.g., invalid configuration)
 
 ```ts
-import { assert, assertNonEmptyArray } from "./Assert.js";
+import { assert, assertNonEmptyArray } from './Assert.js';
 
 const length = buffer.getLength();
-assert(NonNegativeInt.is(length), "buffer length should be non-negative");
+assert(NonNegativeInt.is(length), 'buffer length should be non-negative');
 
-assertNonEmptyArray(items, "Expected items to process");
+assertNonEmptyArray(items, 'Expected items to process');
 ```
 
 ## Dependency injection
@@ -287,11 +275,11 @@ Follow Evolu's convention-based DI approach without frameworks:
 
 ```ts
 export interface Time {
-  readonly now: () => number;
+    readonly now: () => number;
 }
 
 export interface TimeDep {
-  readonly time: Time;
+    readonly time: Time;
 }
 ```
 
@@ -299,18 +287,18 @@ export interface TimeDep {
 
 ```ts
 const timeUntilEvent =
-  (deps: TimeDep & Partial<LoggerDep>) =>
-  (eventTimestamp: number): number => {
-    const currentTime = deps.time.now();
-    return eventTimestamp - currentTime;
-  };
+    (deps: TimeDep & Partial<LoggerDep>) =>
+    (eventTimestamp: number): number => {
+        const currentTime = deps.time.now();
+        return eventTimestamp - currentTime;
+    };
 ```
 
 ### 3. Create factory functions
 
 ```ts
 export const createTime = (): Time => ({
-  now: () => Date.now(),
+    now: () => Date.now(),
 });
 ```
 
@@ -318,8 +306,8 @@ export const createTime = (): Time => ({
 
 ```ts
 const deps: TimeDep & Partial<LoggerDep> = {
-  time: createTime(),
-  ...(enableLogging && { logger: createLogger() }),
+    time: createTime(),
+    ...(enableLogging && { logger: createLogger() }),
 };
 ```
 
@@ -340,24 +328,24 @@ const deps: TimeDep & Partial<LoggerDep> = {
 
 ```ts
 // Good - Call tasks with run()
-const result = await run(sleep("1s"));
+const result = await run(sleep('1s'));
 if (!result.ok) return result;
 
 const data = result.value; // only available if ok
 
 // Good - Compose and short-circuit
-const processTask: Task<void, ParseError | TimeoutError> = async (run) => {
-  const data = await run(fetchData);
-  if (!data.ok) return data;
+const processTask: Task<void, ParseError | TimeoutError> = async run => {
+    const data = await run(fetchData);
+    if (!data.ok) return data;
 
-  const parsed = await run(timeout(parseData(data.value), "5s"));
-  if (!parsed.ok) return parsed;
+    const parsed = await run(timeout(parseData(data.value), '5s'));
+    if (!parsed.ok) return parsed;
 
-  return ok();
+    return ok();
 };
 
 // Avoid - Calling task directly
-const result = await sleep("1s")(run);
+const result = await sleep('1s')(run);
 ```
 
 ## Testing
@@ -372,19 +360,19 @@ const result = await sleep("1s")(run);
 Create fresh deps at the start of each test for isolation. Each call creates independent instances, preventing shared state between tests.
 
 ```ts
-import { createTestDeps, createId } from "@evolu/common";
+import { createTestDeps, createId } from '@evolu/common';
 
-test("creates unique IDs", () => {
-  const deps = createTestDeps();
-  const id1 = createId(deps);
-  const id2 = createId(deps);
-  expect(id1).not.toBe(id2);
+test('creates unique IDs', () => {
+    const deps = createTestDeps();
+    const id1 = createId(deps);
+    const id2 = createId(deps);
+    expect(id1).not.toBe(id2);
 });
 
-test("with custom seed for reproducibility", () => {
-  const deps = createTestDeps({ seed: "my-test" });
-  const id = createId(deps);
-  expect(id).toMatchInlineSnapshot(`"..."`);
+test('with custom seed for reproducibility', () => {
+    const deps = createTestDeps({ seed: 'my-test' });
+    const id = createId(deps);
+    expect(id).toMatchInlineSnapshot(`"..."`);
 });
 ```
 
