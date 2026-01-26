@@ -1,9 +1,9 @@
 import { tryAsync } from '@evolu/common';
 import {
     CurrencyCode,
-    FetchRatesError,
     type CurrencyRate,
     type FetchRates,
+    FetchRatesError,
 } from './FetchRates.js';
 
 interface BitpayRateItem {

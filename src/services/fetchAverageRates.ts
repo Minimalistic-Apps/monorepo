@@ -1,9 +1,9 @@
 import { err, ok } from '@evolu/common';
 import {
     CurrencyCode,
-    FetchRatesError,
     type CurrencyRate,
     type FetchRates,
+    FetchRatesError,
     type RatesMap,
 } from './FetchRates.js';
 
