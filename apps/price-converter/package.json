@@ -12,7 +12,8 @@
     },
     "dependencies": {
         "@evolu/common": "^7.4.1",
-        "@price-converter/utils": "workspace:*",
+        "@minimalistic-apps/bitcoin": "workspace:*",
+        "@minimalistic-apps/utils": "workspace:*",
         "react": "^18.2.0",
         "react-dom": "^18.2.0"
     },

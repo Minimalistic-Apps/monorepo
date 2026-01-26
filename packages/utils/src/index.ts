@@ -1,49 +1,5 @@
 // Utility functions for formatting and calculations
 
-const SATOSHI = 100000000; // 1 BTC = 100,000,000 sats
-
-// Format number with custom grouping (e.g., 0.00,001,000)
-export const formatBtcWithCommas = (value: string | number): string => {
-    if (!value || Number.isNaN(Number(value))) return '0';
-
-    const num = Number.parseFloat(String(value));
-    if (num === 0) return '0';
-
-    // Handle scientific notation for very small numbers
-    if (Math.abs(num) < 1e-16) {
-        return '0';
-    }
-
-    if (Math.abs(num) < 1e-8) {
-        return num.toExponential(2);
-    }
-
-    // Format with 8 decimal places
-    const str = num.toFixed(8);
-    const [intPart, decPart] = str.split('.');
-
-    if (!decPart) return intPart;
-
-    // Add commas every 3 digits in decimal part from right to left
-    const formatted = decPart;
-    let result = '';
-    let count = 0;
-
-    for (let i = formatted.length - 1; i >= 0; i--) {
-        if (count === 3 && i < formatted.length - 1) {
-            result = `,${result}`;
-            count = 0;
-        }
-        result = formatted[i] + result;
-        count++;
-    }
-
-    // Remove trailing zeros
-    result = result.replace(/0+$/, '').replace(/,$/, '');
-
-    return intPart + (result ? `.${result}` : '');
-};
-
 // Format fiat with 3 decimal places and commas
 export const formatFiatWithCommas = (value: string | number): string => {
     if (!value || Number.isNaN(Number(value))) return '0';
@@ -61,24 +17,6 @@ export const formatFiatWithCommas = (value: string | number): string => {
     const formattedDec = decPart ? decPart.replace(/0+$/, '') : '';
 
     return formattedInt + (formattedDec ? `.${formattedDec}` : '');
-};
-
-// Convert BTC to Sats
-export const btcToSats = (btc: number): number => {
-    return btc * SATOSHI;
-};
-
-// Convert Sats to BTC
-export const satsToBtc = (sats: number): number => {
-    return sats / SATOSHI;
-};
-
-// Format sats with 3 decimal places
-export const formatSats = (sats: string | number): string => {
-    if (!sats || Number.isNaN(Number(sats))) return '0';
-
-    const num = Number.parseFloat(String(sats));
-    return num.toFixed(3).replace(/\.?0+$/, '');
 };
 
 // Parse formatted number back to float
