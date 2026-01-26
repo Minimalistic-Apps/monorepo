@@ -1,15 +1,17 @@
 import {
     btcToSats,
     formatBtcWithCommas,
-    formatFiatWithCommas,
     formatSats,
+    satsToBtc,
+} from '@minimalistic-apps/bitcoin';
+import {
+    formatFiatWithCommas,
     getTimeAgo,
     isLongerThan1Hour,
     loadFromLocalStorage,
     parseFormattedNumber,
-    satsToBtc,
     saveToLocalStorage,
-} from '@price-converter/utils';
+} from '@minimalistic-apps/utils';
 import { useEffect, useRef, useState } from 'react';
 import { createCompositionRoot } from '../createCompositionRoot';
 import type { CurrencyCode, RatesMap } from '../services/FetchRates';

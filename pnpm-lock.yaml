@@ -23,7 +23,10 @@ importers:
       '@evolu/common':
         specifier: ^7.4.1
         version: 7.4.1
-      '@price-converter/utils':
+      '@minimalistic-apps/bitcoin':
+        specifier: workspace:*
+        version: link:../../packages/bitcoin
+      '@minimalistic-apps/utils':
         specifier: workspace:*
         version: link:../../packages/utils
       react:
@@ -51,6 +54,12 @@ importers:
       vite-plugin-pwa:
         specifier: ^0.16.0
         version: 0.16.7(vite@4.5.14(terser@5.46.0))(workbox-build@7.4.0(@types/babel__core@7.20.5))(workbox-window@7.4.0)
+
+  packages/bitcoin:
+    devDependencies:
+      typescript:
+        specifier: ^5.3.0
+        version: 5.9.3
 
   packages/utils:
     devDependencies:
