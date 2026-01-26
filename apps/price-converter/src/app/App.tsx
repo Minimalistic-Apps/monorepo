@@ -1,8 +1,3 @@
-import { useEffect, useRef, useState } from 'react';
-import { createCompositionRoot } from '../createCompositionRoot';
-import type { CurrencyCode, RatesMap } from '../services/FetchRates';
-
-const { fetchAverageRates } = createCompositionRoot();
 import {
     btcToSats,
     formatBtcWithCommas,
@@ -14,7 +9,12 @@ import {
     parseFormattedNumber,
     satsToBtc,
     saveToLocalStorage,
-} from '../utils/helpers';
+} from '@price-converter/utils';
+import { useEffect, useRef, useState } from 'react';
+import { createCompositionRoot } from '../createCompositionRoot';
+import type { CurrencyCode, RatesMap } from '../services/FetchRates';
+
+const { fetchAverageRates } = createCompositionRoot();
 import AddCurrencyModal from './AddCurrencyModal';
 import CurrencyInput from './CurrencyInput';
 import CurrencyList from './CurrencyList';
