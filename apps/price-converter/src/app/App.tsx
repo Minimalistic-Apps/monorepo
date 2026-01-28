@@ -5,15 +5,6 @@ import {
     satsToBtc,
 } from '@minimalistic-apps/bitcoin';
 import {
-    AddCurrencyButton,
-    AddCurrencyModal,
-    AppHeader,
-    AppLayout,
-    CurrencyInput,
-    CurrencyInputRow,
-    StatusDisplay,
-} from '@minimalistic-apps/components';
-import {
     formatFiatWithCommas,
     getTimeAgo,
     isLongerThan1Hour,
@@ -24,6 +15,13 @@ import {
 import { useEffect, useRef, useState } from 'react';
 import { createCompositionRoot } from '../createCompositionRoot';
 import type { CurrencyCode, CurrencyRate, RatesMap } from '../rates/FetchRates';
+import { AddCurrencyButton } from './AddCurrencyButton';
+import { AddCurrencyModal } from './AddCurrencyModal';
+import { AppHeader } from './AppHeader';
+import { AppLayout } from './AppLayout';
+import { CurrencyInput } from './CurrencyInput';
+import { CurrencyInputRow } from './CurrencyInputRow';
+import { StatusDisplay } from './StatusDisplay';
 
 const { fetchAverageRates } = createCompositionRoot();
 

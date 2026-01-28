@@ -1,0 +1,66 @@
+import { Layout as AntLayout } from 'antd';
+import type { ReactNode } from 'react';
+import { BRAND_COLORS } from './colors';
+
+const { Header: AntHeader, Content: AntContent } = AntLayout;
+
+interface LayoutProps {
+    readonly children: ReactNode;
+}
+
+/**
+ * Main layout wrapper component.
+ */
+export const Layout = ({ children }: LayoutProps) => (
+    <AntLayout
+        style={{ minHeight: '100vh', background: BRAND_COLORS.backgroundBase }}
+    >
+        {children}
+    </AntLayout>
+);
+
+interface HeaderProps {
+    readonly children: ReactNode;
+    readonly style?: React.CSSProperties;
+}
+
+/**
+ * Header component for the layout.
+ */
+export const Header = ({ children, style }: HeaderProps) => (
+    <AntHeader
+        style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            padding: '0 16px',
+            background: BRAND_COLORS.primary,
+            ...style,
+        }}
+    >
+        {children}
+    </AntHeader>
+);
+
+interface ContentProps {
+    readonly children: ReactNode;
+    readonly maxWidth?: number;
+    readonly style?: React.CSSProperties;
+}
+
+/**
+ * Content area component for the layout.
+ */
+export const Content = ({ children, maxWidth = 600, style }: ContentProps) => (
+    <AntContent
+        style={{
+            maxWidth,
+            width: '100%',
+            margin: '0 auto',
+            padding: '24px 16px',
+            ...style,
+        }}
+    >
+        {children}
+    </AntContent>
+);
