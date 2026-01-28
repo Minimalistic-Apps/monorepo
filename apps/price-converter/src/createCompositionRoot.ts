@@ -1,7 +1,7 @@
-import { createFetchAverageRates } from './services/fetchAverageRates.js';
-import { createFetchBitpayRates } from './services/fetchBitpayRates.js';
-import { createFetchBlockchainInfoRates } from './services/fetchBlockchainInfoRates.js';
-import { createFetchCoingeckoRates } from './services/fetchCoingeckoRates.js';
+import { createFetchAverageRates } from './rates/fetchAverageRates.js';
+import { createFetchBitpayRates } from './rates/fetchBitpayRates.js';
+import { createFetchBlockchainInfoRates } from './rates/fetchBlockchainInfoRates.js';
+import { createFetchCoingeckoRates } from './rates/fetchCoingeckoRates.js';
 
 export const createCompositionRoot = () => {
     const fetchDeps = {

@@ -14,7 +14,7 @@ import {
 } from '@minimalistic-apps/utils';
 import { useEffect, useRef, useState } from 'react';
 import { createCompositionRoot } from '../createCompositionRoot';
-import type { CurrencyCode, RatesMap } from '../services/FetchRates';
+import type { CurrencyCode, RatesMap } from '../rates/FetchRates';
 
 const { fetchAverageRates } = createCompositionRoot();
 import { CurrencyInput } from '@minimalistic-apps/components';
