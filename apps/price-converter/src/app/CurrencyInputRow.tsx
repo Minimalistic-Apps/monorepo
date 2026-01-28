@@ -1,10 +1,13 @@
-import { DeleteOutlined } from '@ant-design/icons';
-import { Button, Flex, Input, Typography } from 'antd';
-import type { InputRef } from 'antd';
-import type { ChangeEvent } from 'react';
+import {
+    BRAND_COLORS,
+    Button,
+    DeleteOutlined,
+    Flex,
+    Input,
+    type InputRef,
+    Text,
+} from '@minimalistic-apps/components';
 import { useEffect, useRef } from 'react';
-
-const { Text } = Typography;
 
 interface CurrencyInputRowProps {
     readonly code: string;
@@ -14,13 +17,8 @@ interface CurrencyInputRowProps {
     readonly focused: boolean;
     readonly onFocus: () => void;
     readonly onRemove?: () => void;
-    readonly showLabel?: boolean;
-    readonly labelColor?: string;
 }
 
-/**
- * Currency input row with optional remove button using Ant Design Input.
- */
 export const CurrencyInputRow = ({
     code,
     name,
@@ -29,8 +27,6 @@ export const CurrencyInputRow = ({
     focused,
     onFocus,
     onRemove,
-    showLabel = true,
-    labelColor,
 }: CurrencyInputRowProps) => {
     const inputRef = useRef<InputRef>(null);
 
@@ -43,39 +39,27 @@ export const CurrencyInputRow = ({
     return (
         <Flex gap={12} align="center" style={{ marginBottom: 12 }}>
             <Input
-                ref={inputRef}
+                inputRef={inputRef}
                 value={value}
-                onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                    onChange(e.target.value)
-                }
+                onChange={onChange}
                 onFocus={onFocus}
                 placeholder="0"
                 inputMode="decimal"
+                monospace
+            />
+            <Text
                 style={{
-                    flex: 1,
-                    fontFamily: 'monospace',
                     fontSize: '1.125rem',
                     fontWeight: 600,
-                    background: '#1e1e1e',
-                    borderColor: '#333',
-                    color: '#fff',
+                    minWidth: 60,
+                    color: BRAND_COLORS.primary,
                 }}
-            />
-            {showLabel && (
-                <Text
-                    style={{
-                        fontSize: '1.125rem',
-                        fontWeight: 600,
-                        minWidth: 60,
-                        color: labelColor || '#087d89',
-                    }}
-                >
-                    {code} {name && name !== code ? name : ''}
-                </Text>
-            )}
+            >
+                {code} {name && name !== code ? name : ''}
+            </Text>
             {onRemove && (
                 <Button
-                    type="primary"
+                    variant="primary"
                     danger
                     icon={<DeleteOutlined />}
                     onClick={onRemove}

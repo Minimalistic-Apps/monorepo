@@ -1,9 +1,10 @@
-import { ReloadOutlined } from '@ant-design/icons';
-import { Button, Flex, Layout, Typography } from 'antd';
-import { BRAND_COLORS } from './theme';
-
-const { Header } = Layout;
-const { Title } = Typography;
+import {
+    Button,
+    Flex,
+    Header,
+    ReloadOutlined,
+    Title,
+} from '@minimalistic-apps/components';
 
 interface AppHeaderProps {
     readonly title: string;
@@ -13,9 +14,6 @@ interface AppHeaderProps {
     readonly onModeToggle: () => void;
 }
 
-/**
- * Application header component using Ant Design Layout.Header.
- */
 export const AppHeader = ({
     title,
     onRefresh,
@@ -23,21 +21,13 @@ export const AppHeader = ({
     mode,
     onModeToggle,
 }: AppHeaderProps) => (
-    <Header
-        style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            padding: '0 16px',
-            background: BRAND_COLORS.primary,
-        }}
-    >
+    <Header>
         <Title level={4} style={{ margin: 0, color: '#fff' }}>
             {title}
         </Title>
         <Flex gap={8}>
             <Button
-                type="text"
+                variant="text"
                 onClick={onModeToggle}
                 style={{
                     color: '#fff',
@@ -49,7 +39,7 @@ export const AppHeader = ({
                 {mode}
             </Button>
             <Button
-                type="text"
+                variant="text"
                 icon={<ReloadOutlined />}
                 onClick={onRefresh}
                 loading={loading}

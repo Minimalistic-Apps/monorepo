@@ -1,7 +1,4 @@
-import { Alert, Typography } from 'antd';
-import { BRAND_COLORS } from './theme';
-
-const { Text } = Typography;
+import { Alert, BRAND_COLORS, Text } from '@minimalistic-apps/components';
 
 interface StatusDisplayProps {
     readonly loading: boolean;
@@ -10,9 +7,6 @@ interface StatusDisplayProps {
     readonly isWarning?: boolean;
 }
 
-/**
- * Status display component for showing loading state, errors, and time ago.
- */
 export const StatusDisplay = ({
     loading,
     error,
@@ -31,12 +25,7 @@ export const StatusDisplay = ({
             />
         )}
         {error && (
-            <Alert
-                message={error}
-                type="error"
-                showIcon
-                style={{ marginBottom: 16 }}
-            />
+            <Alert message={error} type="error" style={{ marginBottom: 16 }} />
         )}
         {timeAgo && (
             <Text
@@ -44,7 +33,9 @@ export const StatusDisplay = ({
                     display: 'block',
                     textAlign: 'right',
                     fontSize: '0.875rem',
-                    color: isWarning ? '#ff4d4f' : '#999',
+                    color: isWarning
+                        ? BRAND_COLORS.error
+                        : BRAND_COLORS.textSecondary,
                     marginBottom: 16,
                     fontWeight: 600,
                 }}

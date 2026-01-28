@@ -1,10 +1,11 @@
-import { Flex, Input, Typography } from 'antd';
-import type { InputRef } from 'antd';
-import type { ChangeEvent } from 'react';
+import {
+    BRAND_COLORS,
+    Flex,
+    Input,
+    type InputRef,
+    Text,
+} from '@minimalistic-apps/components';
 import { useEffect, useRef } from 'react';
-import { BRAND_COLORS } from './theme';
-
-const { Text } = Typography;
 
 interface CurrencyInputProps {
     readonly label: string;
@@ -14,9 +15,6 @@ interface CurrencyInputProps {
     readonly onFocus: () => void;
 }
 
-/**
- * Primary currency input component using Ant Design Input.
- */
 export const CurrencyInput = ({
     label,
     value,
@@ -32,10 +30,6 @@ export const CurrencyInput = ({
         }
     }, [focused]);
 
-    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-        onChange(e.target.value);
-    };
-
     return (
         <Flex
             gap={16}
@@ -43,21 +37,14 @@ export const CurrencyInput = ({
             style={{ marginBottom: 24, padding: '0 8px' }}
         >
             <Input
-                ref={inputRef}
+                inputRef={inputRef}
                 value={value}
-                onChange={handleChange}
+                onChange={onChange}
                 onFocus={onFocus}
                 placeholder="0"
                 inputMode="decimal"
-                style={{
-                    flex: 1,
-                    fontFamily: 'monospace',
-                    fontSize: '1.25rem',
-                    fontWeight: 600,
-                    background: '#1e1e1e',
-                    borderColor: '#333',
-                    color: '#fff',
-                }}
+                monospace
+                large
             />
             <Text
                 style={{
