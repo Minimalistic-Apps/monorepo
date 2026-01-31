@@ -11,6 +11,7 @@ import { Input } from '@minimalistic-apps/components';
 import { type FiatAmount, formatFiatWithCommas } from '@minimalistic-apps/fiat';
 import { parseFormattedNumber } from '@minimalistic-apps/utils';
 import { useEffect, useState } from 'react';
+import { useServices } from '../../ServicesProvider';
 import type { Mode } from '../../state/State';
 import { selectMode, useStore } from '../../state/createStore';
 
@@ -40,6 +41,7 @@ export const CurrencyInput = ({
     onChange,
 }: CurrencyInputProps) => {
     const mode = useStore(selectMode);
+    const { store } = useServices();
 
     const [inputValue, setInputValue] = useState(() =>
         formatInputValue(value, code, mode),
@@ -64,10 +66,15 @@ export const CurrencyInput = ({
         }
     };
 
+    const handleFocus = () => {
+        store.setState({ focusedCurrency: code });
+    };
+
     return (
         <Input
             value={inputValue}
             onChange={handleChange}
+            onFocus={handleFocus}
             placeholder=""
             monospace
             large

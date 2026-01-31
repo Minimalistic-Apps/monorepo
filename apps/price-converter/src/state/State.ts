@@ -21,4 +21,5 @@ export interface State {
     readonly lastUpdated: number | null;
     readonly mode: Mode;
     readonly currentScreen: Screen;
+    readonly focusedCurrency: CurrencyCode | 'BTC' | null;
 }
