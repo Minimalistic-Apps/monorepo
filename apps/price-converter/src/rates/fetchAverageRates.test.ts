@@ -1,7 +1,6 @@
-import { err, getOrThrow, ok } from '@evolu/common';
+import { CurrencyCode, err, getOrThrow, ok } from '@evolu/common';
 import { describe, expect, test } from 'vitest';
 import {
-    CurrencyCode,
     type FetchRates,
     FetchRatesError,
     type RatesMap,

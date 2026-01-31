@@ -1,7 +1,6 @@
-import { err, ok } from '@evolu/common';
+import { CurrencyCode, err, ok } from '@evolu/common';
 import { typedObjectKeys } from '@minimalistic-apps/type-utils';
 import {
-    CurrencyCode,
     type CurrencyRate,
     type FetchRates,
     FetchRatesError,

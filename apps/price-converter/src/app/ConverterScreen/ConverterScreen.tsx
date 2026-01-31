@@ -1,8 +1,8 @@
+import type { CurrencyCode } from '@evolu/common';
 import { formatBtcWithCommas, satsToBtc } from '@minimalistic-apps/bitcoin';
 import { Screen } from '@minimalistic-apps/components';
 import { parseFormattedNumber } from '@minimalistic-apps/utils';
 import { useServices } from '../../ServicesProvider';
-import type { CurrencyCode } from '../../rates/FetchRates';
 import {
     selectBtcValue,
     selectCurrencyValues,

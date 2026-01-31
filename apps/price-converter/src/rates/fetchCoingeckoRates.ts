@@ -1,7 +1,6 @@
-import { tryAsync } from '@evolu/common';
+import { CurrencyCode, tryAsync } from '@evolu/common';
 import { typedObjectEntries } from '@minimalistic-apps/type-utils';
 import {
-    CurrencyCode,
     type CurrencyRate,
     type FetchRates,
     FetchRatesError,
@@ -39,7 +38,7 @@ export const createFetchCoingeckoRates =
                     Record<string, CurrencyRate>
                 >((acc, [code, info]) => {
                     if (info.type === 'fiat') {
-                        const upperCode = code.toUpperCase();
+                        const upperCode = String(code).toUpperCase();
                         const codeResult = CurrencyCode.from(upperCode);
                         if (codeResult.ok) {
                             acc[upperCode] = {

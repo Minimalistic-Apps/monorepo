@@ -1,21 +1,6 @@
-import {
-    String as EvoluString,
-    type Result,
-    type TypeError,
-    brand,
-    err,
-    ok,
-} from '@evolu/common';
+import type { CurrencyCode, Result, TypeError } from '@evolu/common';
 
 export interface CurrencyCodeError extends TypeError<'CurrencyCode'> {}
-
-export const CurrencyCode = brand('CurrencyCode', EvoluString, value =>
-    /^[A-Z]{3}$/.test(value)
-        ? ok(value)
-        : err<CurrencyCodeError>({ type: 'CurrencyCode', value }),
-);
-
-export type CurrencyCode = typeof CurrencyCode.Type;
 
 export interface CurrencyRate {
     readonly code: CurrencyCode;
