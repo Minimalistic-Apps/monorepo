@@ -1,14 +1,6 @@
-import { loadFromLocalStorage } from '@minimalistic-apps/utils';
 import { useSyncExternalStore } from 'react';
-import type { CurrencyCode, RatesMap } from '../../rates/FetchRates';
-import type { Mode, State } from './State';
-import type { AddCurrency } from './addCurrency';
-import type { RecalculateFromBtc } from './recalculateFromBtc';
-import type { RecalculateFromCurrency } from './recalculateFromCurrency';
-import type { RemoveCurrency } from './removeCurrency';
-import type { SetRates } from './setRates';
-import { STORAGE_KEYS } from './storageKeys';
-import type { ToggleMode } from './toggleMode';
+import type { CurrencyCode } from '../../rates/FetchRates';
+import type { State } from './State';
 
 type Listener = () => void;
 
@@ -16,51 +8,20 @@ export interface Store {
     readonly getState: () => State;
     readonly subscribe: (listener: Listener) => () => void;
     readonly setState: (partial: Partial<State>) => void;
-    readonly setLoading: (loading: boolean) => void;
-    readonly setError: (error: string) => void;
-    readonly setBtcValue: (value: string) => void;
-    readonly setCurrencyValues: (
-        values: Readonly<Record<CurrencyCode, string>>,
-    ) => void;
-    readonly setFocusedInput: (input: CurrencyCode | 'BTC') => void;
-    readonly setShowModal: (show: boolean) => void;
-    readonly setRates: SetRates;
-    readonly addCurrency: AddCurrency;
-    readonly removeCurrency: RemoveCurrency;
-    readonly toggleMode: ToggleMode;
-    readonly recalculateFromBtc: RecalculateFromBtc;
-    readonly recalculateFromCurrency: RecalculateFromCurrency;
 }
 
-export interface StoreActions {
-    readonly setRates: SetRates;
-    readonly addCurrency: AddCurrency;
-    readonly removeCurrency: RemoveCurrency;
-    readonly toggleMode: ToggleMode;
-    readonly recalculateFromBtc: RecalculateFromBtc;
-    readonly recalculateFromCurrency: RecalculateFromCurrency;
-}
-
-export const createStore = (actions: StoreActions): Store => {
-    const savedRates = loadFromLocalStorage<RatesMap>(STORAGE_KEYS.RATES);
-    const savedTimestamp = loadFromLocalStorage<number>(STORAGE_KEYS.TIMESTAMP);
-    const savedCurrencies = loadFromLocalStorage<CurrencyCode[]>(
-        STORAGE_KEYS.SELECTED_CURRENCIES,
-    );
-    const savedMode = loadFromLocalStorage<Mode>(STORAGE_KEYS.MODE, 'BTC');
-
+export const createStore = (): Store => {
     let state: State = {
-        rates: savedRates ?? ({} as RatesMap),
-        selectedCurrencies:
-            savedCurrencies && savedCurrencies.length > 0
-                ? savedCurrencies
-                : (['USD' as CurrencyCode] as ReadonlyArray<CurrencyCode>),
+        rates: {} as never,
+        selectedCurrencies: [
+            'USD' as CurrencyCode,
+        ] as ReadonlyArray<CurrencyCode>,
         btcValue: '',
         currencyValues: {} as Record<CurrencyCode, string>,
         loading: false,
         error: '',
-        lastUpdated: savedTimestamp,
-        mode: savedMode ?? 'BTC',
+        lastUpdated: null,
+        mode: 'BTC',
         showModal: false,
         focusedInput: 'BTC',
     };
@@ -87,62 +48,11 @@ export const createStore = (actions: StoreActions): Store => {
         };
     };
 
-    const setLoading = (loading: boolean) => {
-        setState({ loading });
-    };
-
-    const setError = (error: string) => {
-        setState({ error });
-    };
-
-    const setBtcValue = (value: string) => {
-        setState({ btcValue: value });
-    };
-
-    const setCurrencyValues = (
-        values: Readonly<Record<CurrencyCode, string>>,
-    ) => {
-        setState({ currencyValues: values });
-    };
-
-    const setFocusedInput = (input: CurrencyCode | 'BTC') => {
-        setState({ focusedInput: input });
-    };
-
-    const setShowModal = (show: boolean) => {
-        setState({ showModal: show });
-    };
-
     return {
         getState,
         subscribe,
         setState,
-        setLoading,
-        setError,
-        setBtcValue,
-        setCurrencyValues,
-        setFocusedInput,
-        setShowModal,
-        setRates: actions.setRates,
-        addCurrency: actions.addCurrency,
-        removeCurrency: actions.removeCurrency,
-        toggleMode: actions.toggleMode,
-        recalculateFromBtc: actions.recalculateFromBtc,
-        recalculateFromCurrency: actions.recalculateFromCurrency,
     };
-};
-
-let storeInstance: Store | null = null;
-
-export const getStore = (): Store => {
-    if (!storeInstance) {
-        throw new Error('Store not initialized. Call initializeStore first.');
-    }
-    return storeInstance;
-};
-
-export const initializeStore = (store: Store) => {
-    storeInstance = store;
 };
 
 type Selector<T> = (state: State) => T;
@@ -167,22 +77,3 @@ export const selectLastUpdated = (state: State) => state.lastUpdated;
 export const selectMode = (state: State) => state.mode;
 export const selectShowModal = (state: State) => state.showModal;
 export const selectFocusedInput = (state: State) => state.focusedInput;
-
-export const useStoreActions = () => {
-    const store = getStore();
-
-    return {
-        setLoading: store.setLoading,
-        setError: store.setError,
-        setRates: store.setRates,
-        setBtcValue: store.setBtcValue,
-        setCurrencyValues: store.setCurrencyValues,
-        setFocusedInput: store.setFocusedInput,
-        setShowModal: store.setShowModal,
-        addCurrency: store.addCurrency,
-        removeCurrency: store.removeCurrency,
-        toggleMode: store.toggleMode,
-        recalculateFromBtc: store.recalculateFromBtc,
-        recalculateFromCurrency: store.recalculateFromCurrency,
-    };
-};
