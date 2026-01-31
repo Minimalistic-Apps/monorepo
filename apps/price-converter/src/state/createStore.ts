@@ -19,6 +19,7 @@ export const createStore = (): Store<State> => {
         lastUpdated: null,
         mode: 'BTC',
         currentScreen: 'Converter',
+        focusedCurrency: null,
     };
 
     return createMiniStore(initialState);
@@ -45,3 +46,4 @@ export const selectError = (state: State) => state.error;
 export const selectLastUpdated = (state: State) => state.lastUpdated;
 export const selectMode = (state: State) => state.mode;
 export const selectCurrentScreen = (state: State) => state.currentScreen;
+export const selectFocusedCurrency = (state: State) => state.focusedCurrency;
