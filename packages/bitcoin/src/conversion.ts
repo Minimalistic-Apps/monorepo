@@ -1,0 +1,20 @@
+import { getOrThrow } from '@evolu/common';
+import { AmountBtc, AmountSats } from './types';
+
+const SATOSHI = 100000000; // 1 BTC = 100,000,000 sats
+
+export const btcToSats = (btc: AmountBtc): AmountSats => {
+    return getOrThrow(AmountSats.from(btc * SATOSHI));
+};
+
+export const satsToBtc = (sats: AmountSats): AmountBtc => {
+    return getOrThrow(AmountBtc.from(sats / SATOSHI));
+};
+
+export const formatSats = (sats: AmountSats): string => {
+    if (!sats || Number.isNaN(Number(sats))) return '0';
+
+    const num = Number.parseFloat(String(sats));
+
+    return num.toFixed(3).replace(/\.?0+$/, '');
+};

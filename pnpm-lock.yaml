@@ -92,6 +92,10 @@ importers:
         version: 0.16.7(vite@4.5.14(terser@5.46.0))(workbox-build@7.4.0(@types/babel__core@7.20.5))(workbox-window@7.4.0)
 
   packages/bitcoin:
+    dependencies:
+      '@evolu/common':
+        specifier: ^7.4.1
+        version: 7.4.1
     devDependencies:
       typescript:
         specifier: ^5.3.0

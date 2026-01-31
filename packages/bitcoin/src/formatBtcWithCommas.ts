@@ -1,7 +1,9 @@
+import type { AmountBtc } from './types';
+
 /**
  * Format number with custom grouping (e.g., 0.00,001,000)
  */
-export const formatBtcWithCommas = (value: string | number): string => {
+export const formatBtcWithCommas = (value: AmountBtc): string => {
     if (!value || Number.isNaN(Number(value))) return '0';
 
     const num = Number.parseFloat(String(value));
