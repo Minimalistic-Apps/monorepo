@@ -1,4 +1,4 @@
-import type { CurrencyCode } from '../rates/FetchRates';
+import type { CurrencyCode } from '@evolu/common';
 import type { StoreDep } from './createStore';
 
 export interface RemoveCurrencyParams {

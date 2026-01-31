@@ -1,3 +1,4 @@
+import type { CurrencyCode } from '@evolu/common';
 import {
     btcToSats,
     formatBtcWithCommas,
@@ -7,7 +8,6 @@ import {
     formatFiatWithCommas,
     parseFormattedNumber,
 } from '@minimalistic-apps/utils';
-import type { CurrencyCode } from '../rates/FetchRates';
 import type { CurrencyValues } from '../state/State';
 import type { StoreDep } from '../state/createStore';
 

@@ -1,6 +1,5 @@
-import { tryAsync } from '@evolu/common';
+import { CurrencyCode, tryAsync } from '@evolu/common';
 import {
-    CurrencyCode,
     type CurrencyRate,
     type FetchRates,
     FetchRatesError,

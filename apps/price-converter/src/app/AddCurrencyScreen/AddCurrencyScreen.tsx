@@ -1,3 +1,4 @@
+import type { CurrencyCode } from '@evolu/common';
 import {
     Button,
     List,
@@ -8,7 +9,6 @@ import {
 import { typedObjectEntries } from '@minimalistic-apps/type-utils';
 import { useState } from 'react';
 import { useServices } from '../../ServicesProvider';
-import type { CurrencyCode } from '../../rates/FetchRates';
 import {
     selectRates,
     selectSelectedCurrencies,
