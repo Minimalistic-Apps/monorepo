@@ -10,19 +10,18 @@ import { CurrencyInput } from './CurrencyInput';
 import { CurrencyInputRow } from './CurrencyInputRow';
 import { StatusDisplay } from './StatusDisplay';
 import {
-    selectBtcValue,
-    selectCurrencyValues,
-    selectError,
-    selectFocusedInput,
-    selectLastUpdated,
-    selectLoading,
-    selectMode,
+    useStore,
     selectRates,
     selectSelectedCurrencies,
+    selectBtcValue,
+    selectCurrencyValues,
+    selectLoading,
+    selectError,
+    selectLastUpdated,
+    selectMode,
     selectShowModal,
-    useStore,
-    useStoreActions,
-} from './state';
+    selectFocusedInput,
+} from './state/createStore';
 
 const { fetchAverageRates } = createCompositionRoot();
 
@@ -37,8 +36,6 @@ export const App = () => {
     const mode = useStore(selectMode);
     const showModal = useStore(selectShowModal);
     const focusedInput = useStore(selectFocusedInput);
-
-    const actions = useStoreActions();
 
     // Local state for time ago (updates every second)
     const [timeAgo, setTimeAgo] = useState<string>('');

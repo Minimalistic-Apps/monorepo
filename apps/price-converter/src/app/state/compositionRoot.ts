@@ -1,6 +1,10 @@
-import { saveToLocalStorage } from '@minimalistic-apps/utils';
+import {
+    loadFromLocalStorage,
+    saveToLocalStorage,
+} from '@minimalistic-apps/utils';
 import { createAddCurrency } from './addCurrency';
 import { createStore, initializeStore } from './createStore';
+import { createLoadInitialState } from './loadInitialState';
 import { createRecalculateFromBtc } from './recalculateFromBtc';
 import { createRecalculateFromCurrency } from './recalculateFromCurrency';
 import { createRemoveCurrency } from './removeCurrency';
@@ -8,14 +12,7 @@ import { createSetRates } from './setRates';
 import { createToggleMode } from './toggleMode';
 
 export const createStoreCompositionRoot = () => {
-    const store = createStore({
-        setRates: undefined as never,
-        addCurrency: undefined as never,
-        removeCurrency: undefined as never,
-        toggleMode: undefined as never,
-        recalculateFromBtc: undefined as never,
-        recalculateFromCurrency: undefined as never,
-    });
+    const store = createStore();
 
     const setRates = createSetRates({
         setState: store.setState,
@@ -50,16 +47,19 @@ export const createStoreCompositionRoot = () => {
         getState: store.getState,
     });
 
-    const storeWithActions = createStore({
+    const loadInitialState = createLoadInitialState({
+        setState: store.setState,
+        loadFromLocalStorage,
+    });
+
+    return {
+        store,
         setRates,
         addCurrency,
         removeCurrency,
         toggleMode,
         recalculateFromBtc,
         recalculateFromCurrency,
-    });
-
-    initializeStore(storeWithActions);
-
-    return storeWithActions;
+        loadInitialState,
+    };
 };
