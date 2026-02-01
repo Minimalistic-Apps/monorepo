@@ -49,7 +49,7 @@ export const Mnemonic = ({ value }: MnemonicProps) => {
                 },
             }}
         >
-            {displayedMnemonic || 'N/A'}
+            {displayedMnemonic ?? 'N/A'}
         </AntCard>
     );
 };

@@ -27,7 +27,7 @@ export const createPersistStore = (deps: PersistStoreDeps): PersistStore => {
             );
             deps.localStorage.save(STORAGE_KEYS.MODE, state.mode);
 
-            if (state.evoluMnemonic) {
+            if (state.evoluMnemonic !== null) {
                 deps.localStorage.save(
                     STORAGE_KEYS.EVOLU_MNEMONIC,
                     state.evoluMnemonic,

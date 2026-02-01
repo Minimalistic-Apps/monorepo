@@ -24,7 +24,7 @@ export const createFetchAverageRates =
 
         const sources = results
             .filter(result => result.ok)
-            .map(result => (result.ok ? result.value : ({} as CurrencyMap)));
+            .map(result => result.value);
 
         if (sources.length === 0) {
             return err(FetchRatesError());

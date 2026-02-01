@@ -43,12 +43,11 @@ export const createLoadInitialState =
             : null;
 
         deps.store.setState({
-            ...(savedRates && { rates: savedRates }),
-            ...(savedTimestamp && { lastUpdated: savedTimestamp }),
-            ...(savedCurrencies &&
-                savedCurrencies.length > 0 && {
-                    selectedFiatCurrencies: savedCurrencies,
-                }),
+            ...(savedRates !== null && { rates: savedRates }),
+            ...(savedTimestamp !== null && { lastUpdated: savedTimestamp }),
+            ...(savedCurrencies !== null && {
+                selectedFiatCurrencies: savedCurrencies,
+            }),
             ...(savedMode && { mode: savedMode }),
             ...(savedMnemonic && { evoluMnemonic: savedMnemonic }),
         });

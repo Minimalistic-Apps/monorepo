@@ -1,4 +1,5 @@
 pnpm format
 pnpm check:fix
+pnpm lint:biome:fix
 pnpm lint:eslint:fix
 git add -u
