@@ -20,6 +20,10 @@ const darkTheme: ThemeConfig = {
         Layout: {
             headerBg: COLORS.dark.primary,
             bodyBg: COLORS.dark.backgroundBase,
+            headerPadding: '0 16px',
+        },
+        Card: {
+            colorBorderSecondary: COLORS.dark.border,
         },
     },
 };
@@ -41,6 +45,10 @@ const lightTheme: ThemeConfig = {
         Layout: {
             headerBg: COLORS.light.primary,
             bodyBg: COLORS.light.backgroundBase,
+            headerPadding: '0 16px',
+        },
+        Card: {
+            colorBorderSecondary: COLORS.light.border,
         },
     },
 };

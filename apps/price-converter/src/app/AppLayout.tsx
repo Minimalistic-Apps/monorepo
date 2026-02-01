@@ -1,4 +1,4 @@
-import { Content, Layout } from '@minimalistic-apps/components';
+import { Layout } from '@minimalistic-apps/components';
 import type { ReactNode } from 'react';
 import { AppHeader } from './AppHeader';
 
@@ -8,7 +8,9 @@ interface AppLayoutProps {
 
 export const AppLayout = ({ children }: AppLayoutProps) => (
     <Layout>
-        <AppHeader />
-        <Content>{children}</Content>
+        <Layout.Header>
+            <AppHeader />
+        </Layout.Header>
+        <Layout.Content>{children}</Layout.Content>
     </Layout>
 );

@@ -1,12 +1,7 @@
-import { Alert, Text } from '@minimalistic-apps/components';
+import { Alert, Row, Text } from '@minimalistic-apps/components';
 import { useEffect, useRef, useState } from 'react';
 import { useServices } from '../ServicesProvider';
-import {
-    selectError,
-    selectLastUpdated,
-    selectLoading,
-    useStore,
-} from '../state/createStore';
+import { selectError, selectLastUpdated, useStore } from '../state/createStore';
 
 const getTimeAgo = (timestamp: number): string => {
     const now = Date.now();
@@ -34,7 +29,6 @@ const getTimeAgo = (timestamp: number): string => {
 
 export const RatesLoading = () => {
     const { fetchAndStoreRates } = useServices();
-    const loading = useStore(selectLoading);
     const error = useStore(selectError);
     const lastUpdated = useStore(selectLastUpdated);
     const [timeAgo, setTimeAgo] = useState<string>('');
@@ -61,10 +55,9 @@ export const RatesLoading = () => {
     }, [lastUpdated]);
 
     return (
-        <>
-            {loading && <div />}
-            {error && <Alert message={error} type="error" />}
+        <Row justify={error ? 'space-between' : 'end'} align="end">
             {timeAgo && <Text>{timeAgo}</Text>}
-        </>
+            {error && <Alert message={error} type="error" />}
+        </Row>
     );
 };
