@@ -13,7 +13,7 @@ export const SettingsScreen = () => {
     const themeMode = useStore(selectThemeMode);
 
     const handleThemeToggle = (checked: boolean) => {
-        store.setState({ themeMode: checked ? 'light' : 'dark' });
+        store.setState({ theme: checked ? 'light' : 'dark' });
     };
 
     return (

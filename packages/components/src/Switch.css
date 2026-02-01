@@ -1,0 +1,11 @@
+.antd-no-color-switch {
+    background-color: var(--color-transparent) !important;
+}
+
+.antd-no-color-switch.ant-switch-checked {
+    background-color: var(--color-transparent) !important;
+}
+
+.antd-no-color-switch .ant-switch-handle::before {
+    background-color: var(--color-textPrimary);
+}

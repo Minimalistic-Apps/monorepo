@@ -1,5 +1,6 @@
 import type { CurrencyCode } from '@evolu/common';
 import type { AmountSats } from '@minimalistic-apps/bitcoin';
+import type { Theme } from '@minimalistic-apps/components';
 import type { FiatAmount } from '@minimalistic-apps/fiat';
 import type { CurrencyMap } from '../rates/FetchRates';
 
@@ -22,5 +23,5 @@ export interface State {
     readonly mode: Mode;
     readonly currentScreen: Screen;
     readonly focusedCurrency: CurrencyCode | 'BTC' | null;
-    readonly themeMode: 'dark' | 'light';
+    readonly theme: Theme;
 }
