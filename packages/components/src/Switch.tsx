@@ -32,7 +32,9 @@ export const Switch = ({
             checkedChildren={checkedChildren}
             unCheckedChildren={unCheckedChildren}
             className={
-                disableStateBgColorChange ? 'antd-no-color-switch' : undefined
+                disableStateBgColorChange === true
+                    ? 'antd-no-color-switch'
+                    : undefined
             }
         />
     );

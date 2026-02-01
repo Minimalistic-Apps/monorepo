@@ -19,6 +19,7 @@ export default [
         },
         rules: {
             '@typescript-eslint/strict-boolean-expressions': 'error',
+            '@typescript-eslint/no-unnecessary-condition': 'error',
             '@stylistic/padding-line-between-statements': [
                 'error',
                 { blankLine: 'always', prev: '*', next: 'return' },

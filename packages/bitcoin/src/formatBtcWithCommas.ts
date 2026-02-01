@@ -4,23 +4,17 @@ import type { AmountBtc } from './types';
  * Format number with custom grouping (e.g., 0.00,001,000)
  */
 export const formatBtcWithCommas = (value: AmountBtc): string => {
-    if (!value || Number.isNaN(Number(value))) {
-        return '0';
-    }
-
-    const num = Number.parseFloat(String(value));
-
-    if (num === 0) {
+    if (value === 0) {
         return '0';
     }
 
     // Handle very small numbers - treat as 0
-    if (Math.abs(num) < 1e-8) {
+    if (Math.abs(value) < 1e-8) {
         return '0';
     }
 
     // Format with 8 decimal places
-    const str = num.toFixed(8);
+    const str = value.toFixed(8);
     const [intPart, decPart] = str.split('.');
 
     if (!decPart) {

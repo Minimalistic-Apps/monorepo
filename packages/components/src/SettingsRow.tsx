@@ -20,7 +20,9 @@ export const SettingsRow = ({
                 <Column gap={12}>
                     <Column gap={4}>
                         <Text>{label}</Text>
-                        {description && <Text>{description}</Text>}
+                        {description !== null &&
+                            description !== undefined &&
+                            description !== '' && <Text>{description}</Text>}
                     </Column>
                     {children}
                 </Column>
@@ -33,7 +35,9 @@ export const SettingsRow = ({
             <Row align="center" justify="space-between">
                 <Column gap={4}>
                     <Text>{label}</Text>
-                    {description && <Text>{description}</Text>}
+                    {description !== null &&
+                        description !== undefined &&
+                        description !== '' && <Text>{description}</Text>}
                 </Column>
                 {children}
             </Row>

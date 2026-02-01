@@ -39,7 +39,7 @@ export const RatesLoading = () => {
     }, [fetchAndStoreRates]);
 
     useEffect(() => {
-        if (lastUpdated) {
+        if (lastUpdated !== null) {
             const updateTime = () => {
                 setTimeAgo(getTimeAgo(lastUpdated));
             };
@@ -47,7 +47,7 @@ export const RatesLoading = () => {
             intervalRef.current = setInterval(updateTime, 1000);
 
             return () => {
-                if (intervalRef.current) {
+                if (intervalRef.current !== null) {
                     clearInterval(intervalRef.current);
                 }
             };
