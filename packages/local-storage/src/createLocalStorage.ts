@@ -29,7 +29,7 @@ export const createLocalStorage = (): LocalStorage => {
         try {
             const item = globalThis.localStorage.getItem(key);
 
-            return ok(item ? JSON.parse(item) : null);
+            return ok(item !== null ? JSON.parse(item) : null);
         } catch (error) {
             return err({ type: 'StorageError', caused: error });
         }
