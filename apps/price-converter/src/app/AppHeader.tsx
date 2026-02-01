@@ -6,6 +6,7 @@ import {
     Row,
     SettingOutlined,
     Switch,
+    ThemeProvider,
     Title,
 } from '@minimalistic-apps/components';
 import { useServices } from '../ServicesProvider';
@@ -30,34 +31,40 @@ export const AppHeader = () => {
     };
 
     return (
-        <Column>
-            <Header>
-                <Title
-                    level={4}
-                    style={{ cursor: 'pointer' }}
-                    onClick={handleHome}
-                >
-                    Price Converter
-                </Title>
-                <Row gap={8}>
-                    <strong>₿</strong>
-                    <Switch checked={mode === 'Sats'} onChange={handleToggle} />
-                    <strong>丰</strong>
-                    <Button
-                        variant="text"
-                        icon={<ReloadOutlined />}
-                        onClick={fetchAndStoreRates}
-                        loading={loading}
-                    />
-                    <Button
-                        variant="text"
-                        icon={<SettingOutlined />}
-                        onClick={handleSettings}
-                        aria-label="Settings"
-                    />
-                </Row>
-            </Header>
-            <RatesLoading />
-        </Column>
+        <ThemeProvider mode="dark">
+            <Column>
+                <Header>
+                    <Title
+                        level={4}
+                        style={{ cursor: 'pointer' }}
+                        onClick={handleHome}
+                    >
+                        Price Converter
+                    </Title>
+                    <Row gap={8}>
+                        <strong>₿</strong>
+                        <Switch
+                            disableStateBgColorChange
+                            checked={mode === 'Sats'}
+                            onChange={handleToggle}
+                        />
+                        <strong>丰</strong>
+                        <Button
+                            variant="text"
+                            icon={<ReloadOutlined />}
+                            onClick={fetchAndStoreRates}
+                            loading={loading}
+                        />
+                        <Button
+                            variant="text"
+                            icon={<SettingOutlined />}
+                            onClick={handleSettings}
+                            aria-label="Settings"
+                        />
+                    </Row>
+                </Header>
+                <RatesLoading />
+            </Column>
+        </ThemeProvider>
     );
 };

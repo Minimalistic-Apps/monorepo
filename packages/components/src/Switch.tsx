@@ -1,5 +1,6 @@
 import { Switch as AntSwitch } from 'antd';
 import type { ReactNode } from 'react';
+import './Switch.css';
 
 interface SwitchProps {
     readonly checked: boolean;
@@ -8,6 +9,9 @@ interface SwitchProps {
     readonly size?: 'small' | 'default';
     readonly checkedChildren?: ReactNode;
     readonly unCheckedChildren?: ReactNode;
+
+    // Hack to make it work in 'primary' themed elements (Header)
+    readonly disableStateBgColorChange?: boolean;
 }
 
 export const Switch = ({
@@ -17,6 +21,7 @@ export const Switch = ({
     size = 'default',
     checkedChildren,
     unCheckedChildren,
+    disableStateBgColorChange,
 }: SwitchProps) => {
     return (
         <AntSwitch
@@ -26,6 +31,9 @@ export const Switch = ({
             size={size}
             checkedChildren={checkedChildren}
             unCheckedChildren={unCheckedChildren}
+            className={
+                disableStateBgColorChange ? 'antd-no-color-switch' : undefined
+            }
         />
     );
 };

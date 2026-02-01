@@ -1,5 +1,6 @@
 import 'antd/dist/reset.css';
 
+export { COLORS, injectColorVariables, type Theme } from './colors';
 export { ThemeProvider } from './ThemeProvider';
 export { Alert } from './Alert';
 export { Button } from './Button';
