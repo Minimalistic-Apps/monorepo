@@ -1,4 +1,5 @@
 import stylistic from '@stylistic/eslint-plugin';
+import tseslint from '@typescript-eslint/eslint-plugin';
 import tsParser from '@typescript-eslint/parser';
 
 export default [
@@ -9,12 +10,15 @@ export default [
             parserOptions: {
                 ecmaVersion: 'latest',
                 sourceType: 'module',
+                projectService: true,
             },
         },
         plugins: {
             '@stylistic': stylistic,
+            '@typescript-eslint': tseslint,
         },
         rules: {
+            '@typescript-eslint/strict-boolean-expressions': 'error',
             '@stylistic/padding-line-between-statements': [
                 'error',
                 { blankLine: 'always', prev: '*', next: 'return' },

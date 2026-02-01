@@ -28,7 +28,8 @@
                 "useSemanticElements": "off"
             },
             "complexity": {
-                "useArrowFunction": "error"
+                "useArrowFunction": "error",
+                "noImplicitCoercions": "error"
             }
         }
     },
