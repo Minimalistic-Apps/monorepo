@@ -65,9 +65,6 @@ importers:
       '@minimalistic-apps/type-utils':
         specifier: workspace:*
         version: link:../../packages/type-utils
-      '@minimalistic-apps/utils':
-        specifier: workspace:*
-        version: link:../../packages/utils
       react:
         specifier: ^18.2.0
         version: 18.3.1
@@ -154,12 +151,6 @@ importers:
         version: 5.9.3
 
   packages/type-utils:
-    devDependencies:
-      typescript:
-        specifier: ^5.3.0
-        version: 5.9.3
-
-  packages/utils:
     devDependencies:
       typescript:
         specifier: ^5.3.0

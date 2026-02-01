@@ -9,7 +9,6 @@ import {
 } from '@minimalistic-apps/bitcoin';
 import { Input } from '@minimalistic-apps/components';
 import { type FiatAmount, formatFiatWithCommas } from '@minimalistic-apps/fiat';
-import { parseFormattedNumber } from '@minimalistic-apps/utils';
 import { useEffect, useState } from 'react';
 import { useServices } from '../../ServicesProvider';
 import {
@@ -18,6 +17,7 @@ import {
     useStore,
 } from '../../state/createStore';
 import type { Mode } from '../../state/State';
+import { parseFormattedNumber } from './parseFormattedNumber';
 
 interface CurrencyInputProps {
     readonly value: number;
