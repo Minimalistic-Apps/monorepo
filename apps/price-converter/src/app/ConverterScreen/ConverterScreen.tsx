@@ -10,6 +10,7 @@ import {
     useStore,
 } from '../../state/createStore';
 import { AddCurrencyButton } from '../AddCurrencyScreen/AddCurrencyButton';
+import { RatesLoading } from '../RatesLoading';
 import { CurrencyRow } from './CurrencyFiatRow';
 
 export const ConverterScreen = () => {
@@ -37,6 +38,7 @@ export const ConverterScreen = () => {
 
     return (
         <Screen gap={12}>
+            <RatesLoading />
             <CurrencyRow
                 key="BTC"
                 code="BTC"
