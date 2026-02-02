@@ -4,9 +4,9 @@ import {
     type Evolu,
 } from '@evolu/common';
 import { satsToBtc } from '@minimalistic-apps/bitcoin';
-import type { Schema } from '../app/evolu/schema';
 import { bitcoinToFiat } from '../converter/bitcoinToFiat';
 import type { StoreDep } from './createStore';
+import type { Schema } from './evolu/schema';
 
 export interface AddCurrencyParams {
     readonly code: CurrencyCode;

@@ -11,7 +11,7 @@ import {
 } from '@evolu/common';
 import { evoluReactWebDeps } from '@evolu/react-web';
 import type { LocalStorageDep } from '@minimalistic-apps/local-storage';
-import type { StoreDep } from '../../state/createStore';
+import type { StoreDep } from '../createStore';
 import { Schema } from './schema';
 
 export type EnsureEvolu = () => Evolu<typeof Schema>;

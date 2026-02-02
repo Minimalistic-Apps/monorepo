@@ -1,5 +1,5 @@
 import { CurrencyCode, getOrThrow, sqliteTrue } from '@evolu/common';
-import type { EvoluDep } from '../../state/addCurrency';
+import type { EvoluDep } from '../addCurrency';
 
 export interface GetSelectedCurrencies {
     readonly query: ReturnType<EvoluDep['evolu']['createQuery']>;
