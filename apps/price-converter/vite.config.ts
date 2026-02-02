@@ -6,6 +6,9 @@ export default defineConfig({
     optimizeDeps: {
         exclude: ['@evolu/react-web', '@evolu/sqlite-wasm'],
     },
+    worker: {
+        format: 'es',
+    },
     plugins: [
         react(),
         VitePWA({
