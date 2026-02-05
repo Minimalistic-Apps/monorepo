@@ -15,9 +15,9 @@
         "typecheck": "tsc --noEmit"
     },
     "dependencies": {
-        "@ant-design/icons": "^5.5.0",
+        "@ant-design/icons": "^6.1.0",
         "@minimalistic-apps/type-utils": "workspace:*",
-        "antd": "^5.22.0"
+        "antd": "^6.2.3"
     },
     "peerDependencies": {
         "react": "^18.2.0",
