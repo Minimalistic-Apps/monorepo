@@ -1,4 +1,5 @@
-import React from 'react';
+import type React from 'react';
+import { useSyncExternalStore } from 'react';
 
 type Listener = () => void;
 
@@ -28,39 +29,25 @@ export const createConnect = <State,>(
 ): Connect<State> => {
     const connect = (
         render: (...args: readonly unknown[]) => React.ReactNode,
-        mapStateToProps: (state: State, ownProps: unknown) => unknown,
+        mapStateToProps: (state: State) => unknown,
         deps?: unknown,
     ): React.FC<unknown> => {
-        class ConnectedComponent extends React.Component<unknown> {
-            private unsubscribe: () => void = () => {};
+        const ConnectedComponent: React.FC<unknown> = ownProps => {
+            const state = useSyncExternalStore(store.subscribe, store.getState);
+            const stateProps = mapStateToProps(state);
+            const props = {
+                ...(stateProps as object),
+                ...(ownProps as object),
+            };
 
-            componentDidMount() {
-                this.unsubscribe = store.subscribe(() => {
-                    this.forceUpdate();
-                });
+            if (deps !== undefined) {
+                return render(deps, props);
             }
 
-            componentWillUnmount() {
-                this.unsubscribe();
-            }
+            return render(props);
+        };
 
-            render() {
-                const state = store.getState();
-                const stateProps = mapStateToProps(state, this.props);
-                const props = {
-                    ...(stateProps as object),
-                    ...(this.props as object),
-                };
-
-                if (deps !== undefined) {
-                    return render(deps, props);
-                }
-
-                return render(props);
-            }
-        }
-
-        return ConnectedComponent as unknown as React.FC<unknown>;
+        return ConnectedComponent;
     };
 
     return connect as unknown as Connect<State>;
