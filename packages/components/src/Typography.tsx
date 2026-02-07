@@ -6,11 +6,35 @@ const { Text: AntText, Title: AntTitle, Paragraph: AntParagraph } = Typography;
 interface TextProps {
     readonly children: ReactNode;
     readonly strong?: boolean;
+    readonly nowrap?: boolean;
+    readonly flexShrink?: number;
     readonly onClick?: () => void;
 }
 
-export const Text = ({ children, strong = false, onClick }: TextProps) => (
-    <AntText strong={strong} onClick={onClick}>
+const buildTextStyle = (
+    nowrap: boolean,
+    flexShrink: number | undefined,
+): Record<string, never> | { readonly style: React.CSSProperties } => {
+    const style: React.CSSProperties = {
+        ...(nowrap ? { whiteSpace: 'nowrap' } : {}),
+        ...(flexShrink !== undefined ? { flexShrink } : {}),
+    };
+
+    return Object.keys(style).length > 0 ? { style } : {};
+};
+
+export const Text = ({
+    children,
+    strong = false,
+    nowrap = false,
+    flexShrink,
+    onClick,
+}: TextProps) => (
+    <AntText
+        strong={strong}
+        onClick={onClick}
+        {...buildTextStyle(nowrap, flexShrink)}
+    >
         {children}
     </AntText>
 );
