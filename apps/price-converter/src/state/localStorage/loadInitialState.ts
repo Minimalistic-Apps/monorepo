@@ -2,7 +2,7 @@ import type { Mnemonic } from '@evolu/common';
 import type { LocalStorageDep } from '@minimalistic-apps/local-storage';
 import type { CurrencyMap } from '../../rates/FetchRates';
 import type { StoreDep } from '../../state/createStore';
-import type { Mode } from '../../state/State';
+import type { BtcMode } from '../../state/State';
 import { STORAGE_KEYS } from './storageKeys';
 
 export type LoadInitialState = () => void;
@@ -22,7 +22,9 @@ export const createLoadInitialState =
         const savedTimestampResult = deps.localStorage.load<number>(
             STORAGE_KEYS.TIMESTAMP,
         );
-        const savedModeResult = deps.localStorage.load<Mode>(STORAGE_KEYS.MODE);
+        const savedModeResult = deps.localStorage.load<BtcMode>(
+            STORAGE_KEYS.MODE,
+        );
         const savedMnemonicResult = deps.localStorage.load<Mnemonic>(
             STORAGE_KEYS.EVOLU_MNEMONIC,
         );
@@ -39,7 +41,7 @@ export const createLoadInitialState =
         deps.store.setState({
             ...(savedRates !== null && { rates: savedRates }),
             ...(savedTimestamp !== null && { lastUpdated: savedTimestamp }),
-            ...(savedMode && { mode: savedMode }),
+            ...(savedMode && { btcMode: savedMode }),
             ...(savedMnemonic && { evoluMnemonic: savedMnemonic }),
         });
     };

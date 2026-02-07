@@ -13,7 +13,7 @@ export const createStore = (): Store<State> => {
         loading: false,
         error: '',
         lastUpdated: null,
-        mode: 'BTC',
+        btcMode: 'btc',
         currentScreen: 'Converter',
         focusedCurrency: null,
         theme: 'dark',
@@ -30,7 +30,7 @@ export const selectSelectedFiatCurrenciesAmounts = (state: State) =>
 export const selectLoading = (state: State) => state.loading;
 export const selectError = (state: State) => state.error;
 export const selectLastUpdated = (state: State) => state.lastUpdated;
-export const selectMode = (state: State) => state.mode;
+export const selectBtcMode = (state: State) => state.btcMode;
 export const selectCurrentScreen = (state: State) => state.currentScreen;
 export const selectFocusedCurrency = (state: State) => state.focusedCurrency;
 export const selectThemeMode = (state: State) => state.theme;

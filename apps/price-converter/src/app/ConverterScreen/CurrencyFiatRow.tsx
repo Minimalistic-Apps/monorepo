@@ -6,7 +6,7 @@ import {
     Text,
 } from '@minimalistic-apps/components';
 import type { FC } from 'react';
-import type { Mode } from '../../state/State';
+import type { BtcMode } from '../../state/State';
 import type { CurrencyInputDep } from './CurrencyInput';
 
 export type CurrencyRowOwnProps = {
@@ -17,7 +17,7 @@ export type CurrencyRowOwnProps = {
 };
 
 export type CurrencyRowStateProps = {
-    readonly mode: Mode;
+    readonly btcMode: BtcMode;
 };
 
 type CurrencyRowDeps = CurrencyInputDep;
@@ -29,7 +29,7 @@ export type CurrencyRowDep = {
 export const CurrencyRowPure = (
     deps: CurrencyRowDeps,
     {
-        mode,
+        btcMode,
         code,
         value,
         onChange,
@@ -38,7 +38,7 @@ export const CurrencyRowPure = (
 ) => (
     <Row gap={12}>
         <deps.CurrencyInput value={value} onChange={onChange} code={code} />
-        <Text>{code === 'BTC' && mode === 'Sats' ? 'Sats' : code}</Text>
+        <Text>{code === 'BTC' && btcMode === 'sats' ? 'Sats' : code}</Text>
         {onRemove && (
             <Button
                 variant="primary"

@@ -4,7 +4,7 @@ import type { Theme } from '@minimalistic-apps/components';
 import type { FiatAmount } from '@minimalistic-apps/fiat';
 import type { CurrencyMap } from '../rates/FetchRates';
 
-export type Mode = 'BTC' | 'Sats';
+export type BtcMode = 'btc' | 'sats';
 
 export type CurrencyValues = {
     [K in CurrencyCode]?: FiatAmount<K>;
@@ -19,7 +19,7 @@ export interface State {
     readonly loading: boolean;
     readonly error: string;
     readonly lastUpdated: number | null;
-    readonly mode: Mode;
+    readonly btcMode: BtcMode;
     readonly currentScreen: Screen;
     readonly focusedCurrency: CurrencyCode | 'BTC' | null;
     readonly theme: Theme;

@@ -1,4 +1,3 @@
-import type { CurrencyCode } from '@evolu/common';
 import { createConnect } from '@minimalistic-apps/connect';
 import { createCurrentDateTime } from '@minimalistic-apps/datetime';
 import { createLocalStorage } from '@minimalistic-apps/local-storage';
@@ -39,6 +38,7 @@ import { createStatePersistence } from './state/localStorage/statePersistence';
 import { createNavigate } from './state/navigate';
 import { createRemoveFiatAmount } from './state/removeFiatAmount';
 import { createSetFiatAmount } from './state/setFiatAmount';
+import { createSetFocusedCurrency } from './state/setFocusedCurrency';
 import { createSetSatsAmount } from './state/setSatsAmount';
 import { createSetTheme } from './state/setTheme';
 
@@ -54,6 +54,7 @@ export const createCompositionRoot = (): Main => {
     const navigate = createNavigate({ store });
     const setSatsAmount = createSetSatsAmount({ store });
     const setFiatAmount = createSetFiatAmount({ store });
+    const setFocusedCurrency = createSetFocusedCurrency({ store });
     const removeFiatAmount = createRemoveFiatAmount({ store });
 
     // State Persistence
@@ -124,19 +125,18 @@ export const createCompositionRoot = (): Main => {
     const CurrencyInput = connect(
         CurrencyInputPure,
         ({ store }) => ({
-            mode: store.mode,
+            mode: store.btcMode,
             focusedCurrency: store.focusedCurrency,
         }),
         {
-            setFocusedCurrency: (code: CurrencyCode | 'BTC') =>
-                store.setState({ focusedCurrency: code }),
+            setFocusedCurrency,
         },
     );
 
     const CurrencyRow = connect(
         CurrencyRowPure,
         ({ store }) => ({
-            mode: store.mode,
+            btcNode: store.btcMode,
         }),
         {
             CurrencyInput,
@@ -205,11 +205,12 @@ export const createCompositionRoot = (): Main => {
         AppHeaderPure,
         ({ store }) => ({
             loading: store.loading,
-            mode: store.mode,
+            btcMode: store.btcMode,
         }),
         {
             fetchAndStoreRates,
-            setMode: (mode: 'BTC' | 'Sats') => store.setState({ mode }),
+            setBtcMode: (btcMode: 'BTC' | 'Sats') =>
+                store.setState({ btcMode: btcMode }),
             navigate,
         },
     );
