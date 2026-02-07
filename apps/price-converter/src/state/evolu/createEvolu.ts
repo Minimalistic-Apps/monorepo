@@ -12,7 +12,7 @@ import {
     type UnuseOwner,
 } from '@evolu/common';
 import { evoluReactWebDeps } from '@evolu/react-web';
-import type { EnsureEvoluOwnerDep } from './createEnsureEvoluOwner';
+import type { EnsureEvoluOwnerDep } from '@minimalistic-apps/evolu';
 import { Schema } from './schema';
 
 export type EvoluStorage = {

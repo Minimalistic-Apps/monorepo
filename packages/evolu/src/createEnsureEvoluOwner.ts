@@ -4,7 +4,11 @@ import {
     type Mnemonic,
     ownerSecretToMnemonic,
 } from '@evolu/common';
-import type { StoreDep } from '../createStore';
+import type { Store } from '@minimalistic-apps/mini-store';
+
+interface EvoluOwnerState {
+    readonly evoluMnemonic: Mnemonic | null;
+}
 
 export type EnsureEvoluOwner = () => Mnemonic;
 
@@ -12,7 +16,9 @@ export interface EnsureEvoluOwnerDep {
     readonly ensureEvoluOwner: EnsureEvoluOwner;
 }
 
-type EnsureEvoluOwnerDeps = StoreDep;
+interface EnsureEvoluOwnerDeps {
+    readonly store: Store<EvoluOwnerState>;
+}
 
 export const createEnsureEvoluOwner =
     (deps: EnsureEvoluOwnerDeps): EnsureEvoluOwner =>
