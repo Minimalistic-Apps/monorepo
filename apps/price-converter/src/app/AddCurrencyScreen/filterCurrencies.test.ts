@@ -1,11 +1,12 @@
+import type { CurrencyCode } from '@evolu/common';
 import { describe, expect, test } from 'vitest';
 import { filterCurrencies } from './filterCurrencies.js';
 
 const currencies = [
-    { code: 'USD', name: 'United States dollar' },
-    { code: 'EUR', name: 'Euro' },
-    { code: 'JPY', name: 'Japanese yen' },
-    { code: 'CHF', name: 'Swiss franc' },
+    { code: 'USD' as CurrencyCode, name: 'United States dollar' },
+    { code: 'EUR' as CurrencyCode, name: 'Euro' },
+    { code: 'JPY' as CurrencyCode, name: 'Japanese yen' },
+    { code: 'CHF' as CurrencyCode, name: 'Swiss franc' },
 ] as const;
 
 describe(filterCurrencies.name, () => {
@@ -68,13 +69,21 @@ describe(filterCurrencies.name, () => {
 
     test('preserves extra properties on items', () => {
         const items = [
-            { code: 'USD', name: 'United States dollar', extra: 42 },
+            {
+                code: 'USD' as CurrencyCode,
+                name: 'United States dollar',
+                extra: 42,
+            },
         ];
 
         const result = filterCurrencies(items, 'USD');
 
         expect(result).toEqual([
-            { code: 'USD', name: 'United States dollar', extra: 42 },
+            {
+                code: 'USD',
+                name: 'United States dollar',
+                extra: 42,
+            },
         ]);
     });
 });

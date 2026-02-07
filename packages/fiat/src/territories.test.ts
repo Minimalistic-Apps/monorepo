@@ -1,14 +1,22 @@
 import { describe, expect, test } from 'vitest';
 import {
+    asCurrencyCodeUnsafe,
     CURRENCY_TERRITORIES,
     currencyMatchesTerritory,
     getFlagsForCurrency,
     getTerritoryNamesForCurrency,
 } from './territories.js';
 
+const USD = asCurrencyCodeUnsafe('USD');
+const EUR = asCurrencyCodeUnsafe('EUR');
+const JPY = asCurrencyCodeUnsafe('JPY');
+const CHF = asCurrencyCodeUnsafe('CHF');
+const NOK = asCurrencyCodeUnsafe('NOK');
+const XYZ = asCurrencyCodeUnsafe('XYZ');
+
 describe('CURRENCY_TERRITORIES', () => {
     test('contains USD with United States as first territory', () => {
-        const usd = CURRENCY_TERRITORIES.USD;
+        const usd = CURRENCY_TERRITORIES[USD];
 
         expect(usd).toBeDefined();
         expect(usd![0]).toEqual({
@@ -18,7 +26,7 @@ describe('CURRENCY_TERRITORIES', () => {
     });
 
     test('contains EUR with multiple territories', () => {
-        const eur = CURRENCY_TERRITORIES.EUR;
+        const eur = CURRENCY_TERRITORIES[EUR];
 
         expect(eur).toBeDefined();
         expect(eur!.length).toBeGreaterThan(10);
@@ -26,13 +34,13 @@ describe('CURRENCY_TERRITORIES', () => {
     });
 
     test('contains single-territory currencies', () => {
-        const jpy = CURRENCY_TERRITORIES.JPY;
+        const jpy = CURRENCY_TERRITORIES[JPY];
 
         expect(jpy).toEqual([{ flag: '🇯🇵', name: 'Japan' }]);
     });
 
     test('returns undefined for unknown currency', () => {
-        const unknown = CURRENCY_TERRITORIES.XYZ as unknown;
+        const unknown = CURRENCY_TERRITORIES[XYZ] as unknown;
 
         expect(unknown).toBeUndefined();
     });
@@ -40,27 +48,27 @@ describe('CURRENCY_TERRITORIES', () => {
 
 describe(getFlagsForCurrency.name, () => {
     test('returns flags for a known currency', () => {
-        const flags = getFlagsForCurrency('USD');
+        const flags = getFlagsForCurrency(USD);
 
         expect(flags).toContain('🇺🇸');
         expect(flags.length).toBeGreaterThan(1);
     });
 
     test('returns unique flags only', () => {
-        const flags = getFlagsForCurrency('NOK');
+        const flags = getFlagsForCurrency(NOK);
 
         // NOK has Norway twice (Norway + Svalbard), flags should be deduplicated
         expect(flags).toEqual(['🇳🇴']);
     });
 
     test('returns single flag for single-territory currency', () => {
-        const flags = getFlagsForCurrency('JPY');
+        const flags = getFlagsForCurrency(JPY);
 
         expect(flags).toEqual(['🇯🇵']);
     });
 
     test('returns empty array for unknown currency', () => {
-        const flags = getFlagsForCurrency('XYZ');
+        const flags = getFlagsForCurrency(XYZ);
 
         expect(flags).toEqual([]);
     });
@@ -68,19 +76,19 @@ describe(getFlagsForCurrency.name, () => {
 
 describe(getTerritoryNamesForCurrency.name, () => {
     test('returns territory names for a known currency', () => {
-        const names = getTerritoryNamesForCurrency('CHF');
+        const names = getTerritoryNamesForCurrency(CHF);
 
         expect(names).toEqual(['Switzerland', 'Liechtenstein']);
     });
 
     test('returns single name for single-territory currency', () => {
-        const names = getTerritoryNamesForCurrency('JPY');
+        const names = getTerritoryNamesForCurrency(JPY);
 
         expect(names).toEqual(['Japan']);
     });
 
     test('returns empty array for unknown currency', () => {
-        const names = getTerritoryNamesForCurrency('XYZ');
+        const names = getTerritoryNamesForCurrency(XYZ);
 
         expect(names).toEqual([]);
     });
@@ -88,33 +96,33 @@ describe(getTerritoryNamesForCurrency.name, () => {
 
 describe(currencyMatchesTerritory.name, () => {
     test('matches territory by full name', () => {
-        expect(currencyMatchesTerritory('USD', 'United States')).toBe(true);
+        expect(currencyMatchesTerritory(USD, 'United States')).toBe(true);
     });
 
     test('matches territory by partial name', () => {
-        expect(currencyMatchesTerritory('USD', 'united')).toBe(true);
+        expect(currencyMatchesTerritory(USD, 'united')).toBe(true);
     });
 
     test('matches case-insensitively', () => {
-        expect(currencyMatchesTerritory('JPY', 'JAPAN')).toBe(true);
+        expect(currencyMatchesTerritory(JPY, 'JAPAN')).toBe(true);
     });
 
     test('matches any territory of a multi-territory currency', () => {
-        expect(currencyMatchesTerritory('EUR', 'Germany')).toBe(true);
-        expect(currencyMatchesTerritory('EUR', 'France')).toBe(true);
-        expect(currencyMatchesTerritory('EUR', 'Italy')).toBe(true);
+        expect(currencyMatchesTerritory(EUR, 'Germany')).toBe(true);
+        expect(currencyMatchesTerritory(EUR, 'France')).toBe(true);
+        expect(currencyMatchesTerritory(EUR, 'Italy')).toBe(true);
     });
 
     test('returns false for non-matching territory', () => {
-        expect(currencyMatchesTerritory('JPY', 'France')).toBe(false);
+        expect(currencyMatchesTerritory(JPY, 'France')).toBe(false);
     });
 
     test('returns false for unknown currency', () => {
-        expect(currencyMatchesTerritory('XYZ', 'anywhere')).toBe(false);
+        expect(currencyMatchesTerritory(XYZ, 'anywhere')).toBe(false);
     });
 
     test('matches partial territory name for search', () => {
-        expect(currencyMatchesTerritory('USD', 'puerto')).toBe(true);
-        expect(currencyMatchesTerritory('USD', 'guam')).toBe(true);
+        expect(currencyMatchesTerritory(USD, 'puerto')).toBe(true);
+        expect(currencyMatchesTerritory(USD, 'guam')).toBe(true);
     });
 });

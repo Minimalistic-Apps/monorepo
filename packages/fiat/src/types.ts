@@ -1,5 +1,10 @@
 import type { Brand, CurrencyCode } from '@evolu/common';
 
+export interface FiatCurrency {
+    readonly code: CurrencyCode;
+    readonly name: string;
+}
+
 export type FiatAmount<Currency extends CurrencyCode = CurrencyCode> = number &
     Brand<'FiatAmount'> &
     Brand<`FiatAmountCurrency:${Currency}`>;
