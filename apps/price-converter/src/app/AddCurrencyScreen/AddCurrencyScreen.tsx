@@ -1,7 +1,6 @@
 import type { CurrencyCode } from '@evolu/common';
 import {
     Button,
-    Column,
     Flex,
     List,
     Row,
@@ -88,21 +87,16 @@ export const AddCurrencyScreenPure = (
                     emptyText="No currencies found"
                     onItemClick={item => handleSelect(item.code)}
                     renderItem={item => (
-                        <Row gap={8} justify="space-between">
-                            <Flex style={{ minWidth: 0, flex: 1 }}>
+                        <Row gap={12} justify="space-between">
+                            <Flex flex="1" style={{ minWidth: 0 }}>
                                 <Text>
-                                    {item.name}{' '}
+                                    {item.name}&nbsp;&nbsp;
                                     {getFlagsForCurrency(item.code).join(' ')}
                                 </Text>
-                            </Column>
-                            <span
-                                style={{
-                                    flexShrink: 0,
-                                    whiteSpace: 'nowrap',
-                                }}
-                            >
-                                <Text strong>{item.code}</Text>
-                            </span>
+                            </Flex>
+                            <Text nowrap flexShrink={0} strong>
+                                {item.code}
+                            </Text>
                         </Row>
                     )}
                 />
