@@ -1,7 +1,16 @@
+import { CurrencyCode, getOrThrow } from '@evolu/common';
+
 export interface Territory {
     readonly flag: string;
     readonly name: string;
 }
+
+type CurrencyToTerritoryMap = Readonly<
+    Record<CurrencyCode, ReadonlyArray<Territory>>
+>;
+
+export const asCurrencyCodeUnsafe = (code: string) =>
+    getOrThrow(CurrencyCode.from(code));
 
 /**
  * Map of ISO 4217 currency codes to the territories where they are used.
@@ -10,63 +19,67 @@ export interface Territory {
  *   - https://en.wikipedia.org/wiki/ISO_4217#Active_codes
  *   - https://en.wikipedia.org/wiki/List_of_circulating_currencies
  */
-export const CURRENCY_TERRITORIES: Readonly<
-    Record<string, ReadonlyArray<Territory>>
-> = {
-    AED: [{ flag: '🇦🇪', name: 'United Arab Emirates' }],
-    AFN: [{ flag: '🇦🇫', name: 'Afghanistan' }],
-    ALL: [{ flag: '🇦🇱', name: 'Albania' }],
-    AMD: [{ flag: '🇦🇲', name: 'Armenia' }],
-    ANG: [
+export const CURRENCY_TERRITORIES = {
+    [asCurrencyCodeUnsafe('AED')]: [
+        { flag: '🇦🇪', name: 'United Arab Emirates' },
+    ],
+    [asCurrencyCodeUnsafe('AFN')]: [{ flag: '🇦🇫', name: 'Afghanistan' }],
+    [asCurrencyCodeUnsafe('ALL')]: [{ flag: '🇦🇱', name: 'Albania' }],
+    [asCurrencyCodeUnsafe('AMD')]: [{ flag: '🇦🇲', name: 'Armenia' }],
+    [asCurrencyCodeUnsafe('ANG')]: [
         { flag: '🇨🇼', name: 'Curaçao' },
         { flag: '🇸🇽', name: 'Sint Maarten' },
     ],
-    AOA: [{ flag: '🇦🇴', name: 'Angola' }],
-    ARS: [{ flag: '🇦🇷', name: 'Argentine' }],
-    AUD: [{ flag: '🇦🇷', name: 'Australia' }],
-    AWG: [{ flag: '🇦🇼', name: 'Aruba' }],
-    AZN: [{ flag: '🇦🇿', name: 'Azerbaijan' }],
-    BAM: [{ flag: '🇧🇦', name: 'Bosnia and Herzegovina' }],
-    BBD: [{ flag: '🇧🇧', name: 'Barbados' }],
-    BDT: [{ flag: '🇧🇩', name: 'Bangladesh' }],
-    BGN: [{ flag: '🇧🇬', name: 'Bulgaria' }],
-    BHD: [{ flag: '🇧🇭', name: 'Bahrain' }],
-    BIF: [{ flag: '🇧🇮', name: 'Burundi' }],
-    BMD: [{ flag: '🇧🇲', name: 'Bermuda' }],
-    BND: [{ flag: '🇧🇳', name: 'Brunei' }],
-    BOB: [{ flag: '🇧🇴', name: 'Bolivia' }],
-    BRL: [{ flag: '🇧🇷', name: 'Brazil' }],
-    BSD: [{ flag: '🇧🇸', name: 'Bahamas' }],
-    BTN: [{ flag: '🇧🇹', name: 'Bhutan' }],
-    BWP: [{ flag: '🇧🇼', name: 'Botswana' }],
-    BYN: [{ flag: '🇧🇾', name: 'Belarus' }],
-    BZD: [{ flag: '🇧🇿', name: 'Belize' }],
-    CAD: [{ flag: '🇨🇦', name: 'Canada' }],
-    CDF: [{ flag: '🇨🇩', name: 'Democratic Republic of the Congo' }],
-    CHF: [
+    [asCurrencyCodeUnsafe('AOA')]: [{ flag: '🇦🇴', name: 'Angola' }],
+    [asCurrencyCodeUnsafe('ARS')]: [{ flag: '🇦🇷', name: 'Argentine' }],
+    [asCurrencyCodeUnsafe('AUD')]: [{ flag: '🇦🇷', name: 'Australia' }],
+    [asCurrencyCodeUnsafe('AWG')]: [{ flag: '🇦🇼', name: 'Aruba' }],
+    [asCurrencyCodeUnsafe('AZN')]: [{ flag: '🇦🇿', name: 'Azerbaijan' }],
+    [asCurrencyCodeUnsafe('BAM')]: [
+        { flag: '🇧🇦', name: 'Bosnia and Herzegovina' },
+    ],
+    [asCurrencyCodeUnsafe('BBD')]: [{ flag: '🇧🇧', name: 'Barbados' }],
+    [asCurrencyCodeUnsafe('BDT')]: [{ flag: '🇧🇩', name: 'Bangladesh' }],
+    [asCurrencyCodeUnsafe('BGN')]: [{ flag: '🇧🇬', name: 'Bulgaria' }],
+    [asCurrencyCodeUnsafe('BHD')]: [{ flag: '🇧🇭', name: 'Bahrain' }],
+    [asCurrencyCodeUnsafe('BIF')]: [{ flag: '🇧🇮', name: 'Burundi' }],
+    [asCurrencyCodeUnsafe('BMD')]: [{ flag: '🇧🇲', name: 'Bermuda' }],
+    [asCurrencyCodeUnsafe('BND')]: [{ flag: '🇧🇳', name: 'Brunei' }],
+    [asCurrencyCodeUnsafe('BOB')]: [{ flag: '🇧🇴', name: 'Bolivia' }],
+    [asCurrencyCodeUnsafe('BRL')]: [{ flag: '🇧🇷', name: 'Brazil' }],
+    [asCurrencyCodeUnsafe('BSD')]: [{ flag: '🇧🇸', name: 'Bahamas' }],
+    [asCurrencyCodeUnsafe('BTN')]: [{ flag: '🇧🇹', name: 'Bhutan' }],
+    [asCurrencyCodeUnsafe('BWP')]: [{ flag: '🇧🇼', name: 'Botswana' }],
+    [asCurrencyCodeUnsafe('BYN')]: [{ flag: '🇧🇾', name: 'Belarus' }],
+    [asCurrencyCodeUnsafe('BZD')]: [{ flag: '🇧🇿', name: 'Belize' }],
+    [asCurrencyCodeUnsafe('CAD')]: [{ flag: '🇨🇦', name: 'Canada' }],
+    [asCurrencyCodeUnsafe('CDF')]: [
+        { flag: '🇨🇩', name: 'Democratic Republic of the Congo' },
+    ],
+    [asCurrencyCodeUnsafe('CHF')]: [
         { flag: '🇨🇭', name: 'Switzerland' },
         { flag: '🇱🇮', name: 'Liechtenstein' },
     ],
-    CLP: [{ flag: '🇨🇱', name: 'Chile' }],
-    CNY: [{ flag: '🇨🇳', name: 'China' }],
-    COP: [{ flag: '🇨🇴', name: 'Colombia' }],
-    CRC: [{ flag: '🇨🇷', name: 'Costa Rica' }],
-    CUC: [{ flag: '🇨🇺', name: 'Cuba' }],
-    CUP: [{ flag: '🇨🇺', name: 'Cuba' }],
-    CVE: [{ flag: '🇨🇻', name: 'Cabo Verde' }],
-    CZK: [{ flag: '🇨🇿', name: 'Czechia' }],
-    DJF: [{ flag: '🇩🇯', name: 'Djibouti' }],
-    DKK: [
+    [asCurrencyCodeUnsafe('CLP')]: [{ flag: '🇨🇱', name: 'Chile' }],
+    [asCurrencyCodeUnsafe('CNY')]: [{ flag: '🇨🇳', name: 'China' }],
+    [asCurrencyCodeUnsafe('COP')]: [{ flag: '🇨🇴', name: 'Colombia' }],
+    [asCurrencyCodeUnsafe('CRC')]: [{ flag: '🇨🇷', name: 'Costa Rica' }],
+    [asCurrencyCodeUnsafe('CUC')]: [{ flag: '🇨🇺', name: 'Cuba' }],
+    [asCurrencyCodeUnsafe('CUP')]: [{ flag: '🇨🇺', name: 'Cuba' }],
+    [asCurrencyCodeUnsafe('CVE')]: [{ flag: '🇨🇻', name: 'Cabo Verde' }],
+    [asCurrencyCodeUnsafe('CZK')]: [{ flag: '🇨🇿', name: 'Czechia' }],
+    [asCurrencyCodeUnsafe('DJF')]: [{ flag: '🇩🇯', name: 'Djibouti' }],
+    [asCurrencyCodeUnsafe('DKK')]: [
         { flag: '🇩🇰', name: 'Denmark' },
         { flag: '🇫🇴', name: 'Faroe Islands' },
         { flag: '🇬🇱', name: 'Greenland' },
     ],
-    DOP: [{ flag: '🇩🇲', name: 'Dominican Republic' }],
-    DZD: [{ flag: '🇩🇿', name: 'Algeria' }],
-    EGP: [{ flag: '🇪🇬', name: 'Egypt' }],
-    ERN: [{ flag: '🇪🇷', name: 'Eritrea' }],
-    ETB: [{ flag: '🇪🇹', name: 'Ethiopia' }],
-    EUR: [
+    [asCurrencyCodeUnsafe('DOP')]: [{ flag: '🇩🇲', name: 'Dominican Republic' }],
+    [asCurrencyCodeUnsafe('DZD')]: [{ flag: '🇩🇿', name: 'Algeria' }],
+    [asCurrencyCodeUnsafe('EGP')]: [{ flag: '🇪🇬', name: 'Egypt' }],
+    [asCurrencyCodeUnsafe('ERN')]: [{ flag: '🇪🇷', name: 'Eritrea' }],
+    [asCurrencyCodeUnsafe('ETB')]: [{ flag: '🇪🇹', name: 'Ethiopia' }],
+    [asCurrencyCodeUnsafe('EUR')]: [
         { flag: '🇪🇺', name: 'EU' },
         { flag: '🇦🇽', name: 'Åland Islands' },
         { flag: '🇦🇩', name: 'Andorra' },
@@ -102,129 +115,133 @@ export const CURRENCY_TERRITORIES: Readonly<
         { flag: '🇪🇸', name: 'Spain' },
         { flag: '🇻🇦', name: 'Vatican City' },
     ],
-    FJD: [{ flag: '🇫🇯', name: 'Fiji' }],
-    FKP: [{ flag: '🇫🇰', name: 'Falkland Islands' }],
-    GBP: [
+    [asCurrencyCodeUnsafe('FJD')]: [{ flag: '🇫🇯', name: 'Fiji' }],
+    [asCurrencyCodeUnsafe('FKP')]: [{ flag: '🇫🇰', name: 'Falkland Islands' }],
+    [asCurrencyCodeUnsafe('GBP')]: [
         { flag: '🇬🇧', name: 'United Kingdom' },
         { flag: '🇮🇲', name: 'Isle of Man' },
         { flag: '🇯🇪', name: 'Jersey' },
         { flag: '🇬🇬', name: 'Guernsey' },
         { flag: '🇹🇦', name: 'Tristan da Cunha' },
     ],
-    GEL: [{ flag: '🇬🇪', name: 'Georgia' }],
-    GHS: [{ flag: '🇬🇭', name: 'Ghana' }],
-    GIP: [{ flag: '🇬🇮', name: 'Gibraltar' }],
-    GMD: [{ flag: '🇬🇲', name: 'Gambia' }],
-    GNF: [{ flag: '🇬🇳', name: 'Guinea' }],
-    GTQ: [{ flag: '🇬🇹', name: 'Guatemala' }],
-    GYD: [{ flag: '🇬🇾', name: 'Guyana' }],
-    HKD: [{ flag: '🇭🇰', name: 'Hong Kong' }],
-    HNL: [{ flag: '🇭🇳', name: 'Honduras' }],
-    HRK: [{ flag: '🇭🇷', name: 'Croatia' }],
-    HTG: [{ flag: '🇭🇹', name: 'Haiti' }],
-    HUF: [{ flag: '🇭🇺', name: 'Hungary' }],
-    IDR: [{ flag: '🇮🇩', name: 'Indonesia' }],
-    ILS: [{ flag: '🇮🇱', name: 'Israel' }],
-    INR: [
+    [asCurrencyCodeUnsafe('GEL')]: [{ flag: '🇬🇪', name: 'Georgia' }],
+    [asCurrencyCodeUnsafe('GHS')]: [{ flag: '🇬🇭', name: 'Ghana' }],
+    [asCurrencyCodeUnsafe('GIP')]: [{ flag: '🇬🇮', name: 'Gibraltar' }],
+    [asCurrencyCodeUnsafe('GMD')]: [{ flag: '🇬🇲', name: 'Gambia' }],
+    [asCurrencyCodeUnsafe('GNF')]: [{ flag: '🇬🇳', name: 'Guinea' }],
+    [asCurrencyCodeUnsafe('GTQ')]: [{ flag: '🇬🇹', name: 'Guatemala' }],
+    [asCurrencyCodeUnsafe('GYD')]: [{ flag: '🇬🇾', name: 'Guyana' }],
+    [asCurrencyCodeUnsafe('HKD')]: [{ flag: '🇭🇰', name: 'Hong Kong' }],
+    [asCurrencyCodeUnsafe('HNL')]: [{ flag: '🇭🇳', name: 'Honduras' }],
+    [asCurrencyCodeUnsafe('HRK')]: [{ flag: '🇭🇷', name: 'Croatia' }],
+    [asCurrencyCodeUnsafe('HTG')]: [{ flag: '🇭🇹', name: 'Haiti' }],
+    [asCurrencyCodeUnsafe('HUF')]: [{ flag: '🇭🇺', name: 'Hungary' }],
+    [asCurrencyCodeUnsafe('IDR')]: [{ flag: '🇮🇩', name: 'Indonesia' }],
+    [asCurrencyCodeUnsafe('ILS')]: [{ flag: '🇮🇱', name: 'Israel' }],
+    [asCurrencyCodeUnsafe('INR')]: [
         { flag: '🇮🇳', name: 'India' },
         { flag: '🇧🇹', name: 'Bhutan' },
     ],
-    IQD: [{ flag: '🇮🇶', name: 'Iraq' }],
-    IRR: [{ flag: '🇮🇷', name: 'Iran' }],
-    ISK: [{ flag: '🇮🇸', name: 'Iceland' }],
-    JMD: [{ flag: '🇯🇲', name: 'Jamaica' }],
-    JOD: [{ flag: '🇯🇴', name: 'Jordan' }],
-    JPY: [{ flag: '🇯🇵', name: 'Japan' }],
-    KES: [{ flag: '🇰🇪', name: 'Kenya' }],
-    KGS: [{ flag: '🇰🇬', name: 'Kyrgyzstan' }],
-    KHR: [{ flag: '🇰🇭', name: 'Cambodia' }],
-    KMF: [{ flag: '🇰🇲', name: 'Comoros' }],
-    KPW: [{ flag: '🇰🇵', name: 'North Korea' }],
-    KRW: [{ flag: '🇰🇷', name: 'South Korea' }],
-    KWD: [{ flag: '🇰🇼', name: 'Kuwait' }],
-    KYD: [{ flag: '🇰🇾', name: 'Cayman Islands' }],
-    KZT: [{ flag: '🇰🇿', name: 'Kazakhstan' }],
-    LAK: [{ flag: '🇱🇦', name: 'Laos' }],
-    LBP: [{ flag: '🇱🇧', name: 'Lebanon' }],
-    LKR: [{ flag: '🇱🇰', name: 'Sri Lanka' }],
-    LRD: [{ flag: '🇱🇷', name: 'Liberia' }],
-    LSL: [{ flag: '🇱🇸', name: 'Lesotho' }],
-    LYD: [{ flag: '🇱🇾', name: 'Libya' }],
-    MAD: [
+    [asCurrencyCodeUnsafe('IQD')]: [{ flag: '🇮🇶', name: 'Iraq' }],
+    [asCurrencyCodeUnsafe('IRR')]: [{ flag: '🇮🇷', name: 'Iran' }],
+    [asCurrencyCodeUnsafe('ISK')]: [{ flag: '🇮🇸', name: 'Iceland' }],
+    [asCurrencyCodeUnsafe('JMD')]: [{ flag: '🇯🇲', name: 'Jamaica' }],
+    [asCurrencyCodeUnsafe('JOD')]: [{ flag: '🇯🇴', name: 'Jordan' }],
+    [asCurrencyCodeUnsafe('JPY')]: [{ flag: '🇯🇵', name: 'Japan' }],
+    [asCurrencyCodeUnsafe('KES')]: [{ flag: '🇰🇪', name: 'Kenya' }],
+    [asCurrencyCodeUnsafe('KGS')]: [{ flag: '🇰🇬', name: 'Kyrgyzstan' }],
+    [asCurrencyCodeUnsafe('KHR')]: [{ flag: '🇰🇭', name: 'Cambodia' }],
+    [asCurrencyCodeUnsafe('KMF')]: [{ flag: '🇰🇲', name: 'Comoros' }],
+    [asCurrencyCodeUnsafe('KPW')]: [{ flag: '🇰🇵', name: 'North Korea' }],
+    [asCurrencyCodeUnsafe('KRW')]: [{ flag: '🇰🇷', name: 'South Korea' }],
+    [asCurrencyCodeUnsafe('KWD')]: [{ flag: '🇰🇼', name: 'Kuwait' }],
+    [asCurrencyCodeUnsafe('KYD')]: [{ flag: '🇰🇾', name: 'Cayman Islands' }],
+    [asCurrencyCodeUnsafe('KZT')]: [{ flag: '🇰🇿', name: 'Kazakhstan' }],
+    [asCurrencyCodeUnsafe('LAK')]: [{ flag: '🇱🇦', name: 'Laos' }],
+    [asCurrencyCodeUnsafe('LBP')]: [{ flag: '🇱🇧', name: 'Lebanon' }],
+    [asCurrencyCodeUnsafe('LKR')]: [{ flag: '🇱🇰', name: 'Sri Lanka' }],
+    [asCurrencyCodeUnsafe('LRD')]: [{ flag: '🇱🇷', name: 'Liberia' }],
+    [asCurrencyCodeUnsafe('LSL')]: [{ flag: '🇱🇸', name: 'Lesotho' }],
+    [asCurrencyCodeUnsafe('LYD')]: [{ flag: '🇱🇾', name: 'Libya' }],
+    [asCurrencyCodeUnsafe('MAD')]: [
         { flag: '🇲🇦', name: 'Marocco' },
         { flag: '🇪🇭', name: 'Western Sahara' },
     ],
-    MDL: [{ flag: '🇲🇩', name: 'Moldova' }],
-    MGA: [{ flag: '🇲🇬', name: 'Madagascar' }],
-    MKD: [{ flag: '🇲🇰', name: 'North Macedonia' }],
-    MMK: [{ flag: '🇲🇲', name: 'Myanmar' }],
-    MNT: [{ flag: '🇲🇳', name: 'Mongolia' }],
-    MOP: [{ flag: '🇲🇴', name: 'Macau' }],
-    MRU: [{ flag: '🇲🇷', name: 'Mauritania' }],
-    MUR: [{ flag: '🇲🇺', name: 'Mauritius' }],
-    MVR: [{ flag: '🇲🇻', name: 'Maldives' }],
-    MWK: [{ flag: '🇲🇼', name: 'Malawi' }],
-    MXN: [{ flag: '🇲🇽', name: 'Mexico' }],
-    MYR: [{ flag: '🇲🇾', name: 'Malaysia' }],
-    MZN: [{ flag: '🇲🇿', name: 'Mozambique' }],
-    NAD: [{ flag: '🇳🇦', name: 'Namibia' }],
-    NGN: [{ flag: '🇳🇬', name: 'Nigeria' }],
-    NIO: [{ flag: '🇳🇮', name: 'Nicaragua' }],
-    NOK: [
+    [asCurrencyCodeUnsafe('MDL')]: [{ flag: '🇲🇩', name: 'Moldova' }],
+    [asCurrencyCodeUnsafe('MGA')]: [{ flag: '🇲🇬', name: 'Madagascar' }],
+    [asCurrencyCodeUnsafe('MKD')]: [{ flag: '🇲🇰', name: 'North Macedonia' }],
+    [asCurrencyCodeUnsafe('MMK')]: [{ flag: '🇲🇲', name: 'Myanmar' }],
+    [asCurrencyCodeUnsafe('MNT')]: [{ flag: '🇲🇳', name: 'Mongolia' }],
+    [asCurrencyCodeUnsafe('MOP')]: [{ flag: '🇲🇴', name: 'Macau' }],
+    [asCurrencyCodeUnsafe('MRU')]: [{ flag: '🇲🇷', name: 'Mauritania' }],
+    [asCurrencyCodeUnsafe('MUR')]: [{ flag: '🇲🇺', name: 'Mauritius' }],
+    [asCurrencyCodeUnsafe('MVR')]: [{ flag: '🇲🇻', name: 'Maldives' }],
+    [asCurrencyCodeUnsafe('MWK')]: [{ flag: '🇲🇼', name: 'Malawi' }],
+    [asCurrencyCodeUnsafe('MXN')]: [{ flag: '🇲🇽', name: 'Mexico' }],
+    [asCurrencyCodeUnsafe('MYR')]: [{ flag: '🇲🇾', name: 'Malaysia' }],
+    [asCurrencyCodeUnsafe('MZN')]: [{ flag: '🇲🇿', name: 'Mozambique' }],
+    [asCurrencyCodeUnsafe('NAD')]: [{ flag: '🇳🇦', name: 'Namibia' }],
+    [asCurrencyCodeUnsafe('NGN')]: [{ flag: '🇳🇬', name: 'Nigeria' }],
+    [asCurrencyCodeUnsafe('NIO')]: [{ flag: '🇳🇮', name: 'Nicaragua' }],
+    [asCurrencyCodeUnsafe('NOK')]: [
         { flag: '🇳🇴', name: 'Norway' },
         { flag: '🇳🇴', name: 'Svalbard' },
     ],
-    NPR: [{ flag: '🇳🇵', name: 'Nepal' }],
-    NZD: [
+    [asCurrencyCodeUnsafe('NPR')]: [{ flag: '🇳🇵', name: 'Nepal' }],
+    [asCurrencyCodeUnsafe('NZD')]: [
         { flag: '🇳🇿', name: 'New Zealand' },
         { flag: '🇨🇰', name: 'Cook Islands' },
         { flag: '🇳🇺', name: 'Niue' },
         { flag: '🇵🇳', name: 'Pitcairn Islands' },
         { flag: '🇹🇰', name: 'Tokelau' },
     ],
-    OMR: [{ flag: '🇴🇲', name: 'Oman' }],
-    PAB: [{ flag: '🇵🇦', name: 'Panama' }],
-    PEN: [{ flag: '🇵🇪', name: 'Peru' }],
-    PGK: [{ flag: '🇵🇬', name: 'Papua New Guinean' }],
-    PHP: [{ flag: '🇵🇭', name: 'Philippines' }],
-    PKR: [{ flag: '🇵🇰', name: 'Pakistan' }],
-    PLN: [{ flag: '🇵🇱', name: 'Poland' }],
-    PYG: [{ flag: '🇵🇾', name: 'Paraguay' }],
-    QAR: [{ flag: '🇶🇦', name: 'Qatar' }],
-    RON: [{ flag: '🇷🇴', name: 'Romania' }],
-    RSD: [{ flag: '🇷🇸', name: 'Serbia' }],
-    RUB: [{ flag: '🇷🇺', name: 'Russia' }],
-    RWF: [{ flag: '🇷🇼', name: 'Rwanda' }],
-    SAR: [{ flag: '🇸🇦', name: 'Saudi Arabia' }],
-    SBD: [{ flag: '🇸🇧', name: 'Solomon Islands' }],
-    SCR: [{ flag: '🇸🇨', name: 'Seychelles' }],
-    SDG: [{ flag: '🇸🇩', name: 'Sudan' }],
-    SEK: [{ flag: '🇸🇪', name: 'Sweden' }],
-    SGD: [{ flag: '🇸🇬', name: 'Singapore' }],
-    SHP: [
+    [asCurrencyCodeUnsafe('OMR')]: [{ flag: '🇴🇲', name: 'Oman' }],
+    [asCurrencyCodeUnsafe('PAB')]: [{ flag: '🇵🇦', name: 'Panama' }],
+    [asCurrencyCodeUnsafe('PEN')]: [{ flag: '🇵🇪', name: 'Peru' }],
+    [asCurrencyCodeUnsafe('PGK')]: [{ flag: '🇵🇬', name: 'Papua New Guinean' }],
+    [asCurrencyCodeUnsafe('PHP')]: [{ flag: '🇵🇭', name: 'Philippines' }],
+    [asCurrencyCodeUnsafe('PKR')]: [{ flag: '🇵🇰', name: 'Pakistan' }],
+    [asCurrencyCodeUnsafe('PLN')]: [{ flag: '🇵🇱', name: 'Poland' }],
+    [asCurrencyCodeUnsafe('PYG')]: [{ flag: '🇵🇾', name: 'Paraguay' }],
+    [asCurrencyCodeUnsafe('QAR')]: [{ flag: '🇶🇦', name: 'Qatar' }],
+    [asCurrencyCodeUnsafe('RON')]: [{ flag: '🇷🇴', name: 'Romania' }],
+    [asCurrencyCodeUnsafe('RSD')]: [{ flag: '🇷🇸', name: 'Serbia' }],
+    [asCurrencyCodeUnsafe('RUB')]: [{ flag: '🇷🇺', name: 'Russia' }],
+    [asCurrencyCodeUnsafe('RWF')]: [{ flag: '🇷🇼', name: 'Rwanda' }],
+    [asCurrencyCodeUnsafe('SAR')]: [{ flag: '🇸🇦', name: 'Saudi Arabia' }],
+    [asCurrencyCodeUnsafe('SBD')]: [{ flag: '🇸🇧', name: 'Solomon Islands' }],
+    [asCurrencyCodeUnsafe('SCR')]: [{ flag: '🇸🇨', name: 'Seychelles' }],
+    [asCurrencyCodeUnsafe('SDG')]: [{ flag: '🇸🇩', name: 'Sudan' }],
+    [asCurrencyCodeUnsafe('SEK')]: [{ flag: '🇸🇪', name: 'Sweden' }],
+    [asCurrencyCodeUnsafe('SGD')]: [{ flag: '🇸🇬', name: 'Singapore' }],
+    [asCurrencyCodeUnsafe('SHP')]: [
         { flag: '🇸🇭', name: 'Saint Helena' },
         { flag: '🇦🇨', name: 'Ascension Island' },
     ],
-    SLL: [{ flag: '🇸🇱', name: 'Sierra Leone' }],
-    SOS: [{ flag: '🇸🇴', name: 'Somalia' }],
-    SRD: [{ flag: '🇸🇷', name: 'Suriname' }],
-    SSP: [{ flag: '🇸🇸', name: 'South Sudan' }],
-    STN: [{ flag: '🇸🇹', name: 'São Tomé and Príncipe' }],
-    SVC: [{ flag: '🇸🇻', name: 'El Salvador' }],
-    SYP: [{ flag: '🇸🇾', name: 'Syria' }],
-    SZL: [{ flag: '🇸🇿', name: 'Eswatini' }],
-    THB: [{ flag: '🇹🇭', name: 'Thailand' }],
-    TJS: [{ flag: '🇹🇯', name: 'Tajikistan' }],
-    TMT: [{ flag: '🇹🇲', name: 'Turkmenistan' }],
-    TND: [{ flag: '🇹🇳', name: 'Tunisia' }],
-    TOP: [{ flag: '🇹🇴', name: 'Tonga' }],
-    TRY: [{ flag: '🇹🇷', name: 'Turkey' }],
-    TTD: [{ flag: '🇹🇹', name: 'Trinidad and Tobago' }],
-    TWD: [{ flag: '🇹🇹', name: 'Taiwan' }],
-    TZS: [{ flag: '🇹🇿', name: 'Tanzania' }],
-    UAH: [{ flag: '🇺🇦', name: 'Ukraine' }],
-    UGX: [{ flag: '🇺🇬', name: 'Uganda' }],
-    USD: [
+    [asCurrencyCodeUnsafe('SLL')]: [{ flag: '🇸🇱', name: 'Sierra Leone' }],
+    [asCurrencyCodeUnsafe('SOS')]: [{ flag: '🇸🇴', name: 'Somalia' }],
+    [asCurrencyCodeUnsafe('SRD')]: [{ flag: '🇸🇷', name: 'Suriname' }],
+    [asCurrencyCodeUnsafe('SSP')]: [{ flag: '🇸🇸', name: 'South Sudan' }],
+    [asCurrencyCodeUnsafe('STN')]: [
+        { flag: '🇸🇹', name: 'São Tomé and Príncipe' },
+    ],
+    [asCurrencyCodeUnsafe('SVC')]: [{ flag: '🇸🇻', name: 'El Salvador' }],
+    [asCurrencyCodeUnsafe('SYP')]: [{ flag: '🇸🇾', name: 'Syria' }],
+    [asCurrencyCodeUnsafe('SZL')]: [{ flag: '🇸🇿', name: 'Eswatini' }],
+    [asCurrencyCodeUnsafe('THB')]: [{ flag: '🇹🇭', name: 'Thailand' }],
+    [asCurrencyCodeUnsafe('TJS')]: [{ flag: '🇹🇯', name: 'Tajikistan' }],
+    [asCurrencyCodeUnsafe('TMT')]: [{ flag: '🇹🇲', name: 'Turkmenistan' }],
+    [asCurrencyCodeUnsafe('TND')]: [{ flag: '🇹🇳', name: 'Tunisia' }],
+    [asCurrencyCodeUnsafe('TOP')]: [{ flag: '🇹🇴', name: 'Tonga' }],
+    [asCurrencyCodeUnsafe('TRY')]: [{ flag: '🇹🇷', name: 'Turkey' }],
+    [asCurrencyCodeUnsafe('TTD')]: [
+        { flag: '🇹🇹', name: 'Trinidad and Tobago' },
+    ],
+    [asCurrencyCodeUnsafe('TWD')]: [{ flag: '🇹🇹', name: 'Taiwan' }],
+    [asCurrencyCodeUnsafe('TZS')]: [{ flag: '🇹🇿', name: 'Tanzania' }],
+    [asCurrencyCodeUnsafe('UAH')]: [{ flag: '🇺🇦', name: 'Ukraine' }],
+    [asCurrencyCodeUnsafe('UGX')]: [{ flag: '🇺🇬', name: 'Uganda' }],
+    [asCurrencyCodeUnsafe('USD')]: [
         { flag: '🇺🇸', name: 'United States' },
         { flag: '🇦🇸', name: 'American Samoa' },
         { flag: '🇮🇴', name: 'British Indian Ocean Territory' },
@@ -243,15 +260,15 @@ export const CURRENCY_TERRITORIES: Readonly<
         { flag: '🇹🇨', name: 'Turks and Caicos Islands' },
         { flag: '🇻🇮', name: 'U.S. Virgin Islands' },
     ],
-    UYU: [{ flag: '🇺🇾', name: 'Uruguay' }],
-    UYW: [{ flag: '🇺🇾', name: 'Uruguay' }],
-    UZS: [{ flag: '🇺🇿', name: 'Uzbekistan' }],
-    VED: [{ flag: '🇻🇪', name: 'Venezuela' }],
-    VES: [{ flag: '🇻🇪', name: 'Venezuela' }],
-    VND: [{ flag: '🇻🇳', name: 'Vietnam' }],
-    VUV: [{ flag: '🇻🇺', name: 'Vanuatu' }],
-    WST: [{ flag: '🇼🇸', name: 'Samoa' }],
-    XAF: [
+    [asCurrencyCodeUnsafe('UYU')]: [{ flag: '🇺🇾', name: 'Uruguay' }],
+    [asCurrencyCodeUnsafe('UYW')]: [{ flag: '🇺🇾', name: 'Uruguay' }],
+    [asCurrencyCodeUnsafe('UZS')]: [{ flag: '🇺🇿', name: 'Uzbekistan' }],
+    [asCurrencyCodeUnsafe('VED')]: [{ flag: '🇻🇪', name: 'Venezuela' }],
+    [asCurrencyCodeUnsafe('VES')]: [{ flag: '🇻🇪', name: 'Venezuela' }],
+    [asCurrencyCodeUnsafe('VND')]: [{ flag: '🇻🇳', name: 'Vietnam' }],
+    [asCurrencyCodeUnsafe('VUV')]: [{ flag: '🇻🇺', name: 'Vanuatu' }],
+    [asCurrencyCodeUnsafe('WST')]: [{ flag: '🇼🇸', name: 'Samoa' }],
+    [asCurrencyCodeUnsafe('XAF')]: [
         { flag: '🇨🇲', name: 'Cameroon' },
         { flag: '🇨🇫', name: 'Central African Republic' },
         { flag: '🇨🇬', name: 'Republic of the Congo' },
@@ -259,7 +276,7 @@ export const CURRENCY_TERRITORIES: Readonly<
         { flag: '🇬🇶', name: 'Equatorial Guinea' },
         { flag: '🇬🇦', name: 'Gabon' },
     ],
-    XCD: [
+    [asCurrencyCodeUnsafe('XCD')]: [
         { flag: '🇦🇮', name: 'Anguilla' },
         { flag: '🇦🇬', name: 'Antigua and Barbuda' },
         { flag: '🇩🇲', name: 'Dominica' },
@@ -269,7 +286,7 @@ export const CURRENCY_TERRITORIES: Readonly<
         { flag: '🇱🇨', name: 'Saint Lucia' },
         { flag: '🇻🇨', name: 'Saint Vincent and the Grenadines' },
     ],
-    XOF: [
+    [asCurrencyCodeUnsafe('XOF')]: [
         { flag: '🇧🇯', name: 'Benin' },
         { flag: '🇧🇫', name: 'Burkina Faso' },
         { flag: '🇨🇮', name: "Côte d'Ivoire" },
@@ -279,72 +296,39 @@ export const CURRENCY_TERRITORIES: Readonly<
         { flag: '🇸🇳', name: 'Senegal' },
         { flag: '🇹🇬', name: 'Togo' },
     ],
-    XPF: [
+    [asCurrencyCodeUnsafe('XPF')]: [
         { flag: '🇵🇫', name: 'French Polynesia' },
         { flag: '🇳🇨', name: 'New Caledonia' },
         { flag: '🇼🇫', name: 'Wallis and Futuna' },
     ],
-    YER: [{ flag: '🇾🇪', name: 'Yemen' }],
-    ZAR: [
+    [asCurrencyCodeUnsafe('YER')]: [{ flag: '🇾🇪', name: 'Yemen' }],
+    [asCurrencyCodeUnsafe('ZAR')]: [
         { flag: '🇸🇿', name: 'Eswatini' },
         { flag: '🇱🇸', name: 'Lesotho' },
         { flag: '🇳🇦', name: 'Namibia' },
         { flag: '🇿🇦', name: 'South Africa' },
     ],
-    ZMW: [{ flag: '🇿🇲', name: 'Zambia' }],
-    ZWL: [{ flag: '🇿🇼', name: 'Zimbabwe' }],
-};
+    [asCurrencyCodeUnsafe('ZMW')]: [{ flag: '🇿🇲', name: 'Zambia' }],
+    [asCurrencyCodeUnsafe('ZWL')]: [{ flag: '🇿🇼', name: 'Zimbabwe' }],
+} satisfies CurrencyToTerritoryMap;
 
-/**
- * Get unique flag emojis for a currency code.
- */
 export const getFlagsForCurrency = (
-    currencyCode: string,
-): ReadonlyArray<string> => {
-    const territories = CURRENCY_TERRITORIES[currencyCode] as
-        | ReadonlyArray<Territory>
-        | undefined;
+    currencyCode: CurrencyCode,
+): ReadonlyArray<string> => [
+    ...new Set(CURRENCY_TERRITORIES[currencyCode].map(t => t.flag)),
+];
 
-    if (!territories) {
-        return [];
-    }
-
-    return [...new Set(territories.map(t => t.flag))];
-};
-
-/**
- * Get territory names for a currency code.
- */
 export const getTerritoryNamesForCurrency = (
-    currencyCode: string,
-): ReadonlyArray<string> => {
-    const territories = CURRENCY_TERRITORIES[currencyCode] as
-        | ReadonlyArray<Territory>
-        | undefined;
+    currencyCode: CurrencyCode,
+): ReadonlyArray<string> => CURRENCY_TERRITORIES[currencyCode].map(t => t.name);
 
-    if (!territories) {
-        return [];
-    }
-
-    return territories.map(t => t.name);
-};
-
-/**
- * Check if any territory of a currency matches a search term.
- */
 export const currencyMatchesTerritory = (
-    currencyCode: string,
+    currencyCode: CurrencyCode,
     searchTerm: string,
 ): boolean => {
-    const territories = CURRENCY_TERRITORIES[currencyCode] as
-        | ReadonlyArray<Territory>
-        | undefined;
-
-    if (!territories) {
-        return false;
-    }
-
     const term = searchTerm.toLowerCase();
 
-    return territories.some(t => t.name.toLowerCase().includes(term));
+    return CURRENCY_TERRITORIES[currencyCode].some(t =>
+        t.name.toLowerCase().includes(term),
+    );
 };
