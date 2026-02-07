@@ -1,5 +1,6 @@
 import { Empty as AntEmpty } from 'antd';
 import type { KeyboardEvent, MouseEvent, ReactNode } from 'react';
+import { Column } from './Flex';
 
 interface ListItem {
     readonly key: string;
@@ -9,17 +10,10 @@ interface ListProps<T extends ListItem> {
     readonly items: ReadonlyArray<T>;
     readonly renderItem: (item: T) => ReactNode;
     readonly emptyText?: string;
-    readonly onItemClick: (item: T) => void;
+    readonly onItemClick?: (item: T) => void;
 }
 
-const itemStyle = {
-    padding: '10px 12px',
-    borderRadius: 8,
-    transition: 'background 0.15s ease',
-} as const;
-
 const interactiveStyle = {
-    ...itemStyle,
     cursor: 'pointer',
     background: 'transparent',
     border: 'none',
@@ -51,25 +45,29 @@ export const List = <T extends ListItem>({
     const handleKeyDown = (e: KeyboardEvent<HTMLButtonElement>, item: T) => {
         if (e.key === 'Enter' || e.key === ' ') {
             e.preventDefault();
-            onItemClick(item);
+            onItemClick?.(item);
         }
     };
 
     return (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-            {items.map(item => (
-                <button
-                    key={item.key}
-                    type="button"
-                    onClick={() => onItemClick(item)}
-                    onKeyDown={e => handleKeyDown(e, item)}
-                    onMouseEnter={handleMouseEnter}
-                    onMouseLeave={handleMouseLeave}
-                    style={interactiveStyle}
-                >
-                    {renderItem(item)}
-                </button>
-            ))}
-        </div>
+        <Column gap={12}>
+            {items.map(item =>
+                onItemClick ? (
+                    <button
+                        key={item.key}
+                        type="button"
+                        onClick={() => onItemClick(item)}
+                        onKeyDown={e => handleKeyDown(e, item)}
+                        onMouseEnter={handleMouseEnter}
+                        onMouseLeave={handleMouseLeave}
+                        style={interactiveStyle}
+                    >
+                        {renderItem(item)}
+                    </button>
+                ) : (
+                    <div key={item.key}>{renderItem(item)}</div>
+                ),
+            )}
+        </Column>
     );
 };
