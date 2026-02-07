@@ -1,5 +1,9 @@
 import { createConnect } from '@minimalistic-apps/connect';
 import { createCurrentDateTime } from '@minimalistic-apps/datetime';
+import {
+    createEnsureEvoluOwner,
+    createSubscribableQuery,
+} from '@minimalistic-apps/evolu';
 import { createLocalStorage } from '@minimalistic-apps/local-storage';
 import { createWindow } from '@minimalistic-apps/window';
 import { AddCurrencyButtonPure } from './app/AddCurrencyScreen/AddCurrencyButton';
@@ -25,9 +29,8 @@ import { createMain, type Main } from './createMain';
 import { createFetchRatesCompositionRoot } from './rates/fetchRatesCompositionRoot';
 import { createAddCurrency } from './state/addCurrency';
 import { createStore } from './state/createStore';
-import { createEnsureEvoluOwner } from './state/evolu/createEnsureEvoluOwner';
+
 import { createEnsureEvolu } from './state/evolu/createEvolu';
-import { createSubscribableQuery } from './state/evolu/createSubscribableQuery';
 import {
     createGetSelectedCurrencies,
     selectCurrencyCodes,
