@@ -11,18 +11,18 @@ import {
 import type { FC } from 'react';
 import type { FetchAndStoreRatesDep } from '../converter/fetchAndStoreRates';
 import type { NavigateDep } from '../state/navigate';
-import type { Mode } from '../state/State';
+import type { BtcMode } from '../state/State';
 
 export type AppHeaderStateProps = {
     readonly loading: boolean;
-    readonly mode: Mode;
+    readonly mode: BtcMode;
 };
 
-type SetMode = (mode: Mode) => void;
+type SetMode = (mode: BtcMode) => void;
 
 type AppHeaderDeps = FetchAndStoreRatesDep &
     NavigateDep & {
-        readonly setMode: SetMode;
+        readonly setBtcMode: SetMode;
     };
 
 export type AppHeaderDep = {
@@ -34,7 +34,7 @@ export const AppHeaderPure = (
     { loading, mode }: AppHeaderStateProps,
 ) => {
     const handleToggle = (checked: boolean) => {
-        deps.setMode(checked ? 'Sats' : 'BTC');
+        deps.setBtcMode(checked ? 'sats' : 'btc');
     };
 
     const handleSettings = () => {
@@ -54,7 +54,7 @@ export const AppHeaderPure = (
                         <strong>₿</strong>
                         <Switch
                             disableStateBgColorChange
-                            checked={mode === 'Sats'}
+                            checked={mode === 'sats'}
                             onChange={handleToggle}
                         />
                         <strong>丰</strong>

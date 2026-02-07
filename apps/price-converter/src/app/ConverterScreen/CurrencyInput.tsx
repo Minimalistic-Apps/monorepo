@@ -10,20 +10,21 @@ import {
 import { Input } from '@minimalistic-apps/components';
 import { type FiatAmount, formatFiatWithCommas } from '@minimalistic-apps/fiat';
 import { type FC, useEffect, useState } from 'react';
-import type { Mode } from '../../state/State';
+import type { BtcMode } from '../../state/State';
+import type { SetFocusedCurrencyDep } from '../../state/setFocusedCurrency';
 import { parseFormattedNumber } from './parseFormattedNumber';
 
 const formatInputValue = (
     value: number,
     currencyCode: CurrencyCode | 'BTC',
-    displayMode: Mode,
+    displayMode: BtcMode,
 ): string => {
     if (value === 0) {
         return '';
     }
 
     if (currencyCode === 'BTC') {
-        return displayMode === 'BTC'
+        return displayMode === 'btc'
             ? formatBtcWithCommas(satsToBtc(value as AmountSats))
             : formatSats(value as AmountSats);
     }
@@ -38,12 +39,8 @@ export type CurrencyInputOwnProps = {
 };
 
 export type CurrencyInputStateProps = {
-    readonly mode: Mode;
+    readonly mode: BtcMode;
     readonly focusedCurrency: CurrencyCode | 'BTC' | null;
-};
-
-type CurrencyInputDeps = {
-    readonly setFocusedCurrency: (code: CurrencyCode | 'BTC') => void;
 };
 
 export type CurrencyInputDep = {
@@ -51,7 +48,7 @@ export type CurrencyInputDep = {
 };
 
 export const CurrencyInputPure = (
-    deps: CurrencyInputDeps,
+    deps: SetFocusedCurrencyDep,
     {
         mode,
         focusedCurrency,
@@ -80,7 +77,7 @@ export const CurrencyInputPure = (
 
         if (!Number.isNaN(numberValue)) {
             const normalizedValue =
-                mode === 'BTC' && code === 'BTC'
+                mode === 'btc' && code === 'BTC'
                     ? btcToSats(numberValue as AmountBtc)
                     : numberValue;
 
