@@ -2,10 +2,15 @@ import type { CurrencyCode } from '@evolu/common';
 import {
     Button,
     List,
+    Row,
     Screen,
     SearchInput,
     Text,
 } from '@minimalistic-apps/components';
+import {
+    currencyMatchesTerritory,
+    getFlagsForCurrency,
+} from '@minimalistic-apps/fiat';
 import { typedObjectValues } from '@minimalistic-apps/type-utils';
 import type { FC } from 'react';
 import { useState } from 'react';
@@ -42,11 +47,11 @@ export const AddCurrencyScreenPure = (
         ? availableCurrencies
         : availableCurrencies.filter(({ code, name }) => {
               const term = searchTerm.toLowerCase();
+              const matchesCode = code.toLowerCase().includes(term);
+              const matchesName = name.toLowerCase().includes(term);
+              const matchesTerritory = currencyMatchesTerritory(code, term);
 
-              return (
-                  code.toLowerCase().includes(term) ||
-                  name.toLowerCase().includes(term)
-              );
+              return matchesCode || matchesName || matchesTerritory;
           });
 
     const handleSelect = (code: string) => {
@@ -81,6 +86,7 @@ export const AddCurrencyScreenPure = (
                 style={{
                     maxHeight: 'calc(100vh - 200px)',
                     overflow: 'auto',
+                    paddingRight: '8px',
                 }}
             >
                 <List
@@ -88,10 +94,15 @@ export const AddCurrencyScreenPure = (
                     emptyText="No currencies found"
                     onItemClick={item => handleSelect(item.code)}
                     renderItem={item => (
-                        <>
+                        <Row gap={8} justify="space-between">
+                            <Row gap={8}>
+                                <Text>
+                                    {getFlagsForCurrency(item.code).join(' ')}
+                                </Text>
+                                <Text>{item.name}</Text>
+                            </Row>
                             <Text strong>{item.code}</Text>
-                            <Text>{item.name}</Text>
-                        </>
+                        </Row>
                     )}
                 />
             </div>
