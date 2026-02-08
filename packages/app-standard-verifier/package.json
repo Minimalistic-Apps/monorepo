@@ -1,0 +1,14 @@
+{
+    "name": "@minimalistic-apps/app-standard-verifier",
+    "version": "0.0.1",
+    "type": "module",
+    "bin": {
+        "app-standard-verifier": "./src/verify.ts"
+    },
+    "dependencies": {
+        "tsx": "^4.0.0"
+    },
+    "devDependencies": {
+        "@types/node": "^22.0.0"
+    }
+}
