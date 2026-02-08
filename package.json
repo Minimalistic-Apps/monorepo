@@ -21,7 +21,7 @@
     "devDependencies": {
         "@biomejs/biome": "^2.3.13",
         "@eslint/js": "^9.39.2",
-        "@minimalistic-apps/app-standard-verifier": "workspace:*",
+        "@minimalistic-apps/app-api": "workspace:*",
         "@stylistic/eslint-plugin": "^5.7.1",
         "@testing-library/jest-dom": "^6.9.1",
         "@testing-library/react": "^16.3.2",

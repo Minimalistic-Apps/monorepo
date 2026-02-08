@@ -3,13 +3,8 @@
 import { existsSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
-import { generateIcons } from './generateIcons.ts';
-
-interface AppConfig {
-    readonly config: {
-        readonly appIconEmoji: string;
-    };
-}
+import type { AppConfig } from '../AppConfig';
+import { generateIcons } from './generateIcons';
 
 const appDir = process.cwd();
 const configPath = resolve(appDir, 'config.ts');
@@ -19,7 +14,9 @@ if (!existsSync(configPath)) {
     process.exit(1);
 }
 
-const { config }: AppConfig = await import(pathToFileURL(configPath).href);
+const { config }: { readonly config: AppConfig } = await import(
+    pathToFileURL(configPath).href
+);
 
 await generateIcons({
     emoji: config.appIconEmoji,

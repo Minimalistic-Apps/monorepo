@@ -1,3 +1,5 @@
-export const config = {
+import type { AppConfig } from '@minimalistic-apps/app-api';
+
+export const config: AppConfig = {
     appIconEmoji: '💱',
-} as const;
+};
