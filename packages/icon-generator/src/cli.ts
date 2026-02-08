@@ -1,22 +1,25 @@
 #!/usr/bin/env tsx
 
-import { existsSync, readFileSync } from 'node:fs';
+import { existsSync } from 'node:fs';
 import { resolve } from 'node:path';
+import { pathToFileURL } from 'node:url';
 import { generateIcons } from './generateIcons.ts';
 
 interface AppConfig {
-    readonly appIconEmoji: string;
+    readonly config: {
+        readonly appIconEmoji: string;
+    };
 }
 
-const configPath = resolve(process.cwd(), 'config.json');
+const appDir = process.cwd();
+const configPath = resolve(appDir, 'config.ts');
 
 if (!existsSync(configPath)) {
-    console.error('No config.json found in', process.cwd());
+    console.error('No config.ts found in', appDir);
     process.exit(1);
 }
 
-const config: AppConfig = JSON.parse(readFileSync(configPath, 'utf-8'));
-const appDir = process.cwd();
+const { config }: AppConfig = await import(pathToFileURL(configPath).href);
 
 await generateIcons({
     emoji: config.appIconEmoji,
