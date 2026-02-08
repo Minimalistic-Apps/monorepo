@@ -23,8 +23,7 @@ export default defineConfig({
             manifest: {
                 name: 'Minimalistic Price Converter',
                 short_name: 'Price Converter',
-                description:
-                    'Minimalistic app converting prices between fiat currencies and Bitcoin',
+                description: 'Minimalistic app converting prices between fiat currencies and Bitcoin',
                 theme_color: '#f7931a',
                 background_color: '#121212',
                 display: 'standalone',

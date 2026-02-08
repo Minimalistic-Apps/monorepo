@@ -1,10 +1,6 @@
 import { CurrencyCode, tryAsync } from '@evolu/common';
 import { RateBtcPerFiat } from '../converter/rate.js';
-import {
-    type CurrencyMap,
-    type FetchRates,
-    FetchRatesError,
-} from './FetchRates.js';
+import { type CurrencyMap, type FetchRates, FetchRatesError } from './FetchRates.js';
 
 interface BitpayRateItem {
     readonly code: string;
@@ -39,9 +35,7 @@ export const createFetchBitpayRates =
                         acc[code.value] = {
                             code: code.value,
                             name: item.name,
-                            rate: RateBtcPerFiat(code.value).from(
-                                1 / item.rate,
-                            ),
+                            rate: RateBtcPerFiat(code.value).from(1 / item.rate),
                         };
                     }
 

@@ -5,6 +5,4 @@ type ScreenProps = {
     readonly children: ReactNode;
 } & FlexProps;
 
-export const Screen = ({ children, ...props }: ScreenProps) => (
-    <Column {...props}>{children}</Column>
-);
+export const Screen = ({ children, ...props }: ScreenProps) => <Column {...props}>{children}</Column>;

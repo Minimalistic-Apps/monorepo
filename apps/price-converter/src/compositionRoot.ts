@@ -1,9 +1,6 @@
 import { createConnect } from '@minimalistic-apps/connect';
 import { createCurrentDateTime } from '@minimalistic-apps/datetime';
-import {
-    createEnsureEvoluOwner,
-    createSubscribableQuery,
-} from '@minimalistic-apps/evolu';
+import { createEnsureEvoluOwner, createSubscribableQuery } from '@minimalistic-apps/evolu';
 import { createLocalStorage } from '@minimalistic-apps/local-storage';
 import { createWindow } from '@minimalistic-apps/window';
 import { createEnsureEvolu } from '../../../packages/evolu/src/createEnsureEvolu';
@@ -30,10 +27,7 @@ import { createMain, type Main } from './createMain';
 import { createFetchRatesCompositionRoot } from './rates/fetchRatesCompositionRoot';
 import { createAddCurrency } from './state/addCurrency';
 import { createStore } from './state/createStore';
-import {
-    createGetSelectedCurrencies,
-    selectCurrencyCodes,
-} from './state/evolu/getSelectedCurrencies';
+import { createGetSelectedCurrencies, selectCurrencyCodes } from './state/evolu/getSelectedCurrencies';
 import { Schema } from './state/evolu/schema';
 import { createLoadInitialState } from './state/localStorage/loadInitialState';
 import { createPersistStore } from './state/localStorage/persistStore';
@@ -84,10 +78,7 @@ export const createCompositionRoot = (): Main => {
     // HACK: We need this to subscribe query, in next Evolu this won't be necessary.
     //       But now, we cannot create static query.
     const { evolu } = ensureEvolu();
-    const selectedCurrencies = createSubscribableQuery(
-        evolu,
-        getSelectedCurrencies.query,
-    );
+    const selectedCurrencies = createSubscribableQuery(evolu, getSelectedCurrencies.query);
 
     const connect = createConnect({ store, selectedCurrencies });
 
@@ -179,13 +170,9 @@ export const createCompositionRoot = (): Main => {
         },
     );
 
-    const ThemeSettings = connect(
-        ThemeSettingsPure,
-        ({ store }) => ({ theme: store.theme }),
-        {
-            setTheme,
-        },
-    );
+    const ThemeSettings = connect(ThemeSettingsPure, ({ store }) => ({ theme: store.theme }), {
+        setTheme,
+    });
 
     const MnemonicSettings = connect(MnemonicSettingsPure, ({ store }) => ({
         evoluMnemonic: store.evoluMnemonic,
@@ -222,25 +209,20 @@ export const createCompositionRoot = (): Main => {
         },
     );
 
-    const AppLayout = (props: AppLayoutProps) =>
-        AppLayoutPure({ AppHeader }, props);
+    const AppLayout = (props: AppLayoutProps) => AppLayoutPure({ AppHeader }, props);
 
     const ThemeWrapper = connect(ThemeWrapperPure, ({ store }) => ({
         themeMode: store.theme,
     }));
 
-    const App = connect(
-        AppPure,
-        ({ store }) => ({ currentScreen: store.currentScreen }),
-        {
-            // Components
-            ConverterScreen,
-            AddCurrencyScreen,
-            SettingsScreen,
-            AppLayout,
-            ThemeWrapper,
-        },
-    );
+    const App = connect(AppPure, ({ store }) => ({ currentScreen: store.currentScreen }), {
+        // Components
+        ConverterScreen,
+        AddCurrencyScreen,
+        SettingsScreen,
+        AppLayout,
+        ThemeWrapper,
+    });
 
     return createMain({ App, statePersistence });
 };

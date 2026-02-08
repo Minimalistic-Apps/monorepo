@@ -30,17 +30,13 @@ const createTestRates = (): CurrencyMap =>
         },
     }) as CurrencyMap;
 
-const createTestComponent = (
-    selectedCurrencies: ReadonlyArray<CurrencyCode> = [],
-) => {
+const createTestComponent = (selectedCurrencies: ReadonlyArray<CurrencyCode> = []) => {
     const navigate = vi.fn();
     const addCurrency = vi.fn();
     const deps = { navigate, addCurrency };
     const rates = createTestRates();
 
-    const AddCurrencyScreen = () => (
-        <>{AddCurrencyScreenPure(deps, { rates, selectedCurrencies })}</>
-    );
+    const AddCurrencyScreen = () => <>{AddCurrencyScreenPure(deps, { rates, selectedCurrencies })}</>;
 
     return { navigate, addCurrency, AddCurrencyScreen };
 };
@@ -68,15 +64,11 @@ describe(AddCurrencyScreenPure.name, () => {
     });
 
     test('excludes already selected currencies', () => {
-        const { AddCurrencyScreen } = createTestComponent([
-            'USD' as CurrencyCode,
-        ]);
+        const { AddCurrencyScreen } = createTestComponent(['USD' as CurrencyCode]);
 
         render(<AddCurrencyScreen />);
 
-        expect(
-            screen.queryByText('United States dollar'),
-        ).not.toBeInTheDocument();
+        expect(screen.queryByText('United States dollar')).not.toBeInTheDocument();
         expect(screen.getByText('Euro')).toBeInTheDocument();
     });
 
@@ -92,8 +84,7 @@ describe(AddCurrencyScreenPure.name, () => {
 
     test('adds currency and navigates on item click', async () => {
         const user = userEvent.setup();
-        const { addCurrency, navigate, AddCurrencyScreen } =
-            createTestComponent();
+        const { addCurrency, navigate, AddCurrencyScreen } = createTestComponent();
 
         render(<AddCurrencyScreen />);
         await user.click(screen.getByText('Japanese yen'));

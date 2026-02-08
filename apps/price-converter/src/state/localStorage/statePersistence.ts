@@ -10,22 +10,15 @@ export interface StatePersistenceDep {
     readonly statePersistence: StatePersistence;
 }
 
-type StatePersistenceDeps = LoadInitialStateDep &
-    PersistStoreDep &
-    WindowServiceDep;
+type StatePersistenceDeps = LoadInitialStateDep & PersistStoreDep & WindowServiceDep;
 
-export const createStatePersistence = (
-    deps: StatePersistenceDeps,
-): StatePersistence => {
+export const createStatePersistence = (deps: StatePersistenceDeps): StatePersistence => {
     const start = () => {
         deps.loadInitialState();
 
         const unsubscribe = deps.persistStore();
 
-        const removeBeforeUnloadListener = deps.window.addEventListener(
-            'beforeunload',
-            unsubscribe,
-        );
+        const removeBeforeUnloadListener = deps.window.addEventListener('beforeunload', unsubscribe);
 
         return () => {
             removeBeforeUnloadListener();

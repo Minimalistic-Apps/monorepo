@@ -24,12 +24,7 @@ export const Button = ({
     size = 'middle',
     style,
 }: ButtonProps) => {
-    const type =
-        variant === 'primary'
-            ? 'primary'
-            : variant === 'text'
-              ? 'text'
-              : 'default';
+    const type = variant === 'primary' ? 'primary' : variant === 'text' ? 'text' : 'default';
 
     return (
         <AntButton

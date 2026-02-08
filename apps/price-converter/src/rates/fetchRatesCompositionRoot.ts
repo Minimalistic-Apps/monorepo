@@ -7,8 +7,7 @@ import { createFetchCoingeckoRates } from './fetchCoingeckoRates';
 export const createFetchRatesCompositionRoot = (): FetchRates => {
     const fetchDeps = {
         // Important to be wrapped to preserve the correct `this` context
-        fetch: (input: RequestInfo | URL, init?: RequestInit) =>
-            globalThis.fetch(input, init),
+        fetch: (input: RequestInfo | URL, init?: RequestInit) => globalThis.fetch(input, init),
     };
 
     const fetchCoingeckoRates = createFetchCoingeckoRates(fetchDeps);
@@ -16,10 +15,6 @@ export const createFetchRatesCompositionRoot = (): FetchRates => {
     const fetchBlockchainInfoRates = createFetchBlockchainInfoRates(fetchDeps);
 
     return createFetchAverageRates({
-        fetchRates: [
-            fetchCoingeckoRates,
-            fetchBitpayRates,
-            fetchBlockchainInfoRates,
-        ],
+        fetchRates: [fetchCoingeckoRates, fetchBitpayRates, fetchBlockchainInfoRates],
     });
 };

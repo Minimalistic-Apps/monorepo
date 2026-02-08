@@ -5,12 +5,9 @@ export interface Territory {
     readonly name: string;
 }
 
-type CurrencyToTerritoryMap = Readonly<
-    Record<CurrencyCode, ReadonlyArray<Territory>>
->;
+type CurrencyToTerritoryMap = Readonly<Record<CurrencyCode, ReadonlyArray<Territory>>>;
 
-export const asCurrencyCodeUnsafe = (code: string) =>
-    getOrThrow(CurrencyCode.from(code));
+export const asCurrencyCodeUnsafe = (code: string) => getOrThrow(CurrencyCode.from(code));
 
 /**
  * Map of ISO 4217 currency codes to the territories where they are used.
@@ -20,9 +17,7 @@ export const asCurrencyCodeUnsafe = (code: string) =>
  *   - https://en.wikipedia.org/wiki/List_of_circulating_currencies
  */
 export const CURRENCY_TERRITORIES = {
-    [asCurrencyCodeUnsafe('AED')]: [
-        { flag: '🇦🇪', name: 'United Arab Emirates' },
-    ],
+    [asCurrencyCodeUnsafe('AED')]: [{ flag: '🇦🇪', name: 'United Arab Emirates' }],
     [asCurrencyCodeUnsafe('AFN')]: [{ flag: '🇦🇫', name: 'Afghanistan' }],
     [asCurrencyCodeUnsafe('ALL')]: [{ flag: '🇦🇱', name: 'Albania' }],
     [asCurrencyCodeUnsafe('AMD')]: [{ flag: '🇦🇲', name: 'Armenia' }],
@@ -43,9 +38,7 @@ export const CURRENCY_TERRITORIES = {
     ],
     [asCurrencyCodeUnsafe('AWG')]: [{ flag: '🇦🇼', name: 'Aruba' }],
     [asCurrencyCodeUnsafe('AZN')]: [{ flag: '🇦🇿', name: 'Azerbaijan' }],
-    [asCurrencyCodeUnsafe('BAM')]: [
-        { flag: '🇧🇦', name: 'Bosnia and Herzegovina' },
-    ],
+    [asCurrencyCodeUnsafe('BAM')]: [{ flag: '🇧🇦', name: 'Bosnia and Herzegovina' }],
     [asCurrencyCodeUnsafe('BBD')]: [{ flag: '🇧🇧', name: 'Barbados' }],
     [asCurrencyCodeUnsafe('BDT')]: [{ flag: '🇧🇩', name: 'Bangladesh' }],
     [asCurrencyCodeUnsafe('BHD')]: [{ flag: '🇧🇭', name: 'Bahrain' }],
@@ -63,9 +56,7 @@ export const CURRENCY_TERRITORIES = {
     [asCurrencyCodeUnsafe('BYN')]: [{ flag: '🇧🇾', name: 'Belarus' }],
     [asCurrencyCodeUnsafe('BZD')]: [{ flag: '🇧🇿', name: 'Belize' }],
     [asCurrencyCodeUnsafe('CAD')]: [{ flag: '🇨🇦', name: 'Canada' }],
-    [asCurrencyCodeUnsafe('CDF')]: [
-        { flag: '🇨🇩', name: 'Democratic Republic of the Congo' },
-    ],
+    [asCurrencyCodeUnsafe('CDF')]: [{ flag: '🇨🇩', name: 'Democratic Republic of the Congo' }],
     [asCurrencyCodeUnsafe('CHF')]: [
         { flag: '🇨🇭', name: 'Switzerland' },
         { flag: '🇱🇮', name: 'Liechtenstein' },
@@ -236,9 +227,7 @@ export const CURRENCY_TERRITORIES = {
     [asCurrencyCodeUnsafe('SOS')]: [{ flag: '🇸🇴', name: 'Somalia' }],
     [asCurrencyCodeUnsafe('SRD')]: [{ flag: '🇸🇷', name: 'Suriname' }],
     [asCurrencyCodeUnsafe('SSP')]: [{ flag: '🇸🇸', name: 'South Sudan' }],
-    [asCurrencyCodeUnsafe('STN')]: [
-        { flag: '🇸🇹', name: 'São Tomé and Príncipe' },
-    ],
+    [asCurrencyCodeUnsafe('STN')]: [{ flag: '🇸🇹', name: 'São Tomé and Príncipe' }],
     [asCurrencyCodeUnsafe('SVC')]: [{ flag: '🇸🇻', name: 'El Salvador' }],
     [asCurrencyCodeUnsafe('SYP')]: [{ flag: '🇸🇾', name: 'Syria' }],
     [asCurrencyCodeUnsafe('SZL')]: [{ flag: '🇸🇿', name: 'Eswatini' }],
@@ -251,9 +240,7 @@ export const CURRENCY_TERRITORIES = {
         { flag: '🇹🇷', name: 'Turkey' },
         { flag: '🇹🇷', name: 'Northern Cyprus' },
     ],
-    [asCurrencyCodeUnsafe('TTD')]: [
-        { flag: '🇹🇹', name: 'Trinidad and Tobago' },
-    ],
+    [asCurrencyCodeUnsafe('TTD')]: [{ flag: '🇹🇹', name: 'Trinidad and Tobago' }],
     [asCurrencyCodeUnsafe('TWD')]: [{ flag: '🇹�', name: 'Taiwan' }],
     [asCurrencyCodeUnsafe('TZS')]: [{ flag: '🇹🇿', name: 'Tanzania' }],
     [asCurrencyCodeUnsafe('UAH')]: [{ flag: '🇺🇦', name: 'Ukraine' }],
@@ -326,24 +313,15 @@ export const CURRENCY_TERRITORIES = {
     [asCurrencyCodeUnsafe('ZMW')]: [{ flag: '🇿🇲', name: 'Zambia' }],
 } satisfies CurrencyToTerritoryMap;
 
-export const getFlagsForCurrency = (
-    currencyCode: CurrencyCode,
-): ReadonlyArray<string> => [
+export const getFlagsForCurrency = (currencyCode: CurrencyCode): ReadonlyArray<string> => [
     ...new Set((CURRENCY_TERRITORIES[currencyCode] ?? []).map(t => t.flag)),
 ];
 
-export const getTerritoryNamesForCurrency = (
-    currencyCode: CurrencyCode,
-): ReadonlyArray<string> =>
+export const getTerritoryNamesForCurrency = (currencyCode: CurrencyCode): ReadonlyArray<string> =>
     (CURRENCY_TERRITORIES[currencyCode] ?? []).map(t => t.name);
 
-export const currencyMatchesTerritory = (
-    currencyCode: CurrencyCode,
-    searchTerm: string,
-): boolean => {
+export const currencyMatchesTerritory = (currencyCode: CurrencyCode, searchTerm: string): boolean => {
     const term = searchTerm.toLowerCase();
 
-    return (CURRENCY_TERRITORIES[currencyCode] ?? []).some(t =>
-        t.name.toLowerCase().includes(term),
-    );
+    return (CURRENCY_TERRITORIES[currencyCode] ?? []).some(t => t.name.toLowerCase().includes(term));
 };

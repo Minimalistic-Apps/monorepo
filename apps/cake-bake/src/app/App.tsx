@@ -1,9 +1,4 @@
-import {
-    AppHeader,
-    Column,
-    Layout,
-    ThemeProvider,
-} from '@minimalistic-apps/components';
+import { AppHeader, Column, Layout, ThemeProvider } from '@minimalistic-apps/components';
 import { Circle } from './modules/circle/Circle';
 import { Rectangle } from './modules/rectangle/Rectangle';
 

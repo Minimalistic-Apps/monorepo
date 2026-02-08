@@ -18,21 +18,14 @@ export interface GenerateIconsConfig {
  */
 const BRAND_COLOR = '#087d89';
 
-const EMOJI_FONT_FAMILY =
-    '"Noto Color Emoji", "Apple Color Emoji", "Segoe UI Emoji", "Twemoji Mozilla", sans-serif';
+const EMOJI_FONT_FAMILY = '"Noto Color Emoji", "Apple Color Emoji", "Segoe UI Emoji", "Twemoji Mozilla", sans-serif';
 
 const EMOJI_PADDING_RATIO = 0.15;
 
 const WEB_SIZES = [192, 512] as const;
 const FAVICON_SIZE = 48;
 
-const ANDROID_DENSITIES = [
-    'mdpi',
-    'hdpi',
-    'xhdpi',
-    'xxhdpi',
-    'xxxhdpi',
-] as const;
+const ANDROID_DENSITIES = ['mdpi', 'hdpi', 'xhdpi', 'xxhdpi', 'xxxhdpi'] as const;
 type AndroidDensity = (typeof ANDROID_DENSITIES)[number];
 
 const ANDROID_LAUNCHER_SIZE: Record<AndroidDensity, number> = {
@@ -53,13 +46,7 @@ const ANDROID_FOREGROUND_SIZE: Record<AndroidDensity, number> = {
 
 // --- Helpers ---
 
-const renderOnBackground = ({
-    emoji,
-    size,
-}: {
-    readonly emoji: string;
-    readonly size: number;
-}): Buffer => {
+const renderOnBackground = ({ emoji, size }: { readonly emoji: string; readonly size: number }): Buffer => {
     const canvas = createCanvas(size, size);
     const ctx = canvas.getContext('2d');
 
@@ -183,19 +170,12 @@ const generateAndroidIcons = async ({
         '',
     ].join('\n');
 
-    await writeFile(
-        join(resDir, 'values', 'ic_launcher_background.xml'),
-        bgXml,
-    );
+    await writeFile(join(resDir, 'values', 'ic_launcher_background.xml'), bgXml);
 };
 
 // --- Public API ---
 
-export const generateIcons = async ({
-    emoji,
-    webOutputDir,
-    androidResDir,
-}: GenerateIconsConfig): Promise<void> => {
+export const generateIcons = async ({ emoji, webOutputDir, androidResDir }: GenerateIconsConfig): Promise<void> => {
     console.log(`Generating icons for emoji: ${emoji}`);
 
     await generateWebIcons({ emoji, outputDir: webOutputDir });

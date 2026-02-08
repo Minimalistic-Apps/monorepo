@@ -10,9 +10,7 @@ export interface RecalculateFromCurrencyParams {
     readonly value: FiatAmount<CurrencyCode>;
 }
 
-export type RecalculateFromCurrency = (
-    params: RecalculateFromCurrencyParams,
-) => void;
+export type RecalculateFromCurrency = (params: RecalculateFromCurrencyParams) => void;
 
 export interface RecalculateFromCurrencyDep {
     readonly recalculateFromCurrency: RecalculateFromCurrency;

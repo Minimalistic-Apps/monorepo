@@ -9,21 +9,14 @@ interface SettingsRowProps {
     readonly direction?: 'row' | 'column';
 }
 
-export const SettingsRow = ({
-    label,
-    children,
-    description,
-    direction = 'row',
-}: SettingsRowProps) => {
+export const SettingsRow = ({ label, children, description, direction = 'row' }: SettingsRowProps) => {
     if (direction === 'column') {
         return (
             <Card>
                 <Column gap={12}>
                     <Column gap={4}>
                         <Title level={5}>{label}</Title>
-                        {isNonEmptyString(description) ? (
-                            <Text>{description}</Text>
-                        ) : null}
+                        {isNonEmptyString(description) ? <Text>{description}</Text> : null}
                     </Column>
                     {children}
                 </Column>
@@ -36,9 +29,7 @@ export const SettingsRow = ({
             <Row align="center" justify="space-between">
                 <Column gap={4}>
                     <Title level={5}>{label}</Title>
-                    {isNonEmptyString(description) ? (
-                        <Text>{description}</Text>
-                    ) : null}
+                    {isNonEmptyString(description) ? <Text>{description}</Text> : null}
                 </Column>
                 {children}
             </Row>

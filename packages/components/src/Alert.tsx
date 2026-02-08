@@ -7,16 +7,6 @@ interface AlertProps {
     readonly style?: React.CSSProperties;
 }
 
-export const Alert = ({
-    message,
-    type = 'info',
-    showIcon = true,
-    style,
-}: AlertProps) => (
-    <AntAlert
-        message={message}
-        type={type}
-        showIcon={showIcon}
-        {...(style ? { style } : {})}
-    />
+export const Alert = ({ message, type = 'info', showIcon = true, style }: AlertProps) => (
+    <AntAlert message={message} type={type} showIcon={showIcon} {...(style ? { style } : {})} />
 );

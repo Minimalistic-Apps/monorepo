@@ -5,11 +5,7 @@ import type { AppConfig } from '../../AppConfig';
 import type { AppRequirement } from '../AppRequirement';
 import { generateIcons } from './generateIcons';
 
-const REQUIRED_ICONS = [
-    'favicon.png',
-    'icon-192x192.png',
-    'icon-512x512.png',
-] as const;
+const REQUIRED_ICONS = ['favicon.png', 'icon-192x192.png', 'icon-512x512.png'] as const;
 
 export const generatedIcons: AppRequirement = {
     name: 'has generated icons',
@@ -20,16 +16,12 @@ export const generatedIcons: AppRequirement = {
             return ['missing config.ts — cannot generate icons'];
         }
 
-        const { config }: { readonly config: AppConfig } = await import(
-            pathToFileURL(configPath).href
-        );
+        const { config }: { readonly config: AppConfig } = await import(pathToFileURL(configPath).href);
 
         await generateIcons({
             emoji: config.appIconEmoji,
             webOutputDir: resolve(appDir, 'public'),
-            androidResDir: existsSync(
-                resolve(appDir, 'android/app/src/main/res'),
-            )
+            androidResDir: existsSync(resolve(appDir, 'android/app/src/main/res'))
                 ? resolve(appDir, 'android/app/src/main/res')
                 : undefined,
         });
@@ -46,9 +38,7 @@ export const generatedIcons: AppRequirement = {
 
         for (const icon of REQUIRED_ICONS) {
             if (!existsSync(resolve(publicDir, icon))) {
-                errors.push(
-                    `missing public/${icon} — run "generate:icons" first`,
-                );
+                errors.push(`missing public/${icon} — run "generate:icons" first`);
             }
         }
 

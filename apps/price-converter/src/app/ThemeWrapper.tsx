@@ -13,9 +13,6 @@ export type ThemeWrapperDep = {
     readonly ThemeWrapper: FC<ThemeWrapperOwnProps>;
 };
 
-export const ThemeWrapperPure = ({
-    themeMode,
-    children,
-}: ThemeWrapperStateProps & ThemeWrapperOwnProps) => (
+export const ThemeWrapperPure = ({ themeMode, children }: ThemeWrapperStateProps & ThemeWrapperOwnProps) => (
     <ThemeProvider mode={themeMode}>{children}</ThemeProvider>
 );

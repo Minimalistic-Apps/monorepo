@@ -9,16 +9,10 @@ interface AppHeaderProps {
     readonly children?: ReactNode;
 }
 
-export const AppHeader = ({
-    title,
-    onTitleClick,
-    children,
-}: AppHeaderProps) => (
+export const AppHeader = ({ title, onTitleClick, children }: AppHeaderProps) => (
     <ThemeProvider mode="dark">
         <Row justify="space-between" align="center" style={{ height: '100%' }}>
-            <Title {...(onTitleClick ? { onClick: onTitleClick } : {})}>
-                {title}
-            </Title>
+            <Title {...(onTitleClick ? { onClick: onTitleClick } : {})}>{title}</Title>
             {children != null && <Row gap={8}>{children}</Row>}
         </Row>
     </ThemeProvider>

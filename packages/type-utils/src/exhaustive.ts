@@ -4,9 +4,6 @@ class UnreachableCaseError extends Error {
     }
 }
 
-export const exhaustive = (
-    unhandledCase: never,
-    message = 'Unreachable case',
-): never => {
+export const exhaustive = (unhandledCase: never, message = 'Unreachable case'): never => {
     throw new UnreachableCaseError(unhandledCase, message);
 };

@@ -1,10 +1,4 @@
-import {
-    Card,
-    Fraction,
-    Input,
-    Row,
-    Text,
-} from '@minimalistic-apps/components';
+import { Card, Fraction, Input, Row, Text } from '@minimalistic-apps/components';
 import { useState } from 'react';
 import { calculateCircle } from './calculateCircle';
 
@@ -17,14 +11,9 @@ export const Circle = () => {
     const parsedOriginal = Number.parseFloat(originalDiameter);
     const parsedNew = Number.parseFloat(newDiameter);
 
-    const canCalculate =
-        Number.isFinite(parsedAmount) &&
-        Number.isFinite(parsedOriginal) &&
-        Number.isFinite(parsedNew);
+    const canCalculate = Number.isFinite(parsedAmount) && Number.isFinite(parsedOriginal) && Number.isFinite(parsedNew);
 
-    const result = canCalculate
-        ? calculateCircle(parsedAmount, parsedOriginal, parsedNew)
-        : null;
+    const result = canCalculate ? calculateCircle(parsedAmount, parsedOriginal, parsedNew) : null;
 
     return (
         <Card title="Circle">

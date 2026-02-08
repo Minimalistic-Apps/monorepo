@@ -7,9 +7,7 @@ export interface SelectedCurrencyRow extends Row {
     readonly currency: CurrencyCode | null;
 }
 
-export const selectCurrencyCodes = (
-    rows: ReadonlyArray<SelectedCurrencyRow>,
-): ReadonlyArray<CurrencyCode> =>
+export const selectCurrencyCodes = (rows: ReadonlyArray<SelectedCurrencyRow>): ReadonlyArray<CurrencyCode> =>
     rows.flatMap(row => (row.currency === null ? [] : [row.currency]));
 
 export interface GetSelectedCurrencies {
@@ -24,15 +22,10 @@ export interface GetSelectedCurrenciesDep {
     readonly getSelectedCurrencies: GetSelectedCurrencies;
 }
 
-export const createGetSelectedCurrencies = (
-    deps: GetSelectedCurrenciesDeps,
-): GetSelectedCurrencies => {
+export const createGetSelectedCurrencies = (deps: GetSelectedCurrenciesDeps): GetSelectedCurrencies => {
     const { evolu, shardOwner } = deps.ensureEvolu();
     const query: Query<SelectedCurrencyRow> = evolu.createQuery(db =>
-        db
-            .selectFrom('currency')
-            .select(['id', 'currency'])
-            .where('isDeleted', 'is not', sqliteTrue),
+        db.selectFrom('currency').select(['id', 'currency']).where('isDeleted', 'is not', sqliteTrue),
     );
 
     const get = async (): Promise<CurrencyCode[]> => {

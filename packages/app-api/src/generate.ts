@@ -10,20 +10,11 @@ import { requiredScripts } from './requirements/requiredScripts/requiredScripts'
 
 // --- Requirements ---
 
-const requirements: ReadonlyArray<AppRequirement> = [
-    configTs,
-    requiredScripts,
-    generatedIcons,
-    matchingDescription,
-];
+const requirements: ReadonlyArray<AppRequirement> = [configTs, requiredScripts, generatedIcons, matchingDescription];
 
 // --- Helpers ---
 
-const getAppDirs = ({
-    appsDir,
-}: {
-    readonly appsDir: string;
-}): ReadonlyArray<string> =>
+const getAppDirs = ({ appsDir }: { readonly appsDir: string }): ReadonlyArray<string> =>
     readdirSync(appsDir, { withFileTypes: true })
         .filter(entry => entry.isDirectory())
         .map(entry => join(appsDir, entry.name));

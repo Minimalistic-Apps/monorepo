@@ -1,8 +1,4 @@
-import {
-    type CurrencyCode,
-    createIdFromString,
-    sqliteTrue,
-} from '@evolu/common';
+import { type CurrencyCode, createIdFromString, sqliteTrue } from '@evolu/common';
 import type { EnsureEvoluDep } from '../state/evolu/schema';
 import type { RemoveFiatAmountDep } from '../state/removeFiatAmount';
 

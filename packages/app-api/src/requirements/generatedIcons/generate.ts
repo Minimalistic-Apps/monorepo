@@ -14,9 +14,7 @@ if (!existsSync(configPath)) {
     process.exit(1);
 }
 
-const { config }: { readonly config: AppConfig } = await import(
-    pathToFileURL(configPath).href
-);
+const { config }: { readonly config: AppConfig } = await import(pathToFileURL(configPath).href);
 
 await generateIcons({
     emoji: config.appIconEmoji,

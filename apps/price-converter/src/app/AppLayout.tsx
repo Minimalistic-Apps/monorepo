@@ -12,10 +12,7 @@ export type AppLayoutDep = {
     readonly AppLayout: FC<AppLayoutProps>;
 };
 
-export const AppLayoutPure = (
-    deps: AppLayoutDeps,
-    { children }: AppLayoutProps,
-) => (
+export const AppLayoutPure = (deps: AppLayoutDeps, { children }: AppLayoutProps) => (
     <Layout>
         <Layout.Header>
             <deps.AppHeader />

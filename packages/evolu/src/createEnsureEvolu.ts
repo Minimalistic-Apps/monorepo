@@ -56,10 +56,7 @@ const createEvoluStorage = <S extends EvoluSchema>(
         unuseOwner = evolu.useOwner(syncOwner);
     };
 
-    const shardOwner = deriveShardOwner(appOwner, [
-        'minimalistic-apps',
-        'price-converter',
-    ]);
+    const shardOwner = deriveShardOwner(appOwner, ['minimalistic-apps', 'price-converter']);
 
     const unuseShardOwner = evolu.useOwner(shardOwner);
 

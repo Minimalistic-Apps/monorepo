@@ -1,9 +1,7 @@
 import type { CurrencyCode } from '@evolu/common';
 import type { FiatAmount } from './types';
 
-export const formatFiatWithCommas = (
-    value: FiatAmount<CurrencyCode> | undefined,
-): string => {
+export const formatFiatWithCommas = (value: FiatAmount<CurrencyCode> | undefined): string => {
     if (value === undefined) {
         return '0';
     }

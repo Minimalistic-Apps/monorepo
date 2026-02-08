@@ -11,11 +11,7 @@ export type AppStateProps = {
     readonly currentScreen: Screen;
 };
 
-type AppDeps = ConverterScreenDep &
-    AddCurrencyScreenDep &
-    SettingsScreenDep &
-    AppLayoutDep &
-    ThemeWrapperDep;
+type AppDeps = ConverterScreenDep & AddCurrencyScreenDep & SettingsScreenDep & AppLayoutDep & ThemeWrapperDep;
 
 export type AppDep = {
     readonly App: FC;

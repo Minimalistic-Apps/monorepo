@@ -11,9 +11,7 @@ export interface Subscribable<State> {
 type SubscribableRecord = Readonly<Record<string, Subscribable<unknown>>>;
 
 type StoreStates<Stores extends SubscribableRecord> = {
-    readonly [K in keyof Stores]: Stores[K] extends Subscribable<infer S>
-        ? S
-        : never;
+    readonly [K in keyof Stores]: Stores[K] extends Subscribable<infer S> ? S : never;
 };
 
 export type Connect<States> = {
@@ -29,9 +27,7 @@ export type Connect<States> = {
     ): React.FC<Omit<RenderProps, keyof StateProps>>;
 };
 
-export const createConnect = <Stores extends SubscribableRecord>(
-    stores: Stores,
-): Connect<StoreStates<Stores>> => {
+export const createConnect = <Stores extends SubscribableRecord>(stores: Stores): Connect<StoreStates<Stores>> => {
     const storeEntries = Object.entries(stores);
 
     const subscribe = (callback: Listener) => {
@@ -59,15 +55,11 @@ export const createConnect = <Stores extends SubscribableRecord>(
             >(undefined);
 
             const getSnapshot = useCallback(() => {
-                const currentStoreStates = storeEntries.map(([, s]) =>
-                    s.getState(),
-                );
+                const currentStoreStates = storeEntries.map(([, s]) => s.getState());
 
                 if (
                     cacheRef.current !== undefined &&
-                    currentStoreStates.every((state, i) =>
-                        Object.is(state, cacheRef.current?.storeStates[i]),
-                    )
+                    currentStoreStates.every((state, i) => Object.is(state, cacheRef.current?.storeStates[i]))
                 ) {
                     return cacheRef.current.mapped;
                 }

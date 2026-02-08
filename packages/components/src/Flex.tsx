@@ -7,12 +7,7 @@ export interface FlexProps {
     readonly flex?: number | string;
     readonly wrap?: boolean;
     readonly align?: 'start' | 'center' | 'end' | 'stretch';
-    readonly justify?:
-        | 'start'
-        | 'center'
-        | 'end'
-        | 'space-between'
-        | 'space-around';
+    readonly justify?: 'start' | 'center' | 'end' | 'space-between' | 'space-around';
     readonly direction?: 'row' | 'column';
     readonly style?: React.CSSProperties;
 }
@@ -40,10 +35,6 @@ export const Flex = ({
     </AntFlex>
 );
 
-export const Row = (props: FlexProps) => (
-    <Flex {...props} direction="row" align={props.align ?? 'center'} />
-);
+export const Row = (props: FlexProps) => <Flex {...props} direction="row" align={props.align ?? 'center'} />;
 
-export const Column = (props: FlexProps) => (
-    <Flex {...props} direction="column" />
-);
+export const Column = (props: FlexProps) => <Flex {...props} direction="column" />;
