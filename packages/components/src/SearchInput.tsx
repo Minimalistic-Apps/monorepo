@@ -23,12 +23,6 @@ export const SearchInput = ({
     };
 
     return (
-        <Search
-            value={value}
-            onChange={handleChange}
-            placeholder={placeholder}
-            allowClear={allowClear}
-            style={style}
-        />
+        <Search value={value} onChange={handleChange} placeholder={placeholder} allowClear={allowClear} style={style} />
     );
 };

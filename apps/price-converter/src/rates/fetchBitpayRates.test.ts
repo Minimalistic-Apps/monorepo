@@ -9,10 +9,7 @@ const EUR = getOrThrow(CurrencyCode.from('EUR'));
 const GBP = getOrThrow(CurrencyCode.from('GBP'));
 const JPY = getOrThrow(CurrencyCode.from('JPY'));
 
-const createMockFetch = (
-    response: unknown,
-    ok = true,
-): typeof globalThis.fetch =>
+const createMockFetch = (response: unknown, ok = true): typeof globalThis.fetch =>
     (() =>
         Promise.resolve({
             ok,
@@ -63,9 +60,7 @@ describe(createFetchBitpayRates, () => {
             return;
         }
 
-        expect(
-            result.value['BTC' as keyof typeof result.value],
-        ).toBeUndefined();
+        expect(result.value['BTC' as keyof typeof result.value]).toBeUndefined();
     });
 
     test('excludes invalid currency codes', async () => {
@@ -107,10 +102,7 @@ describe(createFetchBitpayRates, () => {
 
     test('returns FetchRatesError when fetch throws', async () => {
         const fetchBitpayRates = createFetchBitpayRates({
-            fetch: (() =>
-                Promise.reject(
-                    new Error('Network error'),
-                )) as typeof globalThis.fetch,
+            fetch: (() => Promise.reject(new Error('Network error'))) as typeof globalThis.fetch,
         });
 
         const result = await fetchBitpayRates();

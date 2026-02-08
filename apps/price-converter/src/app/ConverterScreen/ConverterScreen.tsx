@@ -45,9 +45,7 @@ export const ConverterScreenPure = (
                 key="BTC"
                 code="BTC"
                 value={satsAmount}
-                onChange={(value: number) =>
-                    handleBtcChange(value as AmountSats)
-                }
+                onChange={(value: number) => handleBtcChange(value as AmountSats)}
             />
 
             {selectedCurrencies.map((code: CurrencyCode) => (

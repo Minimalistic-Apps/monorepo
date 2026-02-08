@@ -14,10 +14,7 @@ describe(isNonEmpty.name, () => {
         { input: undefined, expected: false },
     ];
 
-    test.each(testCases)('returns $expected for $input', ({
-        input,
-        expected,
-    }) => {
+    test.each(testCases)('returns $expected for $input', ({ input, expected }) => {
         expect(isNonEmpty(input)).toBe(expected);
     });
 

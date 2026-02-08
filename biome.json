@@ -8,7 +8,8 @@
     "formatter": {
         "enabled": true,
         "indentStyle": "space",
-        "indentWidth": 4
+        "indentWidth": 4,
+        "lineWidth": 120
     },
     "linter": {
         "enabled": true,
@@ -44,12 +45,7 @@
     },
     "overrides": [
         {
-            "includes": [
-                "**/vite.config.ts",
-                "**/vitest.config.ts",
-                "**/capacitor.config.ts",
-                "eslint.config.js"
-            ],
+            "includes": ["**/vite.config.ts", "**/vitest.config.ts", "**/capacitor.config.ts", "eslint.config.js"],
             "linter": {
                 "rules": {
                     "style": {

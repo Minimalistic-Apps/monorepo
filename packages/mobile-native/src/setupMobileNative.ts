@@ -16,10 +16,7 @@ const polyfillNavigatorLocks = (): void => {
 
     Object.defineProperty(navigator, 'locks', {
         value: {
-            request: async (
-                _name: string,
-                callback: () => Promise<void>,
-            ): Promise<void> => callback(),
+            request: async (_name: string, callback: () => Promise<void>): Promise<void> => callback(),
             query: async () => ({ held: [], pending: [] }),
         },
         configurable: true,
@@ -35,7 +32,5 @@ export const setupMobileNative = (): void => {
         StatusBar.setOverlaysWebView({ overlay: true });
     }
 
-    document
-        .querySelector('meta[name="theme-color"]')
-        ?.setAttribute('content', BRAND_COLOR);
+    document.querySelector('meta[name="theme-color"]')?.setAttribute('content', BRAND_COLOR);
 };

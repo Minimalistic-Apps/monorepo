@@ -1,7 +1,4 @@
-import {
-    currencyMatchesTerritory,
-    type FiatCurrency,
-} from '@minimalistic-apps/fiat';
+import { currencyMatchesTerritory, type FiatCurrency } from '@minimalistic-apps/fiat';
 
 export const filterCurrencies = <T extends FiatCurrency>(
     currencies: ReadonlyArray<T>,

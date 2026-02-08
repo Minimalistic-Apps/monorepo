@@ -1,10 +1,6 @@
 import { CurrencyCode, err, getOrThrow, ok } from '@evolu/common';
 import { describe, expect, test } from 'vitest';
-import {
-    type CurrencyMap,
-    type FetchRates,
-    FetchRatesError,
-} from './FetchRates.js';
+import { type CurrencyMap, type FetchRates, FetchRatesError } from './FetchRates.js';
 import { createFetchAverageRates } from './fetchAverageRates.js';
 
 const USD = getOrThrow(CurrencyCode.from('USD'));
@@ -16,8 +12,7 @@ const createMockFetchRates =
     async () =>
         ok(rates);
 
-const createFailingFetchRates = (): FetchRates => async () =>
-    err(FetchRatesError());
+const createFailingFetchRates = (): FetchRates => async () => err(FetchRatesError());
 
 describe(createFetchAverageRates, () => {
     test('calculates average rate from multiple sources', async () => {
@@ -35,11 +30,7 @@ describe(createFetchAverageRates, () => {
         } as CurrencyMap;
 
         const fetchAverageRates = createFetchAverageRates({
-            fetchRates: [
-                createMockFetchRates(source1),
-                createMockFetchRates(source2),
-                createMockFetchRates(source3),
-            ],
+            fetchRates: [createMockFetchRates(source1), createMockFetchRates(source2), createMockFetchRates(source3)],
         });
 
         const result = await fetchAverageRates();
@@ -64,10 +55,7 @@ describe(createFetchAverageRates, () => {
         } as CurrencyMap;
 
         const fetchAverageRates = createFetchAverageRates({
-            fetchRates: [
-                createMockFetchRates(source1),
-                createMockFetchRates(source2),
-            ],
+            fetchRates: [createMockFetchRates(source1), createMockFetchRates(source2)],
         });
 
         const result = await fetchAverageRates();
@@ -88,11 +76,7 @@ describe(createFetchAverageRates, () => {
         } as CurrencyMap;
 
         const fetchAverageRates = createFetchAverageRates({
-            fetchRates: [
-                createMockFetchRates(source1),
-                createFailingFetchRates(),
-                createFailingFetchRates(),
-            ],
+            fetchRates: [createMockFetchRates(source1), createFailingFetchRates(), createFailingFetchRates()],
         });
 
         const result = await fetchAverageRates();
@@ -135,10 +119,7 @@ describe(createFetchAverageRates, () => {
         } as CurrencyMap;
 
         const fetchAverageRates = createFetchAverageRates({
-            fetchRates: [
-                createMockFetchRates(source1),
-                createMockFetchRates(source2),
-            ],
+            fetchRates: [createMockFetchRates(source1), createMockFetchRates(source2)],
         });
 
         const result = await fetchAverageRates();

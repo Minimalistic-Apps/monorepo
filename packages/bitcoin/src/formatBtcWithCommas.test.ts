@@ -24,10 +24,7 @@ describe(formatBtcWithCommas.name, () => {
         { input: -1.23456789, expected: '-1.23,456,789' },
     ];
 
-    test.each(testCases)('formats $input to $expected', ({
-        input,
-        expected,
-    }) => {
+    test.each(testCases)('formats $input to $expected', ({ input, expected }) => {
         expect(formatBtcWithCommas(input as AmountBtc)).toBe(expected);
     });
 });

@@ -9,11 +9,5 @@ export type AddCurrencyButtonDep = { AddCurrencyButton: FC };
 export const AddCurrencyButtonPure = (deps: AddCurrencyButtonDeps) => {
     const onClick = () => deps.navigate('AddCurrency');
 
-    return (
-        <FloatButton
-            icon={<PlusOutlined />}
-            onClick={onClick}
-            tooltip="Add Currency"
-        />
-    );
+    return <FloatButton icon={<PlusOutlined />} onClick={onClick} tooltip="Add Currency" />;
 };

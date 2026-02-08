@@ -25,10 +25,7 @@ export const createPersistStore =
             deps.localStorage.save(STORAGE_KEYS.MODE, state.btcMode);
 
             if (state.evoluMnemonic !== null) {
-                deps.localStorage.save(
-                    STORAGE_KEYS.EVOLU_MNEMONIC,
-                    state.evoluMnemonic,
-                );
+                deps.localStorage.save(STORAGE_KEYS.EVOLU_MNEMONIC, state.evoluMnemonic);
             }
         });
 

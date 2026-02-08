@@ -9,10 +9,7 @@ export interface FetchAndStoreRatesDep {
     readonly fetchAndStoreRates: FetchAndStoreRates;
 }
 
-type FetchAndStoreRatesDeps = StoreDep &
-    FetchRatesDep &
-    RecalculateFromBtcDep &
-    CurrentDateTimeDep;
+type FetchAndStoreRatesDeps = StoreDep & FetchRatesDep & RecalculateFromBtcDep & CurrentDateTimeDep;
 
 export const createFetchAndStoreRates =
     (deps: FetchAndStoreRatesDeps): FetchAndStoreRates =>

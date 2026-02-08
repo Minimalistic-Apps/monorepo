@@ -25,8 +25,7 @@ export const createStore = (): Store<State> => {
 
 export const selectRates = (state: State) => state.rates;
 export const selectSatsAmount = (state: State) => state.satsAmount;
-export const selectSelectedFiatCurrenciesAmounts = (state: State) =>
-    state.fiatAmounts;
+export const selectSelectedFiatCurrenciesAmounts = (state: State) => state.fiatAmounts;
 export const selectLoading = (state: State) => state.loading;
 export const selectError = (state: State) => state.error;
 export const selectLastUpdated = (state: State) => state.lastUpdated;

@@ -43,9 +43,7 @@ interface LayoutProps {
 }
 
 const LayoutComponent = ({ children }: LayoutProps) => (
-    <AntLayout style={{ minHeight: '100vh', padding: '0' }}>
-        {children}
-    </AntLayout>
+    <AntLayout style={{ minHeight: '100vh', padding: '0' }}>{children}</AntLayout>
 );
 
 export const Layout = Object.assign(LayoutComponent, {

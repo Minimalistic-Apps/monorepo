@@ -1,13 +1,5 @@
 import type { CurrencyCode } from '@evolu/common';
-import {
-    Button,
-    Flex,
-    List,
-    Row,
-    Screen,
-    SearchInput,
-    Text,
-} from '@minimalistic-apps/components';
+import { Button, Flex, List, Row, Screen, SearchInput, Text } from '@minimalistic-apps/components';
 import { CURRENCY_TERRITORIES } from '@minimalistic-apps/fiat';
 import { typedObjectValues } from '@minimalistic-apps/type-utils';
 import type { FC } from 'react';
@@ -35,17 +27,11 @@ export const AddCurrencyScreenPure = (
     const [searchTerm, setSearchTerm] = useState('');
 
     const availableCurrencies = typedObjectValues(rates)
-        .filter(
-            (it): it is CurrencyEntity =>
-                it !== undefined && !selectedCurrencies.includes(it.code),
-        )
+        .filter((it): it is CurrencyEntity => it !== undefined && !selectedCurrencies.includes(it.code))
         .sort((a, b) => a.name.localeCompare(b.name))
         .map(it => ({ code: it.code, name: it.name }));
 
-    const filteredCurrencies = filterCurrencies(
-        availableCurrencies,
-        searchTerm,
-    );
+    const filteredCurrencies = filterCurrencies(availableCurrencies, searchTerm);
 
     const handleSelect = (code: string) => {
         deps.addCurrency({ code: code as CurrencyCode });
@@ -63,18 +49,10 @@ export const AddCurrencyScreenPure = (
 
     return (
         <Screen gap={12}>
-            <Button
-                onClick={handleBack}
-                variant="text"
-                style={{ alignSelf: 'start' }}
-            >
+            <Button onClick={handleBack} variant="text" style={{ alignSelf: 'start' }}>
                 ← Back
             </Button>
-            <SearchInput
-                value={searchTerm}
-                onChange={setSearchTerm}
-                placeholder="Search currencies..."
-            />
+            <SearchInput value={searchTerm} onChange={setSearchTerm} placeholder="Search currencies..." />
             <div
                 style={{
                     maxHeight: 'calc(100vh - 200px)',
@@ -91,9 +69,7 @@ export const AddCurrencyScreenPure = (
                             <Flex flex="1" style={{ minWidth: 0 }}>
                                 <Row gap={4} wrap>
                                     {item.name}&nbsp;&nbsp;
-                                    {(
-                                        CURRENCY_TERRITORIES[item.code] ?? []
-                                    ).map(t => (
+                                    {(CURRENCY_TERRITORIES[item.code] ?? []).map(t => (
                                         <span key={t.name} title={t.name}>
                                             {t.flag}
                                         </span>

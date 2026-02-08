@@ -1,10 +1,7 @@
 export type EventListener = () => void;
 
 export interface Window {
-    readonly addEventListener: (
-        event: string,
-        listener: EventListener,
-    ) => () => void;
+    readonly addEventListener: (event: string, listener: EventListener) => () => void;
 }
 
 export interface WindowServiceDep {

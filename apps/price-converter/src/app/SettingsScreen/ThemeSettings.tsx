@@ -10,10 +10,7 @@ export type ThemeSettingsDep = {
     ThemeSettings: FC;
 };
 
-export const ThemeSettingsPure = (
-    deps: SetThemeDep,
-    { theme }: ThemeSettingsStateProps,
-) => {
+export const ThemeSettingsPure = (deps: SetThemeDep, { theme }: ThemeSettingsStateProps) => {
     const onThemeToggle = (checked: boolean) => {
         deps.setTheme(checked ? 'light' : 'dark');
     };
