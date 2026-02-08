@@ -2,10 +2,10 @@
 
 import { readdirSync } from 'node:fs';
 import { join, resolve } from 'node:path';
-import type { AppCheck } from './AppCheck.ts';
-import { hasConfigTs } from './checks/hasConfigTs.ts';
-import { hasGeneratedIcons } from './checks/hasGeneratedIcons.ts';
-import { hasRequiredScripts } from './checks/hasRequiredScripts.ts';
+import type { AppCheck } from './AppCheck';
+import { hasConfigTs } from './checks/hasConfigTs';
+import { hasGeneratedIcons } from './checks/hasGeneratedIcons';
+import { hasRequiredScripts } from './checks/hasRequiredScripts';
 
 // --- Checks ---
 

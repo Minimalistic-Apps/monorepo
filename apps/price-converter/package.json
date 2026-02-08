@@ -35,7 +35,7 @@
     "devDependencies": {
         "@capacitor/android": "^7.2.0",
         "@capacitor/cli": "^7.2.0",
-        "@minimalistic-apps/icon-generator": "workspace:*",
+        "@minimalistic-apps/app-api": "workspace:*",
         "@testing-library/jest-dom": "^6.9.1",
         "@testing-library/react": "^16.3.2",
         "@testing-library/user-event": "^14.6.1",
