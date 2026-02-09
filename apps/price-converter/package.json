@@ -6,12 +6,13 @@
     "type": "module",
     "scripts": {
         "dev": "vite",
-        "dev:android": "CAP_SERVER_URL=http://$(hostname -I | awk '{print $1}'):5173 npx cap run android",
+        "dev:android": "../../scripts/dev-android.sh",
         "dev:android:sign": "../../scripts/sign-apk.sh",
         "build": "vite build",
         "build:android": "../../scripts/build-android.sh",
         "preview": "vite preview",
-        "typecheck": "tsc --noEmit"
+        "typecheck": "tsc --noEmit",
+        "capacitor:sync:after": "../../scripts/configure-android.sh"
     },
     "dependencies": {
         "@capacitor/core": "^7.2.0",
