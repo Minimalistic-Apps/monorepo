@@ -28,7 +28,15 @@ export const requireAndroidSetup: Requirement = {
         }
 
         if (!existsSync(androidDir)) {
-            return ['android/ directory still missing after build:android'];
+            return ['android/ directory still missing after cap add'];
+        }
+
+        console.log('  Configuring android build…');
+
+        try {
+            execSync('../../scripts/configure-android.sh', { cwd: appDir, stdio: 'inherit' });
+        } catch {
+            return ['configure-android.sh failed — check output above'];
         }
 
         const targetPath = join(androidDir, 'keystore.properties');

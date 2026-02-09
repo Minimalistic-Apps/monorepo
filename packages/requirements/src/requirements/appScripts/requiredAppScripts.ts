@@ -3,34 +3,15 @@ import { join } from 'node:path';
 import { typedObjectKeys } from '@minimalist-apps/type-utils';
 import type { Requirement } from '../Requirement';
 
-const getDevPort = ({ appDir }: { readonly appDir: string }): number | null => {
-    const configPath = join(appDir, 'config.ts');
-
-    if (!existsSync(configPath)) {
-        return null;
-    }
-
-    const content = readFileSync(configPath, 'utf-8');
-    const match = /devPort:\s*(\d+)/u.exec(content);
-
-    return match ? Number(match[1]) : null;
-};
-
-const buildExpectedScripts = ({
-    port,
-}: {
-    readonly port: number;
-}): ReadonlyArray<readonly [name: string, value: string | null]> => [
+const expectedScripts: ReadonlyArray<readonly [name: string, value: string]> = [
     ['dev', 'vite'],
-    [
-        'dev:android',
-        `CAP_SERVER_URL=http://$(hostname -I | awk '{print $1}'):${String(port)} npx cap run android`,
-    ],
+    ['dev:android', '../../scripts/dev-android.sh'],
     ['dev:android:sign', '../../scripts/sign-apk.sh'],
     ['build', 'vite build'],
     ['build:android', '../../scripts/build-android.sh'],
     ['preview', 'vite preview'],
     ['typecheck', 'tsc --noEmit'],
+    ['capacitor:sync:after', '../../scripts/configure-android.sh'],
 ];
 
 export const requiredAppScripts: Requirement = {
@@ -38,12 +19,6 @@ export const requiredAppScripts: Requirement = {
     applies: ({ projectType }) => projectType === 'app',
     // biome-ignore lint/suspicious/useAwait: interface requires Promise return
     fix: async ({ appDir }) => {
-        const port = getDevPort({ appDir });
-
-        if (port === null) {
-            return ['missing devPort in config.ts — cannot fix scripts'];
-        }
-
         const pkgPath = join(appDir, 'package.json');
 
         if (!existsSync(pkgPath)) {
@@ -51,13 +26,10 @@ export const requiredAppScripts: Requirement = {
         }
 
         const pkg = JSON.parse(readFileSync(pkgPath, 'utf-8'));
-        const existingScripts: Partial<Record<string, string>> = pkg.scripts ?? {};
-        const expected = buildExpectedScripts({ port });
-
         const newScripts: Record<string, string> = {};
 
-        for (const [name, value] of expected) {
-            newScripts[name] = value ?? existingScripts[name] ?? '';
+        for (const [name, value] of expectedScripts) {
+            newScripts[name] = value;
         }
 
         pkg.scripts = newScripts;
@@ -73,12 +45,6 @@ export const requiredAppScripts: Requirement = {
             return ['missing package.json'];
         }
 
-        const port = getDevPort({ appDir });
-
-        if (port === null) {
-            return ['missing devPort in config.ts — cannot verify scripts'];
-        }
-
         const pkg = JSON.parse(readFileSync(pkgPath, 'utf-8'));
         const scripts: Record<string, string> | undefined = pkg.scripts;
 
@@ -86,8 +52,7 @@ export const requiredAppScripts: Requirement = {
             return ['no "scripts" in package.json'];
         }
 
-        const expected = buildExpectedScripts({ port });
-        const expectedNames = expected.map(([name]) => name);
+        const expectedNames = expectedScripts.map(([name]) => name);
         const scriptKeys = typedObjectKeys(scripts);
 
         const missing = expectedNames.filter(s => !scriptKeys.includes(s));
@@ -102,8 +67,8 @@ export const requiredAppScripts: Requirement = {
         }
 
         if (missing.length === 0 && extra.length === 0) {
-            for (let i = 0; i < expected.length; i++) {
-                const [expectedName, expectedValue] = expected[i];
+            for (let i = 0; i < expectedScripts.length; i++) {
+                const [expectedName, expectedValue] = expectedScripts[i];
 
                 if (scriptKeys[i] !== expectedName) {
                     errors.push(
@@ -112,7 +77,7 @@ export const requiredAppScripts: Requirement = {
                     break;
                 }
 
-                if (expectedValue !== null && scripts[expectedName] !== expectedValue) {
+                if (scripts[expectedName] !== expectedValue) {
                     errors.push(
                         `script "${expectedName}" value mismatch — expected "${expectedValue}", found "${scripts[expectedName]}"`,
                     );
