@@ -13,10 +13,6 @@ dist-ssr
 *.local
 *.tsbuildinfo
 
-# Capacitor Android
-apps/*/android
-*.apk
-
 # Signing
 keystore.properties
 
