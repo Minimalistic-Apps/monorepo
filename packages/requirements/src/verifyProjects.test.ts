@@ -2,23 +2,23 @@ import { mkdtempSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { afterEach, beforeEach, describe, expect, test } from 'vitest';
-import { fixProjects } from './fix';
 import type { Requirement } from './requirements/Requirement';
+import { verifyProjects } from './verifyProjects';
 
-const createTempDir = (): string => mkdtempSync(join(tmpdir(), 'fix-'));
+const createTempDir = (): string => mkdtempSync(join(tmpdir(), 'verify-'));
 
 const createMockRequirement = ({
     name,
     applies = () => true,
-    fix = async () => [],
+    verify = () => [],
 }: Partial<Requirement> & { name: string }): Requirement => ({
     name,
     applies,
-    fix,
-    verify: () => [],
+    verify,
+    fix: async () => [],
 });
 
-describe(fixProjects.name, () => {
+describe(verifyProjects.name, () => {
     let appDir: string;
 
     beforeEach(() => {
@@ -29,8 +29,8 @@ describe(fixProjects.name, () => {
         rmSync(appDir, { recursive: true, force: true });
     });
 
-    test('returns no errors when all requirements pass', async () => {
-        const errors = await fixProjects({
+    test('returns no errors when all requirements pass', () => {
+        const errors = verifyProjects({
             projectDirs: [appDir],
             projectType: 'app',
             filteredRequirements: [createMockRequirement({ name: 'passing-req' })],
@@ -39,33 +39,33 @@ describe(fixProjects.name, () => {
         expect(errors).toEqual([]);
     });
 
-    test('returns errors from a failing requirement', async () => {
-        const errors = await fixProjects({
+    test('returns errors from a failing requirement', () => {
+        const errors = verifyProjects({
             projectDirs: [appDir],
             projectType: 'app',
             filteredRequirements: [
                 createMockRequirement({
                     name: 'failing-req',
-                    fix: async () => ['could not fix'],
+                    verify: () => ['something is wrong'],
                 }),
             ],
         });
 
-        expect(errors).toEqual([`${appDir} [failing-req]: could not fix`]);
+        expect(errors).toEqual([`${appDir} [failing-req]: something is wrong`]);
     });
 
-    test('collects errors from multiple requirements', async () => {
-        const errors = await fixProjects({
+    test('collects errors from multiple requirements', () => {
+        const errors = verifyProjects({
             projectDirs: [appDir],
             projectType: 'app',
             filteredRequirements: [
                 createMockRequirement({
                     name: 'req-a',
-                    fix: async () => ['error from a'],
+                    verify: () => ['error from a'],
                 }),
                 createMockRequirement({
                     name: 'req-b',
-                    fix: async () => ['error from b'],
+                    verify: () => ['error from b'],
                 }),
             ],
         });
@@ -76,16 +76,16 @@ describe(fixProjects.name, () => {
         ]);
     });
 
-    test('collects errors across multiple project dirs', async () => {
+    test('collects errors across multiple project dirs', () => {
         const secondDir = createTempDir();
 
-        const errors = await fixProjects({
+        const errors = verifyProjects({
             projectDirs: [appDir, secondDir],
             projectType: 'app',
             filteredRequirements: [
                 createMockRequirement({
                     name: 'req-a',
-                    fix: async () => ['broken'],
+                    verify: () => ['broken'],
                 }),
             ],
         });
@@ -95,15 +95,15 @@ describe(fixProjects.name, () => {
         rmSync(secondDir, { recursive: true, force: true });
     });
 
-    test('skips requirements that do not apply', async () => {
-        const errors = await fixProjects({
+    test('skips requirements that do not apply', () => {
+        const errors = verifyProjects({
             projectDirs: [appDir],
             projectType: 'app',
             filteredRequirements: [
                 createMockRequirement({
                     name: 'skipped-req',
                     applies: () => false,
-                    fix: async () => ['should not appear'],
+                    verify: () => ['should not appear'],
                 }),
             ],
         });
@@ -111,10 +111,10 @@ describe(fixProjects.name, () => {
         expect(errors).toEqual([]);
     });
 
-    test('applies is called with correct projectType and dirName', async () => {
+    test('applies is called with correct projectType and dirName', () => {
         const appliesCalls: Array<{ projectType: string; dirName: string }> = [];
 
-        await fixProjects({
+        verifyProjects({
             projectDirs: [appDir],
             projectType: 'package',
             filteredRequirements: [
@@ -133,14 +133,14 @@ describe(fixProjects.name, () => {
         expect(appliesCalls[0]?.projectType).toBe('package');
     });
 
-    test('returns no errors when project dirs are empty', async () => {
-        const errors = await fixProjects({
+    test('returns no errors when project dirs are empty', () => {
+        const errors = verifyProjects({
             projectDirs: [],
             projectType: 'app',
             filteredRequirements: [
                 createMockRequirement({
                     name: 'req',
-                    fix: async () => ['should not appear'],
+                    verify: () => ['should not appear'],
                 }),
             ],
         });
@@ -148,14 +148,14 @@ describe(fixProjects.name, () => {
         expect(errors).toEqual([]);
     });
 
-    test('collects multiple errors from a single requirement', async () => {
-        const errors = await fixProjects({
+    test('collects multiple errors from a single requirement', () => {
+        const errors = verifyProjects({
             projectDirs: [appDir],
             projectType: 'app',
             filteredRequirements: [
                 createMockRequirement({
                     name: 'multi-error-req',
-                    fix: async () => ['first error', 'second error'],
+                    verify: () => ['first error', 'second error'],
                 }),
             ],
         });

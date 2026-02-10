@@ -1,46 +1,10 @@
 #!/usr/bin/env tsx
 
-import { basename, join, resolve } from 'node:path';
+import { join, resolve } from 'node:path';
 import { filterDirs, getSubDirs, green, parseArgs, red } from '@minimalist-apps/cli';
-import { requirements } from './allRequirements';
-import { filterRequirementsByName } from './filterRequirementsByName';
-import type { ProjectType, Requirement } from './requirements/Requirement';
-
-// --- Helpers ---
-
-export interface VerifyProjectsProps {
-    readonly projectDirs: ReadonlyArray<string>;
-    readonly projectType: ProjectType;
-    readonly filteredRequirements: ReadonlyArray<Requirement>;
-}
-
-export const verifyProjects = ({
-    projectDirs,
-    projectType,
-    filteredRequirements,
-}: VerifyProjectsProps): ReadonlyArray<string> => {
-    const errors: Array<string> = [];
-
-    for (const dir of projectDirs) {
-        const dirName = basename(dir);
-
-        for (const requirement of filteredRequirements) {
-            if (!requirement.applies({ projectType, dirName })) {
-                continue;
-            }
-
-            const requirementErrors = requirement.verify({ appDir: dir });
-
-            for (const error of requirementErrors) {
-                errors.push(`${dir} [${requirement.name}]: ${error}`);
-            }
-        }
-    }
-
-    return errors;
-};
-
-// --- Main ---
+import { requirements } from '../allRequirements';
+import { filterRequirementsByName } from '../filterRequirementsByName';
+import { verifyProjects } from '../verifyProjects';
 
 const workspaceRoot = resolve(process.cwd());
 const { filter, only } = parseArgs(process.argv);
