@@ -1,4 +1,8 @@
 {
     "extends": "@minimalist-apps/tsconfig/library.json",
+    "compilerOptions": {
+        // Uses Node.js APIs (fs, path, url) for file-system based template reading
+        "types": ["node"]
+    },
     "include": ["src"]
 }

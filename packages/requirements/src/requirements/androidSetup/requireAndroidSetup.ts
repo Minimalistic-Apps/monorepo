@@ -5,6 +5,7 @@ import {
     generateAppBuildGradle,
     generateColorsXml,
     generateStringsXml,
+    generateStylesXml,
 } from '@minimalist-apps/android-build';
 import type { AppConfig } from '../appConfig/AppConfig';
 import type { Requirement } from '../Requirement';
@@ -56,10 +57,15 @@ export const requireAndroidSetup: Requirement = {
         );
         console.log('  ✓ strings.xml generated (app name from config.ts)');
 
-        // Generate colors.xml (color from config.ts)
+        // Generate colors.xml (uses shared BRAND_COLOR)
         const colorsPath = join(stringsDir, 'colors.xml');
-        writeFileSync(colorsPath, generateColorsXml({ androidColor: config.androidColor }));
-        console.log('  ✓ colors.xml generated (color from config.ts)');
+        writeFileSync(colorsPath, generateColorsXml());
+        console.log('  ✓ colors.xml generated');
+
+        // Generate styles.xml (plain-color splash screen)
+        const stylesPath = join(stringsDir, 'styles.xml');
+        writeFileSync(stylesPath, generateStylesXml());
+        console.log('  ✓ styles.xml generated (brand-color splash screen)');
 
         return [];
     },
@@ -76,6 +82,7 @@ export const requireAndroidSetup: Requirement = {
             join('app', 'build.gradle'),
             join('app', 'src', 'main', 'res', 'values', 'strings.xml'),
             join('app', 'src', 'main', 'res', 'values', 'colors.xml'),
+            join('app', 'src', 'main', 'res', 'values', 'styles.xml'),
         ] as const;
 
         for (const file of requiredFiles) {

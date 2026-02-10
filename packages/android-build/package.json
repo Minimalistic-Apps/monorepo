@@ -8,7 +8,12 @@
             "default": "./src/index.ts"
         }
     },
+    "dependencies": {
+        "@minimalist-apps/components": "workspace:*",
+        "@minimalist-apps/type-utils": "workspace:*"
+    },
     "devDependencies": {
-        "@minimalist-apps/tsconfig": "workspace:*"
+        "@minimalist-apps/tsconfig": "workspace:*",
+        "@types/node": "^22.0.0"
     }
 }

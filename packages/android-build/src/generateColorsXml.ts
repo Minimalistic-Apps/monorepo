@@ -1,16 +1,10 @@
-interface GenerateColorsXmlProps {
-    readonly androidColor: string;
-}
+import { BRAND_COLOR } from '@minimalist-apps/components/colors';
+import { injectTemplateVars } from './injectTemplateVars';
+import { readTemplate } from './readTemplate';
 
 /**
- * Generates Android colors.xml content from app config.
- * The primary color is taken from config.ts androidColor field.
+ * Generates Android colors.xml content.
+ * All three Android color slots use the shared BRAND_COLOR.
  */
-export const generateColorsXml = ({ androidColor }: GenerateColorsXmlProps): string =>
-    `<?xml version='1.0' encoding='utf-8'?>
-<resources>
-    <color name="colorPrimary">${androidColor}</color>
-    <color name="colorPrimaryDark">${androidColor}</color>
-    <color name="colorAccent">${androidColor}</color>
-</resources>
-`;
+export const generateColorsXml = (): string =>
+    injectTemplateVars(readTemplate('colors.xml'), { brandColor: BRAND_COLOR });
