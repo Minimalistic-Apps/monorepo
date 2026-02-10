@@ -1,19 +1,20 @@
 #!/usr/bin/env tsx
 
 import { basename, join, resolve } from 'node:path';
-import { filterByName, filterDirs, getSubDirs, green, parseArgs, red } from '@minimalist-apps/cli';
+import { filterDirs, getSubDirs, green, parseArgs, red } from '@minimalist-apps/cli';
 import { requirements } from './allRequirements';
-import type { ProjectType } from './requirements/Requirement';
+import { filterRequirementsByName } from './filterRequirementsByName';
+import type { ProjectType, Requirement } from './requirements/Requirement';
 
 // --- Helpers ---
 
-interface FixProjectsProps {
+export interface FixProjectsProps {
     readonly projectDirs: ReadonlyArray<string>;
     readonly projectType: ProjectType;
-    readonly filteredRequirements: ReadonlyArray<(typeof requirements)[number]>;
+    readonly filteredRequirements: ReadonlyArray<Requirement>;
 }
 
-const fixProjects = async ({
+export const fixProjects = async ({
     projectDirs,
     projectType,
     filteredRequirements,
@@ -52,7 +53,7 @@ const packageDirs = filterDirs({
     dirs: getSubDirs({ parentDir: join(workspaceRoot, 'packages') }),
     filter,
 });
-const filteredRequirements = filterByName({ items: requirements, only });
+const filteredRequirements = filterRequirementsByName({ requirements, only });
 
 if (appDirs.length === 0 && filter === undefined) {
     console.error('No apps found in', join(workspaceRoot, 'apps'));
