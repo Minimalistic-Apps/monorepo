@@ -7,5 +7,4 @@ export const config: AppConfig = {
     appIconEmoji: '💱',
     devPort: 5173,
     appId: 'com.minimalist.priceconverter',
-    androidColor: '#FF6200',
 };

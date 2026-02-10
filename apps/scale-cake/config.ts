@@ -7,5 +7,4 @@ export const config: AppConfig = {
     appIconEmoji: '🎂',
     devPort: 5174,
     appId: 'com.minimalist.scalecake',
-    androidColor: '#E91E63',
 };
