@@ -78,7 +78,7 @@ export const requireAndroidSetup: Requirement = {
         }
 
         const requiredFiles = [
-            'keystore.properties',
+            // keystore.properties is gitignored (signing secret) — only generated locally by fix
             join('app', 'build.gradle'),
             join('app', 'src', 'main', 'res', 'values', 'strings.xml'),
             join('app', 'src', 'main', 'res', 'values', 'colors.xml'),

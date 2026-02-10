@@ -51,9 +51,9 @@ describe(requiredAppScripts.name, () => {
             expect(pkg.scripts).toEqual({
                 dev: 'vite',
                 'dev:android': '../../scripts/dev-android.sh',
-                'dev:android:sign': '../../scripts/sign-apk.sh',
                 build: 'vite build',
                 'build:android': '../../scripts/build-android.sh',
+                'build:android:sign': '../../scripts/sign-apk.sh',
                 preview: 'vite preview',
                 typecheck: 'tsc --noEmit',
             });
