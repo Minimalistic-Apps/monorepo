@@ -3,8 +3,8 @@
     "version": "0.0.1",
     "type": "module",
     "bin": {
-        "requirements-verify": "./src/verify.ts",
-        "requirements-fix": "./src/fix.ts"
+        "requirements-verify": "./src/scripts/verify.ts",
+        "requirements-fix": "./src/scripts/fix.ts"
     },
     "exports": {
         ".": {
