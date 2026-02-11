@@ -92,7 +92,7 @@ export const CurrencyInputPure = (
             value={inputValue}
             onChange={handleChange}
             onFocus={handleFocus}
-            placeholder={`Type in the ${code} amount`}
+            label={`${code} amount`}
             monospace
             size="large"
             className="minimalist-input-with-small-placeholder"

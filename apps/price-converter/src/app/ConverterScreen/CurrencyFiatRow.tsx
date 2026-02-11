@@ -25,7 +25,7 @@ export const CurrencyRowPure = (
     deps: CurrencyRowDeps,
     { btcMode, code, value, onChange, onRemove }: CurrencyRowStateProps & CurrencyRowOwnProps,
 ) => (
-    <Row gap={12}>
+    <Row gap={16}>
         <deps.CurrencyInput value={value} onChange={onChange} code={code} />
         <Text>{code === 'BTC' && btcMode === 'sats' ? 'Sats' : code}</Text>
         {onRemove && (
