@@ -3,6 +3,7 @@ import './Input.css';
 import type { InputRef as AntInputRef } from 'antd';
 import { Input as AntInput, theme } from 'antd';
 import type { ChangeEvent, RefObject } from 'react';
+import { decreaseFontSize, type FontSize, fontSizeMap } from './fontSize';
 
 export type InputRef = AntInputRef;
 
@@ -15,6 +16,7 @@ interface InputProps {
     readonly inputRef?: RefObject<InputRef | null>;
     readonly monospace?: boolean;
     readonly size?: 'small' | 'medium' | 'large';
+    readonly fontSize?: FontSize;
     readonly textAlign?: 'center' | 'left' | 'right';
     readonly label?: string;
     readonly className?: string;
@@ -26,12 +28,6 @@ const antSizeMap = {
     large: 'large',
 } as const;
 
-const fontSizeMap = {
-    small: '0.875rem',
-    medium: '1.125rem',
-    large: '1.25rem',
-} as const;
-
 export const Input = ({
     value,
     onChange,
@@ -41,11 +37,13 @@ export const Input = ({
     inputRef,
     monospace = false,
     size = 'medium',
+    fontSize = size,
     textAlign,
     label,
     className,
 }: InputProps) => {
     const { token } = theme.useToken();
+    const labelFontSize = fontSizeMap[decreaseFontSize(fontSize, 2)];
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         const { selectionStart, selectionEnd } = e.target;
@@ -71,7 +69,7 @@ export const Input = ({
             style={{
                 flex: 1,
                 fontFamily: monospace ? 'monospace' : 'inherit',
-                fontSize: fontSizeMap[size],
+                fontSize: fontSizeMap[fontSize],
                 fontWeight: 600,
                 textAlign,
             }}
@@ -89,7 +87,7 @@ export const Input = ({
                     position: 'absolute',
                     top: -8,
                     left: 8,
-                    fontSize: 12,
+                    fontSize: labelFontSize,
                     lineHeight: '16px',
                     padding: '0 4px',
                     backgroundColor: token.colorBgContainer,
