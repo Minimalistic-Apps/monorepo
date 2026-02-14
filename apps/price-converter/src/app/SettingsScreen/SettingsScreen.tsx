@@ -1,7 +1,7 @@
 import { Column } from '@minimalist-apps/components';
+import type { MnemonicSettingsDep } from '@minimalist-apps/module-evolu-settings';
 import type { FC } from 'react';
 import type { DebugSettingsDep } from './DebugSettings';
-import type { MnemonicSettingsDep } from './MnemonicSettings';
 import type { ThemeSettingsDep } from './ThemeSettings';
 
 type SettingsScreenDeps = ThemeSettingsDep & DebugSettingsDep & MnemonicSettingsDep;

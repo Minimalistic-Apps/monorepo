@@ -6,6 +6,7 @@ import {
     createEnsureEvoluOwner as createEnsureEvoluMnemonic,
 } from '@minimalist-apps/evolu';
 import { createLocalStorage } from '@minimalist-apps/local-storage';
+import { createEvoluSettingsCompositionRoot } from '@minimalist-apps/module-evolu-settings';
 import { createWindow } from '@minimalist-apps/window';
 import { AddCurrencyButtonPure } from './app/AddCurrencyScreen/AddCurrencyButton';
 import { AddCurrencyScreenPure } from './app/AddCurrencyScreen/AddCurrencyScreen';
@@ -18,7 +19,6 @@ import { type MoscowTimeOwnProps, MoscowTimePure } from './app/ConverterScreen/M
 import { DebugHeaderPure } from './app/DebugHeader';
 import { RatesLoadingPure } from './app/RatesLoading';
 import { DebugSettingsPure } from './app/SettingsScreen/DebugSettings';
-import { MnemonicSettingsPure } from './app/SettingsScreen/MnemonicSettings';
 import { SettingsScreenPure } from './app/SettingsScreen/SettingsScreen';
 import { ThemeSettingsPure } from './app/SettingsScreen/ThemeSettings';
 import { ThemeWrapperPure } from './app/ThemeWrapper';
@@ -103,6 +103,7 @@ export const createCompositionRoot = (): Main => {
     const getSelectedCurrencies = createGetSelectedCurrencies({ ensureEvoluStorage });
 
     const connect = createConnect({ store, selectedCurrencies: selectedCurrenciesStore });
+    const evoluSettings = createEvoluSettingsCompositionRoot({ connect });
 
     // Fetch Rates
     const fetchRates = createFetchRatesCompositionRoot();
@@ -226,15 +227,11 @@ export const createCompositionRoot = (): Main => {
         },
     );
 
-    const MnemonicSettings = connect(MnemonicSettingsPure, ({ store }) => ({
-        evoluMnemonic: store.evoluMnemonic,
-    }));
-
     const SettingsScreen = () =>
         SettingsScreenPure({
             ThemeSettings,
             DebugSettings,
-            MnemonicSettings,
+            MnemonicSettings: evoluSettings.MnemonicSettings,
         });
 
     const AddCurrencyScreen = connect(
