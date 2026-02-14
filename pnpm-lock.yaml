@@ -107,6 +107,9 @@ importers:
       '@minimalist-apps/mobile-native':
         specifier: workspace:*
         version: link:../../packages/mobile-native
+      '@minimalist-apps/module-evolu-settings':
+        specifier: workspace:*
+        version: link:../../packages/module-evolu-settings
       '@minimalist-apps/number':
         specifier: workspace:*
         version: link:../../packages/number
@@ -443,6 +446,34 @@ importers:
       '@minimalist-apps/tsconfig':
         specifier: workspace:*
         version: link:../tsconfig
+
+  packages/module-evolu-settings:
+    dependencies:
+      '@minimalist-apps/components':
+        specifier: workspace:*
+        version: link:../components
+      '@minimalist-apps/connect':
+        specifier: workspace:*
+        version: link:../connect
+      react:
+        specifier: ^19.0.0
+        version: 19.2.4
+      react-dom:
+        specifier: ^19.0.0
+        version: 19.2.4(react@19.2.4)
+    devDependencies:
+      '@minimalist-apps/tsconfig':
+        specifier: workspace:*
+        version: link:../tsconfig
+      '@types/react':
+        specifier: ^19.0.0
+        version: 19.2.13
+      '@types/react-dom':
+        specifier: ^19.0.0
+        version: 19.2.3(@types/react@19.2.13)
+      typescript:
+        specifier: ^5.3.0
+        version: 5.9.3
 
   packages/number:
     devDependencies:
