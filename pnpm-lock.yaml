@@ -449,6 +449,9 @@ importers:
 
   packages/module-evolu-settings:
     dependencies:
+      '@evolu/common':
+        specifier: ^7.4.1
+        version: 7.4.1
       '@minimalist-apps/components':
         specifier: workspace:*
         version: link:../components
