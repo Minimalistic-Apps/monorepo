@@ -1,6 +1,7 @@
 import { typedObjectKeys } from '@minimalist-apps/type-utils';
 import { Typography } from 'antd';
 import type { CSSProperties, ReactNode } from 'react';
+import { type FontSize, fontSizeMap } from './fontSize';
 import { buildSpacingStyle, type Spacing } from './spacing';
 
 const { Text: AntText, Title: AntTitle, Paragraph: AntParagraph } = Typography;
@@ -10,18 +11,12 @@ interface TextProps {
     readonly strong?: boolean;
     readonly nowrap?: boolean;
     readonly flexShrink?: number;
-    readonly size?: 'small' | 'medium' | 'large';
+    readonly size?: FontSize;
     readonly secondary?: boolean;
     readonly onClick?: () => void;
     readonly margin?: Spacing;
     readonly padding?: Spacing;
 }
-
-const textSizeMap = {
-    small: '0.875rem',
-    medium: '1rem',
-    large: '1.5rem',
-} as const;
 
 const buildTextStyle = (
     nowrap: boolean,
@@ -33,7 +28,7 @@ const buildTextStyle = (
     const style: CSSProperties = {
         ...(nowrap ? { whiteSpace: 'nowrap' } : {}),
         ...(flexShrink !== undefined ? { flexShrink } : {}),
-        ...(size !== undefined ? { fontSize: textSizeMap[size] } : {}),
+        ...(size !== undefined ? { fontSize: fontSizeMap[size] } : {}),
         ...buildSpacingStyle({
             ...(margin ? { margin } : {}),
             ...(padding ? { padding } : {}),
