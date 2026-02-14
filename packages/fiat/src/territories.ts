@@ -320,6 +320,9 @@ export const getFlagsForCurrency = (currencyCode: CurrencyCode): ReadonlyArray<s
 export const getTerritoryNamesForCurrency = (currencyCode: CurrencyCode): ReadonlyArray<string> =>
     (CURRENCY_TERRITORIES[currencyCode] ?? []).map(t => t.name);
 
+export const isFiatCurrency = (currencyCode: CurrencyCode): boolean =>
+    Object.hasOwn(CURRENCY_TERRITORIES, currencyCode);
+
 export const currencyMatchesTerritory = (
     currencyCode: CurrencyCode,
     searchTerm: string,

@@ -4,6 +4,7 @@ import {
     currencyMatchesTerritory,
     getFlagsForCurrency,
     getTerritoryNamesForCurrency,
+    isFiatCurrency,
 } from './territories.js';
 
 const USD = asCurrencyCodeUnsafe('USD');
@@ -83,5 +84,15 @@ describe(currencyMatchesTerritory.name, () => {
     test('matches partial territory name for search', () => {
         expect(currencyMatchesTerritory(USD, 'puerto')).toBe(true);
         expect(currencyMatchesTerritory(USD, 'guam')).toBe(true);
+    });
+});
+
+describe(isFiatCurrency.name, () => {
+    test('returns true for fiat currency', () => {
+        expect(isFiatCurrency(USD)).toBe(true);
+    });
+
+    test('returns false for unknown currency', () => {
+        expect(isFiatCurrency(XYZ)).toBe(false);
     });
 });

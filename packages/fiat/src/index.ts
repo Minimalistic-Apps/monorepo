@@ -5,6 +5,7 @@ export {
     currencyMatchesTerritory,
     getFlagsForCurrency,
     getTerritoryNamesForCurrency,
+    isFiatCurrency,
     type Territory,
 } from './territories';
 export { asFiatAmount, FiatAmount, type FiatCurrency } from './types';
