@@ -14,8 +14,21 @@
     "scripts": {
         "typecheck": "tsc --noEmit"
     },
+    "dependencies": {
+        "@evolu/common": "^7.4.1",
+        "@minimalist-apps/bitcoin": "workspace:*",
+        "@minimalist-apps/components": "workspace:*",
+        "@minimalist-apps/fiat": "workspace:*",
+        "@minimalist-apps/number": "workspace:*"
+    },
+    "peerDependencies": {
+        "react": "^19.0.0",
+        "react-dom": "^19.0.0"
+    },
     "devDependencies": {
         "@minimalist-apps/tsconfig": "workspace:*",
+        "@types/react": "^19.0.0",
+        "@types/react-dom": "^19.0.0",
         "typescript": "^5.3.0"
     }
 }
