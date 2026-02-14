@@ -43,7 +43,7 @@ export const Input = ({
     className,
 }: InputProps) => {
     const { token } = theme.useToken();
-    const labelFontSize = fontSizeMap[decreaseFontSize(fontSize, 2)];
+    const labelFontSize = fontSizeMap[decreaseFontSize(fontSize, 1)];
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         const { selectionStart, selectionEnd } = e.target;
@@ -91,7 +91,6 @@ export const Input = ({
                     lineHeight: '16px',
                     padding: '0 4px',
                     backgroundColor: token.colorBgContainer,
-                    color: token.colorTextSecondary,
                     zIndex: 1,
                     pointerEvents: 'none',
                 }}
