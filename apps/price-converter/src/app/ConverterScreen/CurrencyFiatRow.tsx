@@ -1,8 +1,8 @@
 import type { CurrencyCode } from '@evolu/common';
 import { Button, DeleteOutlined, Row, Text } from '@minimalist-apps/components';
+import type { CurrencyInputDep } from '@minimalist-apps/currency-input';
 import type { FC } from 'react';
 import type { BtcMode } from '../../state/State';
-import type { CurrencyInputDep } from './CurrencyInput';
 
 export type CurrencyRowOwnProps = {
     readonly code: CurrencyCode | 'BTC';

@@ -20,6 +20,7 @@
         "@evolu/web": "^2.4.0",
         "@minimalist-apps/bitcoin": "workspace:*",
         "@minimalist-apps/components": "workspace:*",
+        "@minimalist-apps/currency-input": "workspace:*",
         "@minimalist-apps/datetime": "workspace:*",
         "@minimalist-apps/evolu": "workspace:*",
         "@minimalist-apps/fiat": "workspace:*",

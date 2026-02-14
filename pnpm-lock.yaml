@@ -83,6 +83,9 @@ importers:
       '@minimalist-apps/connect':
         specifier: workspace:*
         version: link:../../packages/connect
+      '@minimalist-apps/currency-input':
+        specifier: workspace:*
+        version: link:../../packages/currency-input
       '@minimalist-apps/datetime':
         specifier: workspace:*
         version: link:../../packages/datetime
@@ -308,6 +311,43 @@ importers:
       '@types/react':
         specifier: ^19.0.0
         version: 19.2.13
+      typescript:
+        specifier: ^5.3.0
+        version: 5.9.3
+
+  packages/currency-input:
+    dependencies:
+      '@evolu/common':
+        specifier: ^7.4.1
+        version: 7.4.1
+      '@minimalist-apps/bitcoin':
+        specifier: workspace:*
+        version: link:../bitcoin
+      '@minimalist-apps/components':
+        specifier: workspace:*
+        version: link:../components
+      '@minimalist-apps/fiat':
+        specifier: workspace:*
+        version: link:../fiat
+      '@minimalist-apps/number':
+        specifier: workspace:*
+        version: link:../number
+      react:
+        specifier: ^19.0.0
+        version: 19.2.4
+      react-dom:
+        specifier: ^19.0.0
+        version: 19.2.4(react@19.2.4)
+    devDependencies:
+      '@minimalist-apps/tsconfig':
+        specifier: workspace:*
+        version: link:../tsconfig
+      '@types/react':
+        specifier: ^19.0.0
+        version: 19.2.13
+      '@types/react-dom':
+        specifier: ^19.0.0
+        version: 19.2.3(@types/react@19.2.13)
       typescript:
         specifier: ^5.3.0
         version: 5.9.3

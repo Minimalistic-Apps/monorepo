@@ -1,4 +1,5 @@
 import { createConnect } from '@minimalist-apps/connect';
+import { CurrencyInputPure } from '@minimalist-apps/currency-input';
 import { createCurrentDateTime } from '@minimalist-apps/datetime';
 import { createEnsureEvolu, createEnsureEvoluOwner } from '@minimalist-apps/evolu';
 import { createLocalStorage } from '@minimalist-apps/local-storage';
@@ -10,7 +11,6 @@ import { AppHeaderPure } from './app/AppHeader';
 import { type AppLayoutProps, AppLayoutPure } from './app/AppLayout';
 import { ConverterScreenPure } from './app/ConverterScreen/ConverterScreen';
 import { CurrencyRowPure } from './app/ConverterScreen/CurrencyFiatRow';
-import { CurrencyInputPure } from './app/ConverterScreen/CurrencyInput';
 import { DebugHeaderPure } from './app/DebugHeader';
 import { RatesLoadingPure } from './app/RatesLoading';
 import { DebugSettingsPure } from './app/SettingsScreen/DebugSettings';
