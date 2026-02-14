@@ -98,6 +98,7 @@ export type CurrencyInputOwnProps = {
     readonly code: CurrencyCode | 'BTC';
     readonly onChange: (value: number) => void;
     readonly fontSize?: 'tiny' | 'small' | 'medium' | 'large';
+    readonly label?: string;
 };
 
 export type CurrencyInputStateProps = {
@@ -115,7 +116,7 @@ export type CurrencyInputPureDeps = SetFocusedCurrencyDep;
 
 export const CurrencyInputPure = (
     deps: CurrencyInputPureDeps,
-    { mode, focusedCurrency, value, code, onChange, fontSize }: CurrencyInputProps,
+    { mode, focusedCurrency, value, code, onChange, fontSize, label }: CurrencyInputProps,
 ) => {
     const [inputValue, setInputValue] = useState(() => {
         const formattedValue = formatInputValue(value, code, mode);
@@ -306,7 +307,7 @@ export const CurrencyInputPure = (
             onFocus={handleFocus}
             inputRef={inputRef}
             inputMode="decimal"
-            label={`${code} amount`}
+            label={label}
             monospace
             size="medium"
             fontSize="medium"

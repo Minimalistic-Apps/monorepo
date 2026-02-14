@@ -1,5 +1,5 @@
 import type { CurrencyCode } from '@evolu/common';
-import { Button, Column, Row, Text } from '@minimalist-apps/components';
+import { Button, Column, Row } from '@minimalist-apps/components';
 import type { CurrencyInputDep } from '@minimalist-apps/currency-input';
 import { type FC, useState } from 'react';
 import type { BtcMode } from '../../state/State';
@@ -54,41 +54,50 @@ export const CurrencyRowPure = (
     return (
         <Column gap={8}>
             <Row gap={16}>
-                <deps.CurrencyInput value={value} onChange={onChange} code={code} />
-                <Text>{code === 'BTC' && btcMode === 'sats' ? 'Sats' : code}</Text>
+                <deps.CurrencyInput
+                    value={value}
+                    onChange={onChange}
+                    code={code}
+                    label={code === 'BTC' ? (btcMode === 'btc' ? 'BTC' : 'Sats') : code}
+                />
                 {onRemove && (
-                    <Button
-                        onClick={() => {
-                            setIsRemoveModalOpen(true);
-                        }}
-                        variant="text"
-                        danger
-                        size="small"
-                        style={{ paddingInline: 0 }}
-                    >
-                        🗑️
-                    </Button>
+                    <>
+                        <Button
+                            onClick={() => {
+                                setIsRemoveModalOpen(true);
+                            }}
+                            variant="text"
+                            danger
+                            size="small"
+                            style={{ paddingInline: 0 }}
+                        >
+                            🗑️
+                        </Button>
+                        <RemoveCurrencyModal
+                            open={isRemoveModalOpen}
+                            code={code}
+                            onOk={confirmRemove}
+                            onCancel={closeRemoveModal}
+                        />
+                    </>
                 )}
                 {!onRemove && code === 'BTC' && (
-                    <Button
-                        onClick={openBtcEasterEgg}
-                        style={{
-                            width: 24,
-                            minWidth: 24,
-                            paddingInline: 0,
-                            border: 'none',
-                            background: 'transparent',
-                        }}
-                    />
+                    <>
+                        <Button
+                            onClick={openBtcEasterEgg}
+                            style={{
+                                width: 24,
+                                minWidth: 24,
+                                paddingInline: 0,
+                                border: 'none',
+                                background: 'transparent',
+                            }}
+                        />
+                        <BtcEasterEggModal open={isBtcEasterEggOpen} onOk={closeBtcEasterEgg} />
+                    </>
                 )}
             </Row>
-            <RemoveCurrencyModal
-                open={isRemoveModalOpen}
-                code={code}
-                onOk={confirmRemove}
-                onCancel={closeRemoveModal}
-            />
-            <BtcEasterEggModal open={isBtcEasterEggOpen} onOk={closeBtcEasterEgg} />
+
             <deps.MoscowTime code={code} />
         </Column>
     );

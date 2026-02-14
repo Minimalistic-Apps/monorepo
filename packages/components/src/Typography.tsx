@@ -11,6 +11,7 @@ interface TextProps {
     readonly strong?: boolean;
     readonly nowrap?: boolean;
     readonly flexShrink?: number;
+    readonly align?: CSSProperties['textAlign'];
     readonly size?: FontSize;
     readonly secondary?: boolean;
     readonly onClick?: () => void;
@@ -21,6 +22,7 @@ interface TextProps {
 const buildTextStyle = (
     nowrap: boolean,
     flexShrink: number | undefined,
+    align: TextProps['align'],
     size: TextProps['size'],
     margin: TextProps['margin'],
     padding: TextProps['padding'],
@@ -28,6 +30,7 @@ const buildTextStyle = (
     const style: CSSProperties = {
         ...(nowrap ? { whiteSpace: 'nowrap' } : {}),
         ...(flexShrink !== undefined ? { flexShrink } : {}),
+        ...(align !== undefined ? { textAlign: align } : {}),
         ...(size !== undefined ? { fontSize: fontSizeMap[size] } : {}),
         ...buildSpacingStyle({
             ...(margin ? { margin } : {}),
@@ -43,6 +46,7 @@ export const Text = ({
     strong = false,
     nowrap = false,
     flexShrink,
+    align,
     size = 'medium',
     secondary = false,
     onClick,
@@ -53,7 +57,7 @@ export const Text = ({
         strong={strong}
         onClick={onClick}
         {...(secondary ? { type: 'secondary' as const } : {})}
-        {...buildTextStyle(nowrap, flexShrink, size, margin, padding)}
+        {...buildTextStyle(nowrap, flexShrink, align, size, margin, padding)}
     >
         {children}
     </AntText>
