@@ -45,6 +45,7 @@ import { createSetBtcMode } from './state/setBtcMode';
 import { createSetDebugMode } from './state/setDebugMode';
 import { createSetFiatAmount } from './state/setFiatAmount';
 import { createSetFocusedCurrency } from './state/setFocusedCurrency';
+import { createSetMnemonic } from './state/setMnemonic';
 import { createSetSatsAmount } from './state/setSatsAmount';
 import { createSetTheme } from './state/setTheme';
 
@@ -62,6 +63,7 @@ export const createCompositionRoot = (): Main => {
     const setSatsAmount = createSetSatsAmount({ store });
     const setFiatAmount = createSetFiatAmount({ store });
     const setFocusedCurrency = createSetFocusedCurrency({ store });
+    const setMnemonic = createSetMnemonic({ store });
     const setBtcMode = createSetBtcMode({ store });
     const removeFiatAmount = createRemoveFiatAmount({ store });
 
@@ -82,7 +84,7 @@ export const createCompositionRoot = (): Main => {
     // Evolu
     const ensureEvoluOwner = createEnsureEvoluMnemonic({
         getPersistedMnemonic: () => store.getState().evoluMnemonic,
-        persistMnemonic: mnemonic => store.setState({ evoluMnemonic: mnemonic }),
+        persistMnemonic: setMnemonic,
     });
     const ensureEvoluStorage = createEnsureEvolu({
         deps: {
@@ -103,7 +105,12 @@ export const createCompositionRoot = (): Main => {
     const getSelectedCurrencies = createGetSelectedCurrencies({ ensureEvoluStorage });
 
     const connect = createConnect({ store, selectedCurrencies: selectedCurrenciesStore });
-    const evoluSettings = createEvoluSettingsCompositionRoot({ connect });
+
+    // Modules
+    const { BackupMnemonic, RestoreMnemonic } = createEvoluSettingsCompositionRoot({
+        connect,
+        setMnemonic,
+    });
 
     // Fetch Rates
     const fetchRates = createFetchRatesCompositionRoot();
@@ -231,7 +238,8 @@ export const createCompositionRoot = (): Main => {
         SettingsScreenPure({
             ThemeSettings,
             DebugSettings,
-            MnemonicSettings: evoluSettings.MnemonicSettings,
+            BackupMnemonic,
+            RestoreMnemonic,
         });
 
     const AddCurrencyScreen = connect(
