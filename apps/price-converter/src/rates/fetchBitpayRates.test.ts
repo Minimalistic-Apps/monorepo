@@ -63,6 +63,27 @@ describe(createFetchBitpayRates, () => {
         expect(result.value['BTC' as keyof typeof result.value]).toBeUndefined();
     });
 
+    test('excludes non-bitcoin crypto currencies', async () => {
+        const fetchBitpayRates = createFetchBitpayRates({
+            fetch: createMockFetch(bitpayFixture),
+        });
+
+        const result = await fetchBitpayRates();
+
+        expect(result.ok).toBe(true);
+
+        if (!result.ok) {
+            return;
+        }
+
+        expect(result.value['ETH' as CurrencyCode]).toBeUndefined();
+        expect(result.value['BCH' as CurrencyCode]).toBeUndefined();
+        expect(result.value['LTC' as CurrencyCode]).toBeUndefined();
+        expect(result.value['XRP' as CurrencyCode]).toBeUndefined();
+        expect(result.value['SOL' as CurrencyCode]).toBeUndefined();
+        expect(result.value['APE' as CurrencyCode]).toBeUndefined();
+    });
+
     test('excludes invalid currency codes', async () => {
         const fetchBitpayRates = createFetchBitpayRates({
             fetch: createMockFetch(bitpayFixture),
