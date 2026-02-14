@@ -29,6 +29,21 @@ const createCurrencyInput = (
 });
 
 describe(CurrencyInputPure.name, () => {
+    test('focus selects entire input value', () => {
+        const { TestCurrencyInput } = createCurrencyInput({
+            code: 'USD' as CurrencyCode,
+            value: 1234.56,
+        });
+
+        render(<TestCurrencyInput />);
+        const input = screen.getByRole('textbox') as HTMLInputElement;
+
+        fireEvent.focus(input);
+
+        expect(input.selectionStart).toBe(0);
+        expect(input.selectionEnd).toBe(input.value.length);
+    });
+
     test('calls onChange with value change', () => {
         const onChange = vi.fn();
         const { TestCurrencyInput } = createCurrencyInput({ onChange, code: 'BTC' });

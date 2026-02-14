@@ -295,6 +295,7 @@ export const CurrencyInputPure = (
 
     const handleFocus = () => {
         deps.setFocusedCurrency(code);
+        inputRef.current?.input?.select();
     };
 
     return (
