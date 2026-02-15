@@ -2,6 +2,7 @@ import 'antd/dist/reset.css';
 
 export { Alert } from './Alert';
 export { AppHeader } from './AppHeader';
+export { Banner } from './Banner';
 export { Button, type ButtonIntent } from './Button';
 export { Card } from './Card';
 export { Code } from './Code';
@@ -26,6 +27,7 @@ export {
 } from './Icons';
 export type { InputRef } from './Input';
 export { Input } from './Input';
+export type { Intent } from './intent';
 export { Layout } from './Layout';
 export { List } from './List';
 export { Menu, type MenuClickInfo, type MenuItems } from './Menu';
@@ -38,5 +40,6 @@ export type { ReorderEvent, SortableItem } from './SortableList';
 export { SortableList } from './SortableList';
 export { Switch } from './Switch';
 export { buildSpacingStyle, type Spacing } from './spacing';
+export { Textarea } from './Textarea';
 export { ThemeProvider, useTheme } from './ThemeProvider';
 export { Paragraph, Text, Title } from './Typography';

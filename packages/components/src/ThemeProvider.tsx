@@ -1,5 +1,5 @@
 import type { ThemeConfig } from 'antd';
-import { ConfigProvider } from 'antd';
+import { ConfigProvider, theme } from 'antd';
 import { createContext, type ReactNode, useContext, useEffect } from 'react';
 import { COLORS, injectColorVariables, type Theme } from './colors';
 
@@ -39,6 +39,7 @@ const darkTheme: ThemeConfig = {
             paddingBlockLG: 14,
         },
     },
+    algorithm: theme.darkAlgorithm,
 };
 
 const lightTheme: ThemeConfig = {
@@ -72,6 +73,7 @@ const lightTheme: ThemeConfig = {
             paddingBlockLG: 14,
         },
     },
+    algorithm: theme.defaultAlgorithm,
 };
 
 interface ThemeProviderProps {
