@@ -1,8 +1,9 @@
 import { exhaustive } from '@minimalist-apps/type-utils';
 import { Button as AntButton, theme } from 'antd';
 import type { ReactNode } from 'react';
+import type { Intent } from './intent';
 
-export type ButtonIntent = 'warning' | 'danger' | 'primary' | 'secondary';
+export type ButtonIntent = Intent;
 
 interface ButtonProps {
     readonly children?: ReactNode;
