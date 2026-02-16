@@ -110,7 +110,7 @@ export const createCompositionRoot = (): Main => {
     // Modules
     const { BackupMnemonic, RestoreMnemonic } = createEvoluSettingsCompositionRoot({
         connect,
-        restoreMnemonic: () => {}, // Todo: implement
+        restoreMnemonic: () => {},
     });
 
     // Fetch Rates
