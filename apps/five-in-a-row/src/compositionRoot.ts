@@ -1,4 +1,5 @@
 import { createConnect } from '@minimalist-apps/connect';
+import { createLocalStorage } from '@minimalist-apps/local-storage';
 import { AppPure } from './app/App';
 import { AppHeader as AppHeaderPure } from './app/AppHeader';
 import { type GameScreenDep, GameScreenPure, type GameScreenStateProps } from './app/GameScreen';
@@ -10,16 +11,24 @@ import {
 } from './app/SettingsScreen';
 import { createMain, type Main } from './createMain';
 import { createStore } from './state/createStore';
+import { createLoadInitialState } from './state/localStorage/loadInitialState';
+import { createPersistStore } from './state/localStorage/persistStore';
+import { createStatePersistence } from './state/localStorage/statePersistence';
 import { createNavigate } from './state/navigate';
 import { selectCurrentScreen, selectThemeMode } from './state/State';
 import { createSetThemeMode } from './state/setThemeMode';
 
 export const createCompositionRoot = (): Main => {
+    const localStorage = createLocalStorage();
     const store = createStore();
     const gameStore = createGameStore({ initialBoardSize: 10 });
 
     const navigate = createNavigate({ store });
     const setThemeMode = createSetThemeMode({ store });
+
+    const loadInitialState = createLoadInitialState({ store, gameStore, localStorage });
+    const persistStore = createPersistStore({ store, gameStore, localStorage });
+    const statePersistence = createStatePersistence({ loadInitialState, persistStore });
 
     const connect = createConnect({ store, gameStore });
 
@@ -83,5 +92,5 @@ export const createCompositionRoot = (): Main => {
         },
     );
 
-    return createMain({ App });
+    return createMain({ App, statePersistence });
 };

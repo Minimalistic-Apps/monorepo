@@ -1,14 +1,6 @@
 import { useRef } from 'react';
-import type { Player } from './game';
+import { emojiMap, type Player } from './game';
 import { useElementRect } from './useElementRect';
-
-const ringEmoji = '🇴';
-const crossEmoji = '❌';
-
-const emojiMap: Record<Player, string> = {
-    cross: crossEmoji,
-    ring: ringEmoji,
-};
 
 const toFontSize = (rect: DOMRectReadOnly | null): number =>
     rect === null ? 16 : Math.floor(Math.min(rect.width, rect.height) * 0.6);
