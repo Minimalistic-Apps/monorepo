@@ -14,7 +14,7 @@ export interface GetSelectedCurrenciesDep {
 export const createGetSelectedCurrencies =
     (deps: GetSelectedCurrenciesDeps): GetSelectedCurrencies =>
     async () => {
-        const storage = deps.ensureEvoluStorage();
+        const storage = await deps.ensureEvoluStorage();
         const query = allSelectedCurrenciesQuery(storage);
         const result = await storage.evolu.loadQuery(query);
 

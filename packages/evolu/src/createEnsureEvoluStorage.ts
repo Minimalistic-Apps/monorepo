@@ -22,6 +22,7 @@ export type EvoluStorage<S extends EvoluSchema> = {
     readonly shardOwner: ShardOwner;
     readonly updateRelayUrls: (urls: ReadonlyArray<string>) => Promise<void>;
     readonly dispose: () => Promise<void>;
+    // readonly restoreAppOwner: (mnemonic: Mnemonic) => Promise<void>;
 };
 
 interface CreateEvoluStorageProps<S extends EvoluSchema> {
@@ -36,7 +37,7 @@ const createEvoluStorage = <S extends EvoluSchema>({
     schema,
     appName,
     shardPath,
-}: CreateEvoluStorageProps<S>): EvoluStorage<S> => {
+}: CreateEvoluStorageProps<S>): Promise<EvoluStorage<S>> => {
     const ownerSecret = mnemonicToOwnerSecret(mnemonic);
     const appOwner = createAppOwner(ownerSecret);
 
@@ -70,7 +71,8 @@ const createEvoluStorage = <S extends EvoluSchema>({
 
     const unuseShardOwner = evolu.useOwner(shardOwner);
 
-    return {
+    // Todo: new evolu API will be async
+    return Promise.resolve({
         evolu,
         shardOwner,
         updateRelayUrls,
@@ -79,10 +81,10 @@ const createEvoluStorage = <S extends EvoluSchema>({
             unuseOwner();
             await evolu.resetAppOwner({ reload: false });
         },
-    };
+    });
 };
 
-export type EnsureEvoluStorage<S extends EvoluSchema> = () => EvoluStorage<S>;
+export type EnsureEvoluStorage<S extends EvoluSchema> = () => Promise<EvoluStorage<S>>;
 
 export interface EnsureEvoluDep<S extends EvoluSchema> {
     readonly ensureEvoluStorage: EnsureEvoluStorage<S>;
@@ -107,9 +109,9 @@ export const createEnsureEvoluStorage = <S extends EvoluSchema>({
 }: CreateEnsureEvoluProps<S>): EnsureEvoluStorage<S> => {
     let storage: EvoluStorage<S> | null = null;
 
-    return () => {
+    return async () => {
         if (storage === null) {
-            storage = createEvoluStorage({
+            storage = await createEvoluStorage({
                 mnemonic: deps.ensureEvoluOwner(),
                 schema,
                 appName,
