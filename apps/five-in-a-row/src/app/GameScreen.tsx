@@ -58,8 +58,8 @@ export const GameScreenPure = ({
     return (
         <Column gap={12}>
             <Row justify="space-between" align="center">
-                <Card padding={{ top: 8, bottom: 8, left: 16, right: 16 }}>
-                    <Title level={5}>{statusText}</Title>
+                <Card padding={{ top: 4, bottom: 4, left: 16, right: 16 }}>
+                    <Title level={3}>{statusText}</Title>
                 </Card>
                 <Row gap={8}>
                     <Button onClick={onUndo} disabled={!canUndo}>

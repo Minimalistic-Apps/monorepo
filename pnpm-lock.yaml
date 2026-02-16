@@ -74,6 +74,9 @@ importers:
       '@minimalist-apps/connect':
         specifier: workspace:*
         version: link:../../packages/connect
+      '@minimalist-apps/local-storage':
+        specifier: workspace:*
+        version: link:../../packages/local-storage
       '@minimalist-apps/mini-store':
         specifier: workspace:*
         version: link:../../packages/mini-store
