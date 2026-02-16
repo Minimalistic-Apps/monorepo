@@ -6,7 +6,7 @@ export interface RemoveCurrencyParams {
     readonly code: CurrencyCode;
 }
 
-export type RemoveCurrency = (params: RemoveCurrencyParams) => void;
+export type RemoveCurrency = (params: RemoveCurrencyParams) => Promise<void>;
 
 export interface RemoveCurrencyDep {
     readonly removeCurrency: RemoveCurrency;
@@ -16,8 +16,8 @@ type RemoveCurrencyDeps = EnsureEvoluStorageDep & RemoveFiatAmountDep;
 
 export const createRemoveCurrency =
     (deps: RemoveCurrencyDeps): RemoveCurrency =>
-    ({ code }) => {
-        const { evolu, shardOwner } = deps.ensureEvoluStorage();
+    async ({ code }) => {
+        const { evolu, shardOwner } = await deps.ensureEvoluStorage();
         evolu.upsert(
             'currency',
             {

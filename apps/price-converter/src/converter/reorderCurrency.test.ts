@@ -19,7 +19,7 @@ const createTestDeps = (
     orderedCurrencies: ReadonlyArray<SelectedCurrency>,
     evoluStorage: EvoluStorage,
 ): ReorderCurrencyDeps => ({
-    ensureEvoluStorage: () => evoluStorage,
+    ensureEvoluStorage: async () => evoluStorage,
     getSelectedCurrencies: async () => orderedCurrencies,
 });
 
@@ -166,7 +166,7 @@ describe(createReorderCurrency.name, () => {
         const getSelectedCurrencies = vi.fn(async () => currencies);
 
         const reorderCurrency = createReorderCurrency({
-            ensureEvoluStorage: () => mockEvoluStorage(vi.fn()),
+            ensureEvoluStorage: async () => mockEvoluStorage(vi.fn()),
             getSelectedCurrencies,
         });
 
