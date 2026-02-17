@@ -43,6 +43,16 @@ interface CollectCellsInDirectionProps {
     readonly player: Player;
 }
 
+interface CellCoordinatesProps {
+    readonly x: number;
+    readonly y: number;
+    readonly size: number;
+}
+
+interface BuildTargetLineLengthProps {
+    readonly size: number;
+}
+
 const directions: ReadonlyArray<readonly [number, number]> = [
     [1, 0],
     [0, 1],
@@ -52,25 +62,10 @@ const directions: ReadonlyArray<readonly [number, number]> = [
 
 const winLength = 5;
 
-const buildCellIndex = ({
-    x,
-    y,
-    size,
-}: {
-    readonly x: number;
-    readonly y: number;
-    readonly size: number;
-}): number => y * size + x;
+const buildCellIndex = ({ x, y, size }: CellCoordinatesProps): number => y * size + x;
 
-const isInsideBoard = ({
-    x,
-    y,
-    size,
-}: {
-    readonly x: number;
-    readonly y: number;
-    readonly size: number;
-}): boolean => x >= 0 && y >= 0 && x < size && y < size;
+const isInsideBoard = ({ x, y, size }: CellCoordinatesProps): boolean =>
+    x >= 0 && y >= 0 && x < size && y < size;
 
 const collectCellsInDirection = ({
     board,
@@ -100,7 +95,7 @@ const collectCellsInDirection = ({
     return cells;
 };
 
-const buildTargetLineLength = ({ size }: { readonly size: number }): number =>
+const buildTargetLineLength = ({ size }: BuildTargetLineLengthProps): number =>
     size < winLength ? size : winLength;
 
 export const createEmptyBoard = ({ size }: CreateEmptyBoardProps): GameBoard =>
