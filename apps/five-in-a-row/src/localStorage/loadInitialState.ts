@@ -1,11 +1,8 @@
 import { isTheme, type Theme } from '@minimalist-apps/components';
 import type { LocalStorageDep } from '@minimalist-apps/local-storage';
-import {
-    type GameMode,
-    type GameStore,
-    isGameMode,
-    isValidBoardSize,
-} from '../app/game/store/createGameStore';
+import { type GameMode, isGameMode, isValidBoardSize } from '../app/game/store/createGameStore';
+import type { SetBoardSizeDeps } from '../app/game/store/setBoardSize';
+import type { SetGameModeDeps } from '../app/game/store/setGameMode';
 import type { AppStoreDep } from '../appStore/createAppStore';
 import { STORAGE_KEYS } from './storageKeys';
 
@@ -15,10 +12,7 @@ export interface LoadInitialStateDep {
     readonly loadInitialState: LoadInitialState;
 }
 
-type LoadInitialStateDeps = AppStoreDep &
-    LocalStorageDep & {
-        readonly gameStore: GameStore;
-    };
+type LoadInitialStateDeps = AppStoreDep & LocalStorageDep & SetBoardSizeDeps & SetGameModeDeps;
 
 export const createLoadInitialState =
     (deps: LoadInitialStateDeps): LoadInitialState =>
@@ -32,10 +26,10 @@ export const createLoadInitialState =
         }
 
         if (savedBoardSizeResult.ok && isValidBoardSize(savedBoardSizeResult.value)) {
-            deps.gameStore.setBoardSize(savedBoardSizeResult.value);
+            deps.setBoardSize(savedBoardSizeResult.value);
         }
 
         if (savedGameModeResult.ok && isGameMode(savedGameModeResult.value)) {
-            deps.gameStore.setGameMode(savedGameModeResult.value);
+            deps.setGameMode(savedGameModeResult.value);
         }
     };

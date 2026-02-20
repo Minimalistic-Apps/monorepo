@@ -9,8 +9,12 @@ import {
     selectGameMode,
     selectGameViewState,
 } from './app/game/store/createGameStore';
+import { createPlayMove } from './app/game/store/playMove';
+import { createRedoMove } from './app/game/store/redoMove';
+import { createResetGame } from './app/game/store/resetGame';
 import { createSetBoardSize } from './app/game/store/setBoardSize';
 import { createSetGameMode } from './app/game/store/setGameMode';
+import { createUndoMove } from './app/game/store/undoMove';
 import {
     type BoardSizeSettingsDeps,
     BoardSizeSettingsPure,
@@ -42,8 +46,17 @@ export const createCompositionRoot = (): Main => {
 
     const setBoardSize = createSetBoardSize({ gameStore });
     const setGameMode = createSetGameMode({ gameStore });
+    const playMove = createPlayMove({ gameStore });
+    const resetGame = createResetGame({ gameStore });
+    const undoMove = createUndoMove({ gameStore });
+    const redoMove = createRedoMove({ gameStore });
 
-    const loadInitialState = createLoadInitialState({ store, gameStore, localStorage });
+    const loadInitialState = createLoadInitialState({
+        store,
+        localStorage,
+        setBoardSize,
+        setGameMode,
+    });
     const persistStore = createPersistStore({ store, gameStore, localStorage });
     const statePersistence = createStatePersistence({ loadInitialState, persistStore });
 
@@ -55,10 +68,10 @@ export const createCompositionRoot = (): Main => {
     });
 
     const GameScreen = connect(GameScreenPure, ({ gameStore }) => selectGameViewState(gameStore), {
-        onUndo: () => gameStore.undo(),
-        onRedo: () => gameStore.redo(),
-        onReset: () => gameStore.reset(),
-        onCellClick: (index: number) => gameStore.playMove(index),
+        onUndo: () => undoMove(),
+        onRedo: () => redoMove(),
+        onReset: () => resetGame(),
+        onCellClick: (index: number) => playMove(index),
     });
 
     const ThemeModeSettings = connect(
