@@ -7,7 +7,11 @@ import {
     Title,
     UndoOutlined,
 } from '@minimalist-apps/components';
+import type { PlayerMoveDep } from '../game/createPlayerMove';
 import { emojiMap, type GameBoard, type Player, type Winner } from '../game/game';
+import type { RedoMoveDeps } from '../game/store/redoMove';
+import type { ResetGameDeps } from '../game/store/resetGame';
+import type { UndoMoveDeps } from '../game/store/undoMove';
 import { GridCell } from './GridCell';
 
 interface BuildStatusTextProps {
@@ -38,12 +42,7 @@ export interface GameScreenStateProps {
     readonly canRedo: boolean;
 }
 
-export interface GameScreenDep {
-    readonly onUndo: () => void;
-    readonly onRedo: () => void;
-    readonly onReset: () => void;
-    readonly onCellClick: (index: number) => void;
-}
+export type GameScreenDep = UndoMoveDeps & RedoMoveDeps & ResetGameDeps & PlayerMoveDep;
 
 export const GameScreenPure = (
     deps: GameScreenDep,
@@ -67,9 +66,9 @@ export const GameScreenPure = (
                     <Title level={3}>{statusText}</Title>
                 </Card>
                 <Row gap={8}>
-                    <Button onClick={deps.onUndo} disabled={!canUndo} icon={<UndoOutlined />} />
-                    <Button onClick={deps.onRedo} disabled={!canRedo} icon={<RedoOutlined />} />
-                    <Button onClick={deps.onReset}>Restart</Button>
+                    <Button onClick={deps.undoMove} disabled={!canUndo} icon={<UndoOutlined />} />
+                    <Button onClick={deps.redoMove} disabled={!canRedo} icon={<RedoOutlined />} />
+                    <Button onClick={deps.resetGame}>Restart</Button>
                 </Row>
             </Row>
 
@@ -96,7 +95,7 @@ export const GameScreenPure = (
                                 cell={cell}
                                 isWinningCell={isWinningCell}
                                 disabled={isDisabled}
-                                onCellClick={deps.onCellClick}
+                                onCellClick={index => deps.playerMove({ index })}
                             />
                         );
                     })}

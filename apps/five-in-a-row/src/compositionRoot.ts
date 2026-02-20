@@ -3,6 +3,7 @@ import { createLocalStorage } from '@minimalist-apps/local-storage';
 import { AppPure } from './app/App';
 import { AppHeader as AppHeaderPure } from './app/AppHeader';
 import { GameScreenPure } from './app/GameScreen/GameScreen';
+import { createPlayerMove } from './app/game/createPlayerMove';
 import {
     createGameStore,
     selectBoardSize,
@@ -47,6 +48,7 @@ export const createCompositionRoot = (): Main => {
     const setBoardSize = createSetBoardSize({ gameStore });
     const setGameMode = createSetGameMode({ gameStore });
     const playMove = createPlayMove({ gameStore });
+    const playerMove = createPlayerMove({ gameStore, playMove });
     const resetGame = createResetGame({ gameStore });
     const undoMove = createUndoMove({ gameStore });
     const redoMove = createRedoMove({ gameStore });
@@ -68,10 +70,10 @@ export const createCompositionRoot = (): Main => {
     });
 
     const GameScreen = connect(GameScreenPure, ({ gameStore }) => selectGameViewState(gameStore), {
-        onUndo: () => undoMove(),
-        onRedo: () => redoMove(),
-        onReset: () => resetGame(),
-        onCellClick: (index: number) => playMove(index),
+        undoMove,
+        redoMove,
+        resetGame,
+        playerMove,
     });
 
     const ThemeModeSettings = connect(

@@ -1,19 +1,6 @@
 import { describe, expect, test } from 'vitest';
-import { createEmptyBoard, findWinner, type GameBoard, getNextPlayer, isBoardFull } from './game';
-
-describe(createEmptyBoard.name, () => {
-    test.each([
-        {
-            label: 'creates board with expected number of cells',
-            size: 3,
-            expected: [null, null, null, null, null, null, null, null, null],
-        },
-    ])('$label', ({ size, expected }) => {
-        const board = createEmptyBoard({ size });
-
-        expect(board).toEqual(expected);
-    });
-});
+import { createEmptyBoard } from './createRootSnapshot';
+import { findWinner, type GameBoard, getNextPlayer, isBoardFull } from './game';
 
 describe(getNextPlayer.name, () => {
     test.each([

@@ -1,7 +1,7 @@
 import { createStore, type Store } from '@minimalist-apps/mini-store';
 import { canRedo, canUndo, createUndoState, type UndoState } from '@minimalist-apps/undo';
+import { createRootSnapshot } from '../createRootSnapshot';
 import { type GameBoard, type GameState, isBoardFull, type Player, type Winner } from '../game';
-import { clampBoardSize, createSnapshot } from './gameStateTransforms';
 
 export interface GameStoreState {
     readonly history: UndoState<GameState>;
@@ -16,6 +16,16 @@ export const isValidBoardSize = (value: unknown): value is number =>
 
 export const isGameMode = (value: unknown): value is GameMode =>
     value === 'human' || value === 'bot';
+
+export const MAX_BOT_BOARD_SIZE = 15;
+
+interface ClampBoardSizeProps {
+    readonly size: number;
+    readonly gameMode: 'human' | 'bot';
+}
+
+export const clampBoardSize = ({ size, gameMode }: ClampBoardSizeProps): number =>
+    gameMode === 'bot' ? Math.min(size, MAX_BOT_BOARD_SIZE) : size;
 
 export interface GameViewState {
     readonly boardSize: number;
@@ -61,7 +71,7 @@ export const createGameStore = ({ initialBoardSize }: CreateGameStoreProps): Gam
 
     return createStore<GameStoreState>({
         history: createUndoState(
-            createSnapshot({
+            createRootSnapshot({
                 boardSize: clampBoardSize({ size: initialBoardSize, gameMode }),
             }),
         ),

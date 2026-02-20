@@ -1,26 +1,25 @@
 import { write } from '@minimalist-apps/undo';
+import { buildNextSnapshot } from '../buildNextSnapshot';
 import type { GameStore } from './createGameStore';
-import { buildSnapshotAfterMove } from './gameStateTransforms';
 
-export type PlayMove = (index: number) => void;
+export type PlayMove = (params: { index: number }) => void;
 
-export type PlayMoveDeps = {
+export type PlayMoveDep = {
     readonly playMove: PlayMove;
 };
 
-interface CreatePlayMoveDeps {
+interface PlayMoveDeps {
     readonly gameStore: GameStore;
 }
 
 export const createPlayMove =
-    (deps: CreatePlayMoveDeps): PlayMove =>
-    index => {
+    (deps: PlayMoveDeps): PlayMove =>
+    ({ index }) => {
         const state = deps.gameStore.getState();
-        const nextSnapshot = buildSnapshotAfterMove({
+
+        const nextSnapshot = buildNextSnapshot({
             snapshot: state.history.present,
             index,
-            gameMode: state.gameMode,
-            botPlayer: state.botPlayer,
         });
 
         if (nextSnapshot === null) {
