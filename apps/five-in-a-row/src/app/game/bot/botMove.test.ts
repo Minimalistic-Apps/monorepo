@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'vitest';
 import { createEmptyBoard, type GameState } from '../game';
-import { botMove } from './bot';
+import { botMove } from './botMove';
 
 interface CreateStateProps {
     readonly boardSize: number;
@@ -26,7 +26,7 @@ const createState = ({
 });
 
 describe(botMove.name, () => {
-    test('plays in the middle when bot is first', () => {
+    test('returns middle index when bot is first', () => {
         const state = createState({
             boardSize: 5,
             currentPlayer: 'cross',
@@ -34,12 +34,12 @@ describe(botMove.name, () => {
             lastMoveIndex: null,
         });
 
-        const nextState = botMove(state);
+        const moveIndex = botMove(state);
 
-        expect(nextState.board[12]).toBe('cross');
+        expect(moveIndex).toBe(12);
     });
 
-    test('plays next to opponent last move', () => {
+    test('returns index next to opponent last move', () => {
         const board = createEmptyBoard({ size: 5 });
         board[6] = 'ring';
 
@@ -51,8 +51,8 @@ describe(botMove.name, () => {
             board,
         });
 
-        const nextState = botMove(state);
+        const moveIndex = botMove(state);
 
-        expect(nextState.board[7]).toBe('cross');
+        expect(moveIndex).toBe(7);
     });
 });

@@ -23,8 +23,8 @@ describe(createGameStore.name, () => {
     test('supports undo and redo for moves', () => {
         const { gameStore, playMove, undoMove, redoMove } = createServices();
 
-        playMove(0);
-        playMove(1);
+        playMove({ index: 0 });
+        playMove({ index: 1 });
 
         expect(selectGameViewState(gameStore.getState()).board).toEqual([
             'ring',
@@ -70,13 +70,13 @@ describe(createGameStore.name, () => {
     test('drops future history when writing after undo', () => {
         const { gameStore, playMove, undoMove } = createServices();
 
-        playMove(0);
-        playMove(1);
+        playMove({ index: 0 });
+        playMove({ index: 1 });
         undoMove();
 
         expect(selectGameViewState(gameStore.getState()).canRedo).toBe(true);
 
-        playMove(2);
+        playMove({ index: 2 });
 
         const view = selectGameViewState(gameStore.getState());
 
@@ -106,15 +106,15 @@ describe(createGameStore.name, () => {
         expect(view.gameMode).toBe('bot');
     });
 
-    test('plays bot move automatically in bot mode', () => {
+    test('does not play bot move automatically in store service', () => {
         const { gameStore, playMove, setGameMode } = createServices();
 
         setGameMode('bot');
-        playMove(0);
+        playMove({ index: 0 });
 
         expect(selectGameViewState(gameStore.getState()).board).toEqual([
             'ring',
-            'cross',
+            null,
             null,
             null,
             null,

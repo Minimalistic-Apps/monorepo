@@ -84,13 +84,6 @@ interface BuildTargetLineLengthProps {
 const buildTargetLineLength = ({ size }: BuildTargetLineLengthProps): number =>
     size < winLength ? size : winLength;
 
-interface CreateEmptyBoardProps {
-    readonly size: number;
-}
-
-export const createEmptyBoard = ({ size }: CreateEmptyBoardProps): GameBoard =>
-    Array.from({ length: size * size }, () => null);
-
 interface IsBoardFullProps {
     readonly board: GameBoard;
 }
