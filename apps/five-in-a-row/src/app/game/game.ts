@@ -10,47 +10,13 @@ export const emojiMap: Record<Player, string> = {
 
 export type GameBoard = Array<Player | null>;
 
-export interface Winner {
-    readonly player: Player;
-    readonly cellIndexes: ReadonlyArray<number>;
-}
-
-interface CreateEmptyBoardProps {
-    readonly size: number;
-}
-
-interface IsBoardFullProps {
+export interface GameState {
+    readonly boardSize: number;
     readonly board: GameBoard;
-}
-
-interface GetNextPlayerProps {
-    readonly player: Player;
-}
-
-interface FindWinnerProps {
-    readonly board: GameBoard;
-    readonly size: number;
-    readonly lastMoveIndex: number;
-}
-
-interface CollectCellsInDirectionProps {
-    readonly board: GameBoard;
-    readonly size: number;
-    readonly startX: number;
-    readonly startY: number;
-    readonly directionX: number;
-    readonly directionY: number;
-    readonly player: Player;
-}
-
-interface CellCoordinatesProps {
-    readonly x: number;
-    readonly y: number;
-    readonly size: number;
-}
-
-interface BuildTargetLineLengthProps {
-    readonly size: number;
+    readonly currentPlayer: Player;
+    readonly winner: Winner | null;
+    readonly moveCount: number;
+    readonly lastMoveIndex: number | null;
 }
 
 const directions: ReadonlyArray<readonly [number, number]> = [
@@ -62,10 +28,26 @@ const directions: ReadonlyArray<readonly [number, number]> = [
 
 const winLength = 5;
 
+interface CellCoordinatesProps {
+    readonly x: number;
+    readonly y: number;
+    readonly size: number;
+}
+
 const buildCellIndex = ({ x, y, size }: CellCoordinatesProps): number => y * size + x;
 
 const isInsideBoard = ({ x, y, size }: CellCoordinatesProps): boolean =>
     x >= 0 && y >= 0 && x < size && y < size;
+
+interface CollectCellsInDirectionProps {
+    readonly board: GameBoard;
+    readonly size: number;
+    readonly startX: number;
+    readonly startY: number;
+    readonly directionX: number;
+    readonly directionY: number;
+    readonly player: Player;
+}
 
 const collectCellsInDirection = ({
     board,
@@ -95,17 +77,44 @@ const collectCellsInDirection = ({
     return cells;
 };
 
+interface BuildTargetLineLengthProps {
+    readonly size: number;
+}
+
 const buildTargetLineLength = ({ size }: BuildTargetLineLengthProps): number =>
     size < winLength ? size : winLength;
+
+interface CreateEmptyBoardProps {
+    readonly size: number;
+}
 
 export const createEmptyBoard = ({ size }: CreateEmptyBoardProps): GameBoard =>
     Array.from({ length: size * size }, () => null);
 
+interface IsBoardFullProps {
+    readonly board: GameBoard;
+}
+
 export const isBoardFull = ({ board }: IsBoardFullProps): boolean =>
     board.every(cell => cell !== null);
 
+interface GetNextPlayerProps {
+    readonly player: Player;
+}
+
 export const getNextPlayer = ({ player }: GetNextPlayerProps): Player =>
     player === 'cross' ? 'ring' : 'cross';
+
+interface FindWinnerProps {
+    readonly board: GameBoard;
+    readonly size: number;
+    readonly lastMoveIndex: number;
+}
+
+export interface Winner {
+    readonly player: Player;
+    readonly cellIndexes: ReadonlyArray<number>;
+}
 
 export const findWinner = ({ board, size, lastMoveIndex }: FindWinnerProps): Winner | null => {
     const player = board[lastMoveIndex];

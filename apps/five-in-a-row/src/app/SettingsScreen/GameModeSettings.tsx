@@ -20,7 +20,6 @@ export const GameModeSettingsPure = (
     <>
         <SettingsRow label="2 Players Mode">
             <Switch
-                disabled
                 checked={gameMode === 'human'}
                 onChange={() => {
                     deps.setGameMode(gameMode === 'human' ? 'bot' : 'human');

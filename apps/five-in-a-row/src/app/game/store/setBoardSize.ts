@@ -1,4 +1,6 @@
+import { createUndoState } from '@minimalist-apps/undo';
 import type { GameStore } from './createGameStore';
+import { clampBoardSize, createSnapshot } from './gameStateTransforms';
 
 export type SetBoardSize = (size: number) => void;
 
@@ -13,5 +15,10 @@ interface CreateSetBoardSizeDeps {
 export const createSetBoardSize =
     (deps: CreateSetBoardSizeDeps): SetBoardSize =>
     size => {
-        deps.gameStore.setBoardSize(size);
+        const mode = deps.gameStore.getState().gameMode;
+        const nextSize = clampBoardSize({ size, gameMode: mode });
+
+        deps.gameStore.setState({
+            history: createUndoState(createSnapshot({ boardSize: nextSize })),
+        });
     };

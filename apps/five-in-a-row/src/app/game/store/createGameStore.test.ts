@@ -1,14 +1,32 @@
 import { describe, expect, test } from 'vitest';
 import { createGameStore, selectGameViewState } from './createGameStore';
+import { createPlayMove } from './playMove';
+import { createRedoMove } from './redoMove';
+import { createSetBoardSize } from './setBoardSize';
+import { createSetGameMode } from './setGameMode';
+import { createUndoMove } from './undoMove';
+
+const createServices = () => {
+    const gameStore = createGameStore({ initialBoardSize: 3 });
+
+    return {
+        gameStore,
+        playMove: createPlayMove({ gameStore }),
+        undoMove: createUndoMove({ gameStore }),
+        redoMove: createRedoMove({ gameStore }),
+        setBoardSize: createSetBoardSize({ gameStore }),
+        setGameMode: createSetGameMode({ gameStore }),
+    };
+};
 
 describe(createGameStore.name, () => {
     test('supports undo and redo for moves', () => {
-        const store = createGameStore({ initialBoardSize: 3 });
+        const { gameStore, playMove, undoMove, redoMove } = createServices();
 
-        store.playMove(0);
-        store.playMove(1);
+        playMove(0);
+        playMove(1);
 
-        expect(selectGameViewState(store.getState()).board).toEqual([
+        expect(selectGameViewState(gameStore.getState()).board).toEqual([
             'ring',
             'cross',
             null,
@@ -20,9 +38,9 @@ describe(createGameStore.name, () => {
             null,
         ]);
 
-        store.undo();
+        undoMove();
 
-        expect(selectGameViewState(store.getState()).board).toEqual([
+        expect(selectGameViewState(gameStore.getState()).board).toEqual([
             'ring',
             null,
             null,
@@ -34,9 +52,9 @@ describe(createGameStore.name, () => {
             null,
         ]);
 
-        store.redo();
+        redoMove();
 
-        expect(selectGameViewState(store.getState()).board).toEqual([
+        expect(selectGameViewState(gameStore.getState()).board).toEqual([
             'ring',
             'cross',
             null,
@@ -50,38 +68,60 @@ describe(createGameStore.name, () => {
     });
 
     test('drops future history when writing after undo', () => {
-        const store = createGameStore({ initialBoardSize: 3 });
+        const { gameStore, playMove, undoMove } = createServices();
 
-        store.playMove(0);
-        store.playMove(1);
-        store.undo();
+        playMove(0);
+        playMove(1);
+        undoMove();
 
-        expect(selectGameViewState(store.getState()).canRedo).toBe(true);
+        expect(selectGameViewState(gameStore.getState()).canRedo).toBe(true);
 
-        store.playMove(2);
+        playMove(2);
 
-        const view = selectGameViewState(store.getState());
+        const view = selectGameViewState(gameStore.getState());
 
         expect(view.board).toEqual(['ring', null, 'cross', null, null, null, null, null, null]);
         expect(view.canRedo).toBe(false);
     });
 
     test('limits board size to 15 in bot mode', () => {
-        const store = createGameStore({ initialBoardSize: 10 });
+        const gameStore = createGameStore({ initialBoardSize: 10 });
+        const setGameMode = createSetGameMode({ gameStore });
+        const setBoardSize = createSetBoardSize({ gameStore });
 
-        store.setGameMode('bot');
-        store.setBoardSize(30);
+        setGameMode('bot');
+        setBoardSize(30);
 
-        expect(selectGameViewState(store.getState()).boardSize).toBe(15);
+        expect(selectGameViewState(gameStore.getState()).boardSize).toBe(15);
     });
 
     test('stores selected opening protocol and bot level in view state', () => {
-        const store = createGameStore({ initialBoardSize: 10 });
+        const gameStore = createGameStore({ initialBoardSize: 10 });
+        const setGameMode = createSetGameMode({ gameStore });
 
-        store.setGameMode('bot');
+        setGameMode('bot');
 
-        const view = selectGameViewState(store.getState());
+        const view = selectGameViewState(gameStore.getState());
 
         expect(view.gameMode).toBe('bot');
+    });
+
+    test('plays bot move automatically in bot mode', () => {
+        const { gameStore, playMove, setGameMode } = createServices();
+
+        setGameMode('bot');
+        playMove(0);
+
+        expect(selectGameViewState(gameStore.getState()).board).toEqual([
+            'ring',
+            'cross',
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+        ]);
     });
 });
