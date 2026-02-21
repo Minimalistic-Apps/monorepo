@@ -1,6 +1,6 @@
 import { SettingsRow, Switch, type Theme } from '@minimalist-apps/components';
 import type { FC } from 'react';
-import type { SetThemeModeDep } from '../../appStore/setThemeMode';
+import type { SetThemeModeDep } from './createSetThemeMode';
 
 export type ThemeModeSettingsDep = {
     readonly ThemeModeSettings: FC;

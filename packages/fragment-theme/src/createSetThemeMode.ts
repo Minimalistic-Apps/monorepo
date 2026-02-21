@@ -1,5 +1,5 @@
 import type { Theme } from '@minimalist-apps/components';
-import type { AppStoreDep } from './createAppStore';
+import type { ThemeState, ThemeStoreDep } from './themeState';
 
 export type SetThemeMode = (themeMode: Theme) => void;
 
@@ -8,7 +8,7 @@ export type SetThemeModeDep = {
 };
 
 export const createSetThemeMode =
-    (deps: AppStoreDep): SetThemeMode =>
+    <State extends ThemeState>(deps: ThemeStoreDep<State>): SetThemeMode =>
     (themeMode): void => {
-        deps.store.setState({ themeMode });
+        deps.store.setState({ themeMode } as Partial<State>);
     };

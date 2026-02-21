@@ -1,5 +1,5 @@
+import { selectThemeMode } from '@minimalist-apps/fragment-theme';
 import type { LocalStorageDep } from '@minimalist-apps/local-storage';
-import { selectThemeMode } from '../appStore/AppState';
 import type { AppStoreDep } from '../appStore/createAppStore';
 import { STORAGE_KEYS } from './storageKeys';
 

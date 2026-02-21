@@ -1,7 +1,7 @@
 import { Button, Column } from '@minimalist-apps/components';
+import type { ThemeModeSettingsDep } from '@minimalist-apps/fragment-theme';
 import type { BoardSizeSettingsDep } from './BoardSizeSettings';
 import type { GameModeSettingsDep } from './GameModeSettings';
-import type { ThemeModeSettingsDep } from './ThemeModeSettings';
 
 type SettingsScreenDeps = ThemeModeSettingsDep &
     GameModeSettingsDep &

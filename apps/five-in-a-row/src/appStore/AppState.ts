@@ -1,11 +1,9 @@
-import type { Theme } from '@minimalist-apps/components';
+import type { ThemeState } from '@minimalist-apps/fragment-theme';
 
 export type Screen = 'Game' | 'Settings';
 
-export interface AppState {
-    readonly themeMode: Theme;
+export interface AppState extends ThemeState {
     readonly currentScreen: Screen;
 }
 
-export const selectThemeMode = (state: AppState): Theme => state.themeMode;
 export const selectCurrentScreen = (state: AppState): Screen => state.currentScreen;

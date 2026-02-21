@@ -1,5 +1,5 @@
 import { Button, Column } from '@minimalist-apps/components';
-import type { ThemeModeSettingsDep } from './ThemeModeSettings';
+import type { ThemeModeSettingsDep } from '@minimalist-apps/fragment-theme';
 
 type SettingsScreenDeps = ThemeModeSettingsDep & {
     readonly onBack: () => void;
