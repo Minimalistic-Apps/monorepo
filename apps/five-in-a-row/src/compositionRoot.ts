@@ -1,4 +1,8 @@
 import { createConnect } from '@minimalist-apps/connect';
+import {
+    createThemeFragmentCompositionRoot,
+    selectThemeMode,
+} from '@minimalist-apps/fragment-theme';
 import { createLocalStorage } from '@minimalist-apps/local-storage';
 import { toGetter } from '@minimalist-apps/mini-store';
 import { AppPure } from './app/App';
@@ -30,11 +34,9 @@ import {
     type GameModeSettingsStateProps,
 } from './app/SettingsScreen/GameModeSettings';
 import { SettingsScreenPure } from './app/SettingsScreen/SettingsScreen';
-import { ThemeModeSettingsPure } from './app/SettingsScreen/ThemeModeSettings';
-import { selectCurrentScreen, selectThemeMode } from './appStore/AppState';
+import { selectCurrentScreen } from './appStore/AppState';
 import { createAppStore } from './appStore/createAppStore';
 import { createNavigate } from './appStore/navigate';
-import { createSetThemeMode } from './appStore/setThemeMode';
 import { createMain, type Main } from './createMain';
 import { createLoadInitialState } from './localStorage/loadInitialState';
 import { createPersistStore } from './localStorage/persistStore';
@@ -46,7 +48,6 @@ export const createCompositionRoot = (): Main => {
     const gameStore = createGameStore({ initialBoardSize: 10 });
 
     const navigate = createNavigate({ store });
-    const setThemeMode = createSetThemeMode({ store });
 
     const setBoardSize = createSetBoardSize({ gameStore });
     const setGameMode = createSetGameMode({ gameStore });
@@ -74,6 +75,8 @@ export const createCompositionRoot = (): Main => {
 
     const connect = createConnect({ store, gameStore });
 
+    const { ThemeModeSettings } = createThemeFragmentCompositionRoot({ connect, store });
+
     const AppHeader = connect(AppHeaderPure, () => ({}), {
         onHome: () => navigate('Game'),
         onOpenSettings: () => navigate('Settings'),
@@ -85,16 +88,6 @@ export const createCompositionRoot = (): Main => {
         resetGame,
         playerMove,
     });
-
-    const ThemeModeSettings = connect(
-        ThemeModeSettingsPure,
-        ({ store }) => ({
-            themeMode: selectThemeMode(store),
-        }),
-        {
-            setThemeMode,
-        },
-    );
 
     const GameModeSettings = connect(
         (deps: GameModeSettingsDeps, props: GameModeSettingsStateProps) =>

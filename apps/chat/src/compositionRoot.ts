@@ -1,14 +1,16 @@
 import { createConnect } from '@minimalist-apps/connect';
+import {
+    createThemeFragmentCompositionRoot,
+    selectThemeMode,
+} from '@minimalist-apps/fragment-theme';
 import { createLocalStorage } from '@minimalist-apps/local-storage';
 import { AppPure } from './app/App';
 import { AppHeader as AppHeaderPure } from './app/AppHeader';
 import { ChatScreenPure } from './app/ChatScreen/ChatScreen';
 import { SettingsScreenPure } from './app/SettingsScreen/SettingsScreen';
-import { ThemeModeSettingsPure } from './app/SettingsScreen/ThemeModeSettings';
-import { selectCurrentScreen, selectThemeMode } from './appStore/AppState';
+import { selectCurrentScreen } from './appStore/AppState';
 import { createAppStore } from './appStore/createAppStore';
 import { createNavigate } from './appStore/navigate';
-import { createSetThemeMode } from './appStore/setThemeMode';
 import { createMain, type Main } from './createMain';
 import { createLoadInitialState } from './localStorage/loadInitialState';
 import { createPersistStore } from './localStorage/persistStore';
@@ -19,7 +21,6 @@ export const createCompositionRoot = (): Main => {
     const store = createAppStore();
 
     const navigate = createNavigate({ store });
-    const setThemeMode = createSetThemeMode({ store });
 
     const loadInitialState = createLoadInitialState({
         store,
@@ -30,22 +31,14 @@ export const createCompositionRoot = (): Main => {
 
     const connect = createConnect({ store });
 
+    const { ThemeModeSettings } = createThemeFragmentCompositionRoot({ connect, store });
+
     const AppHeader = connect(AppHeaderPure, () => ({}), {
         onHome: () => navigate('Chat'),
         onOpenSettings: () => navigate('Settings'),
     });
 
     const ChatScreen = connect(ChatScreenPure, () => ({}));
-
-    const ThemeModeSettings = connect(
-        ThemeModeSettingsPure,
-        ({ store }) => ({
-            themeMode: selectThemeMode(store),
-        }),
-        {
-            setThemeMode,
-        },
-    );
 
     const SettingsScreen = () =>
         SettingsScreenPure({
