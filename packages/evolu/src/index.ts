@@ -1,4 +1,6 @@
-import './polyfills/disposablestackAuto';
+import { installPolyfills } from '@evolu/common/polyfills';
+
+installPolyfills();
 
 export {
     createEnsureEvoluMnemonic,
