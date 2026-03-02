@@ -1,4 +1,5 @@
-import { installPolyfills as installEvoluCommonPolyfills } from '@evolu/common/polyfills';
+// cspell:ignore disposablestack
+import 'disposablestack/auto';
 
 // cspell:ignore okikio
 import SharedWorkerPolyfill from '@okikio/sharedworker';
@@ -7,8 +8,6 @@ import SharedWorkerPolyfill from '@okikio/sharedworker';
 import promiseTry from 'promise.try';
 
 export const installPolyfills = (): void => {
-    installEvoluCommonPolyfills();
-
     if (typeof globalThis.SharedWorker === 'undefined') {
         globalThis.SharedWorker = SharedWorkerPolyfill as typeof globalThis.SharedWorker;
     }
