@@ -13,6 +13,7 @@ See the following files:
 - [evolu-type.md](skills/evolu-type.md)
 - [final-verification.md](skills/final-verification.md)
 - [functions.md](skills/functions.md)
+- [git-and-commit-guidelines.md](skills/git-and-commit-guidelines.md)
 - [immutability.md](skills/immutability.md)
 - [imports.md](skills/imports.md)
 - [interface.md](skills/interface.md)
