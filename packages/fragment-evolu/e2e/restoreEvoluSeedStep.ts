@@ -1,9 +1,9 @@
 import {
-    clickElementById,
-    getElementAttributeById,
-    typeIntoElementById,
-    waitForElementById,
-    waitForElementTextByIdContains,
+    clickElementByTestId,
+    getElementAttributeByTestId,
+    typeIntoElementByTestId,
+    waitForElementByTestId,
+    waitForElementTextByTestIdContains,
 } from '@minimalist-apps/android-e2e';
 
 const EVOLU_ABANDON_TEST_SEED =
@@ -17,63 +17,63 @@ type RestoreEvoluSeedStepProps = {
 };
 
 const openSettings = async ({ serverUrl, sessionId }: RestoreEvoluSeedStepProps) => {
-    await waitForElementById({
-        id: 'open-settings-button',
+    await waitForElementByTestId({
+        testId: 'open-settings-button',
         serverUrl,
         sessionId,
     });
 
-    await clickElementById({
-        id: 'open-settings-button',
+    await clickElementByTestId({
+        testId: 'open-settings-button',
         serverUrl,
         sessionId,
     });
 
-    await waitForElementById({
-        id: 'settings-back-button',
+    await waitForElementByTestId({
+        testId: 'settings-back-button',
         serverUrl,
         sessionId,
     });
 };
 
 const restoreSeed = async ({ serverUrl, sessionId }: RestoreEvoluSeedStepProps) => {
-    await clickElementById({
-        id: 'restore-backup-button',
+    await clickElementByTestId({
+        testId: 'restore-backup-button',
         serverUrl,
         sessionId,
     });
 
-    await waitForElementById({
-        id: 'restore-seed-input',
+    await waitForElementByTestId({
+        testId: 'restore-seed-input',
         serverUrl,
         sessionId,
     });
 
-    await typeIntoElementById({
-        id: 'restore-seed-input',
+    await typeIntoElementByTestId({
+        testId: 'restore-seed-input',
         serverUrl,
         sessionId,
         text: EVOLU_ABANDON_TEST_SEED,
     });
 
-    await clickElementById({
-        id: 'restore-modal-ok',
+    await clickElementByTestId({
+        testId: 'restore-modal-ok',
         serverUrl,
         sessionId,
     });
 };
 
 const enableDebug = async ({ serverUrl, sessionId }: RestoreEvoluSeedStepProps) => {
-    await waitForElementById({
-        id: 'debug-mode-switch',
+    await waitForElementByTestId({
+        testId: 'debug-mode-switch',
         serverUrl,
         sessionId,
     });
 
     const isDebugEnabled =
-        (await getElementAttributeById({
+        (await getElementAttributeByTestId({
             attribute: 'aria-checked',
-            id: 'debug-mode-switch',
+            testId: 'debug-mode-switch',
             serverUrl,
             sessionId,
         })) === 'true';
@@ -82,16 +82,16 @@ const enableDebug = async ({ serverUrl, sessionId }: RestoreEvoluSeedStepProps) 
         return;
     }
 
-    await clickElementById({
-        id: 'debug-mode-switch',
+    await clickElementByTestId({
+        testId: 'debug-mode-switch',
         serverUrl,
         sessionId,
     });
 };
 
 const assertDebugOwnerSuffix = async ({ serverUrl, sessionId }: RestoreEvoluSeedStepProps) => {
-    await waitForElementTextByIdContains({
-        id: 'debug-owner-id',
+    await waitForElementTextByTestIdContains({
+        testId: 'debug-owner-id',
         serverUrl,
         sessionId,
         text: EVOLU_ABANDON_SEED_OWNER_ID.slice(-6),
@@ -99,20 +99,20 @@ const assertDebugOwnerSuffix = async ({ serverUrl, sessionId }: RestoreEvoluSeed
 };
 
 const goBackFromSettings = async ({ serverUrl, sessionId }: RestoreEvoluSeedStepProps) => {
-    await waitForElementById({
-        id: 'settings-back-button',
+    await waitForElementByTestId({
+        testId: 'settings-back-button',
         serverUrl,
         sessionId,
     });
 
-    await clickElementById({
-        id: 'settings-back-button',
+    await clickElementByTestId({
+        testId: 'settings-back-button',
         serverUrl,
         sessionId,
     });
 
-    await waitForElementById({
-        id: 'open-settings-button',
+    await waitForElementByTestId({
+        testId: 'open-settings-button',
         serverUrl,
         sessionId,
     });
