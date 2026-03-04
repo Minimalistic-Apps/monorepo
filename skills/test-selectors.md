@@ -26,7 +26,7 @@ Do **not** use selectors based on implementation details or user-facing copy:
 
 - Any interactive or asserted element must expose a stable `testId`/`data-testid`.
 - If a test needs to interact with something that has no `data-testid`, first add one in production code, then use it in tests.
-- Prefer exporting test-id constants from the component module when reused across tests.
+- Prefer exporting test-id constants from the component file. Do not create separate test-id files.
 
 ### Naming (mandatory)
 

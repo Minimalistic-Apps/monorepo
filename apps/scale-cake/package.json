@@ -12,7 +12,11 @@
         "build:android:debug": "APP_DIR=$PWD bun run --filter @minimalist-apps/android-build build:debug",
         "build:android:sign": "APP_DIR=$PWD bun run --filter @minimalist-apps/android-build sign",
         "preview": "vite preview",
-        "typecheck": "tsc --noEmit"
+        "typecheck": "tsc --noEmit",
+        "e2e": "sh -c 'bun run build:android:debug && vitest run --config vitest.e2e.config.ts'",
+        "e2e-ci": "sh -c 'bun run build:android:debug && vitest run --config vitest.e2e.config.ts'",
+        "e2e:appium": "APPIUM_HOME=${APPIUM_HOME:-$HOME/.appium} bunx appium --base-path / --allow-insecure '*:chromedriver_autodownload'",
+        "e2e:emulator": "bun run --filter @minimalist-apps/android-e2e e2e:emulator"
     },
     "dependencies": {
         "@capacitor/core": "^7.2.0",
@@ -24,11 +28,13 @@
     "devDependencies": {
         "@capacitor/android": "^7.2.0",
         "@capacitor/cli": "^7.2.0",
+        "@minimalist-apps/android-e2e": "workspace:*",
         "@minimalist-apps/requirements": "workspace:*",
         "@minimalist-apps/tsconfig": "workspace:*",
         "@types/react": "^19.0.0",
         "@types/react-dom": "^19.0.0",
         "@vitejs/plugin-react": "^4.3.0",
+        "appium": "^2.19.0",
         "typescript": "^5.3.0",
         "vite": "^7.3.1"
     }
