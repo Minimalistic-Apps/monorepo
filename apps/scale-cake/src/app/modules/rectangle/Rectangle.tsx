@@ -2,6 +2,13 @@ import { Card, Fraction, Input, Row, Text } from '@minimalist-apps/components';
 import { useState } from 'react';
 import { calculateRectangle } from './calculateRectangle';
 
+export const RECTANGLE_AMOUNT_INPUT_TEST_ID = 'RECTANGLE_AMOUNT_INPUT';
+export const RECTANGLE_ORIGINAL_A_INPUT_TEST_ID = 'RECTANGLE_ORIGINAL_A_INPUT';
+export const RECTANGLE_ORIGINAL_B_INPUT_TEST_ID = 'RECTANGLE_ORIGINAL_B_INPUT';
+export const RECTANGLE_NEW_A_INPUT_TEST_ID = 'RECTANGLE_NEW_A_INPUT';
+export const RECTANGLE_NEW_B_INPUT_TEST_ID = 'RECTANGLE_NEW_B_INPUT';
+export const RECTANGLE_RESULT_TEST_ID = 'RECTANGLE_RESULT';
+
 export const Rectangle = () => {
     const [amount, setAmount] = useState('');
     const [originalA, setOriginalA] = useState('');
@@ -43,17 +50,28 @@ export const Rectangle = () => {
                             inputMode="decimal"
                             textAlign="center"
                             label="amount"
+                            testId={RECTANGLE_AMOUNT_INPUT_TEST_ID}
                         />
                     }
                     denominator={
                         result !== null ? (
-                            <Text strong size="large">
-                                {result.toFixed()}
-                            </Text>
+                            <span
+                                id={RECTANGLE_RESULT_TEST_ID}
+                                data-testid={RECTANGLE_RESULT_TEST_ID}
+                            >
+                                <Text strong size="large">
+                                    {result.toFixed()}
+                                </Text>
+                            </span>
                         ) : (
-                            <Text size="large" intent="secondary">
-                                ?
-                            </Text>
+                            <span
+                                id={RECTANGLE_RESULT_TEST_ID}
+                                data-testid={RECTANGLE_RESULT_TEST_ID}
+                            >
+                                <Text size="large" intent="secondary">
+                                    ?
+                                </Text>
+                            </span>
                         )
                     }
                 />
@@ -69,6 +87,7 @@ export const Rectangle = () => {
                                 inputMode="decimal"
                                 textAlign="center"
                                 label="a"
+                                testId={RECTANGLE_ORIGINAL_A_INPUT_TEST_ID}
                             />
                             <Text strong>×</Text>
                             <Input
@@ -77,6 +96,7 @@ export const Rectangle = () => {
                                 inputMode="decimal"
                                 textAlign="center"
                                 label="b"
+                                testId={RECTANGLE_ORIGINAL_B_INPUT_TEST_ID}
                             />
                         </Row>
                     }
@@ -88,6 +108,7 @@ export const Rectangle = () => {
                                 inputMode="decimal"
                                 textAlign="center"
                                 label="new a"
+                                testId={RECTANGLE_NEW_A_INPUT_TEST_ID}
                             />
                             <Text strong>×</Text>
                             <Input
@@ -96,6 +117,7 @@ export const Rectangle = () => {
                                 inputMode="decimal"
                                 textAlign="center"
                                 label="new b"
+                                testId={RECTANGLE_NEW_B_INPUT_TEST_ID}
                             />
                         </Row>
                     }

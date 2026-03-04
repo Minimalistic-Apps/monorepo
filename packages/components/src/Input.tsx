@@ -20,6 +20,7 @@ interface InputProps {
     readonly textAlign?: 'center' | 'left' | 'right';
     readonly label?: string;
     readonly className?: string;
+    readonly testId?: string;
 }
 
 const antSizeMap = {
@@ -41,6 +42,7 @@ export const Input = ({
     textAlign,
     label,
     className,
+    testId,
 }: InputProps) => {
     const { token } = theme.useToken();
     const labelFontSize = fontSizeMap[decreaseFontSize(fontSize, 1)];
@@ -58,6 +60,8 @@ export const Input = ({
 
     const input = (
         <AntInput
+            id={testId}
+            data-testid={testId}
             ref={inputRef}
             value={value}
             onChange={handleChange}
