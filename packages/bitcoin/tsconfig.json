@@ -1,8 +1,4 @@
 {
     "extends": "@minimalist-apps/tsconfig/library.json",
-    "include": [
-        "src",
-        "../../apps/price-converter/src/app/ConverterScreen/normalizeBtcInput.test.ts",
-        "../../apps/price-converter/src/app/ConverterScreen/normalizeBtcInput.ts"
-    ]
+    "include": ["src"]
 }
